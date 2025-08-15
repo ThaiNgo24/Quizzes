@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Programming Quiz Platform</title>
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* Main container */
+      .main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 50px;
+        padding: 40px 0 20px;
+        position: relative;
+      }
+
+      .header h1 {
+        font-size: 3rem;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-weight: 700;
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        color: #7f8c8d;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      /* Subject cards */
+      .subjects-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .subject-card {
+        background: white;
+        border-radius: 15px;
+        width: 320px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .subject-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .subject-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+      }
+
+      .subject-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #3498db, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .subject-card h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: #2c3e50;
+      }
+
+      .subject-card p {
+        color: #7f8c8d;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      /* Quiz list page */
+      .quiz-list-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        display: none;
+      }
+
+      .back-btn {
+        display: inline-block;
+        margin-bottom: 30px;
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        padding: 8px 15px;
+        border-radius: 5px;
+      }
+
+      .back-btn:hover {
+        background-color: #f0f7fd;
+      }
+
+      .quiz-list-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .quiz-list-header h2 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .quiz-list {
+        list-style: none;
+      }
+
+      .quiz-item {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .quiz-item:hover {
+        transform: translateX(10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .quiz-info h3 {
+        color: #2c3e50;
+        margin-bottom: 5px;
+      }
+
+      .quiz-info p {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+
+      .quiz-arrow {
+        color: #3498db;
+        font-size: 1.5rem;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2.2rem;
+        }
+
+        .subject-card {
+          width: 100%;
+          max-width: 350px;
+        }
+
+        .quiz-list-header h2 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Home Page -->
+    <div class="main-container" id="home-page">
+      <div class="header">
+        <h1>Programming Quiz Platform</h1>
+        <p>Select a subject to test and improve your knowledge</p>
+      </div>
+
+      <div class="subjects-container">
+        <!-- OOP Card -->
+        <div class="subject-card" id="oop-card">
+          <div class="subject-icon">🧩</div>
+          <h2>Object-Oriented Programming</h2>
+          <p>
+            Master OOP concepts: classes, objects, inheritance, polymorphism and
+            more
+          </p>
+          <button class="btn" onclick="showQuizList('oop')">
+            Start Learning
+          </button>
+        </div>
+
+        <!-- OS Card -->
+        <div class="subject-card" id="os-card">
+          <div class="subject-icon">💻</div>
+          <h2>Operating Systems</h2>
+          <p>Understand processes, threads, memory management and scheduling</p>
+          <button class="btn" onclick="showQuizList('os')">
+            Start Learning
+          </button>
+        </div>
+
+        <!-- Web Card -->
+        <div class="subject-card" id="web-card">
+          <div class="subject-icon">🌐</div>
+          <h2>Web Development</h2>
+          <p>Learn HTML, CSS, JavaScript and modern frameworks</p>
+          <button class="btn" onclick="showQuizList('web')">
+            Start Learning
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OOP Quiz List -->
+    <div class="quiz-list-container" id="oop-quiz-list">
+      <a href="#" class="back-btn" onclick="backToHome()">← Back to Subjects</a>
+
+      <div class="quiz-list-header">
+        <h2>OOP Quizzes</h2>
+        <p>Select a quiz to test your knowledge</p>
+      </div>
+
+      <ul class="quiz-list">
+        <a href="/OOP/Class_Object.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>Java OOP - Class and Object Quiz</h3>
+            <!-- <p>Classes, Objects, Constructors, Access Modifiers</p> -->
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="/OOP/Inheritance.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>Inheritance</h3>
+            <!-- <p>Inheritance, Polymorphism, Method Overriding</p> -->
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="oop-abstract-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>Abstract Classes & Interfaces</h3>
+            <p>Abstract methods, Interfaces, Implementation</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="oop-solid-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>SOLID Principles</h3>
+            <p>Five object-oriented design principles</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+      </ul>
+    </div>
+
+    <!-- OS Quiz List -->
+    <div class="quiz-list-container" id="os-quiz-list">
+      <a href="#" class="back-btn" onclick="backToHome()">← Back to Subjects</a>
+
+      <div class="quiz-list-header">
+        <h2>Operating System Quizzes</h2>
+        <p>Select a quiz to test your knowledge</p>
+      </div>
+
+      <ul class="quiz-list">
+        <a href="os-process-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>Processes & Threads</h3>
+            <p>Process management, threading models</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="os-scheduling-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>CPU Scheduling</h3>
+            <p>Scheduling algorithms and policies</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="os-memory-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>Memory Management</h3>
+            <p>Paging, segmentation, virtual memory</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="os-deadlock-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>Deadlocks</h3>
+            <p>Deadlock conditions and prevention</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+      </ul>
+    </div>
+
+    <!-- Web Quiz List -->
+    <div class="quiz-list-container" id="web-quiz-list">
+      <a href="#" class="back-btn" onclick="backToHome()">← Back to Subjects</a>
+
+      <div class="quiz-list-header">
+        <h2>Web Development Quizzes</h2>
+        <p>Select a quiz to test your knowledge</p>
+      </div>
+
+      <ul class="quiz-list">
+        <a href="web-html-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>HTML Fundamentals</h3>
+            <p>HTML tags, structure, and semantics</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="web-css-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>CSS Styling</h3>
+            <p>Selectors, layout, flexbox, grid</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="web-js-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>JavaScript Basics</h3>
+            <p>Variables, functions, DOM manipulation</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+        <a href="web-react-quiz.html" class="quiz-item fade-in">
+          <div class="quiz-info">
+            <h3>React Framework</h3>
+            <p>Components, state, props, hooks</p>
+          </div>
+          <div class="quiz-arrow">→</div>
+        </a>
+      </ul>
+    </div>
+
+    <script>
+      // Show quiz list for selected subject
+      function showQuizList(subject) {
+        document.getElementById("home-page").style.display = "none";
+        const quizList = document.getElementById(`${subject}-quiz-list`);
+        quizList.style.display = "block";
+
+        // Animate quiz items
+        const quizItems = quizList.querySelectorAll(".quiz-item");
+        quizItems.forEach((item, index) => {
+          item.style.animationDelay = `${index * 0.1}s`;
+        });
+      }
+
+      // Return to home page
+      function backToHome() {
+        document
+          .querySelectorAll(".quiz-list-container")
+          .forEach((container) => {
+            container.style.display = "none";
+          });
+        document.getElementById("home-page").style.display = "block";
+      }
+
+      // Start selected quiz (navigate to quiz page)
+      function startQuiz(quizId) {
+        // In a real implementation, this would navigate to the quiz page
+        // For this demo, we'll simulate navigation by changing the URL
+        // without actually loading a new page
+        window.location.hash = `#quiz-${quizId}`;
+
+        // Show a message (replace with actual navigation in production)
+        console.log(`Navigating to quiz: ${quizId}`);
+        alert(
+          `In a real implementation, this would navigate to ${quizId}.html`
+        );
+
+        // Actual implementation would be:
+        // window.location.href = `${quizId}.html`;
+      }
+
+      // Initialize animations when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check URL hash for direct navigation
+        if (window.location.hash) {
+          const hash = window.location.hash.substring(1);
+          if (hash.startsWith("quiz-")) {
+            const quizId = hash.substring(5);
+            startQuiz(quizId);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

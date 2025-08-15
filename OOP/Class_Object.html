@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Java OOP - Class and Object Quiz</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: #f5f7fa;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .quiz-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .progress {
+        text-align: right;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+      }
+
+      .question {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+
+      .options {
+        margin-bottom: 25px;
+      }
+
+      .option {
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .option:hover {
+        background-color: #f0f7fd;
+        border-color: #3498db;
+      }
+
+      .selected {
+        background-color: #d4edff;
+        border-color: #3498db;
+      }
+
+      .correct {
+        background-color: #d4edda;
+        border-color: #28a745;
+      }
+
+      .incorrect {
+        background-color: #f8d7da;
+        border-color: #dc3545;
+      }
+
+      .feedback {
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      .correct-feedback {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .incorrect-feedback {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      .citation {
+        font-style: italic;
+        color: #6c757d;
+        margin-top: 10px;
+        font-size: 0.9rem;
+      }
+
+      button {
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: block;
+        margin: 0 auto;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      button:disabled {
+        background: #cccccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .score-container {
+        text-align: center;
+        display: none;
+      }
+
+      .score {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      .restart-btn {
+        background: linear-gradient(90deg, #2ecc71, #27ae60);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-container">
+      <h1>Java OOP - Class and Object Quiz</h1>
+
+      <div class="progress">
+        Question <span id="current-question">1</span> of
+        <span id="total-questions">0</span>
+      </div>
+
+      <div class="question" id="question"></div>
+
+      <div class="options" id="options"></div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <button id="next-btn" disabled>Next Question</button>
+    </div>
+
+    <div class="score-container" id="score-container">
+      <div class="score" id="score"></div>
+      <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+    </div>
+
+    <script>
+      // Quiz questions based on the provided file content
+      const questions = [
+        {
+          question: "What is an object in Java?",
+          options: [
+            "A primitive data type like int or double",
+            "A real-world entity with attributes and methods",
+            "A special type of variable that can store multiple values",
+            "A function that performs a specific task",
+          ],
+          answer: 1,
+          citation:
+            "Page 3: An object represents a real-world entity. It has attributes (data) and methods (behavior). Example: A car is an object with attributes like weight, color and methods like drive(), brake().",
+        },
+        {
+          question: "What is a class in Java?",
+          options: [
+            "A collection of unrelated methods",
+            "A blueprint for creating objects",
+            "A special type of object",
+            "A file that contains Java code",
+          ],
+          answer: 1,
+          citation:
+            "Page 4: A class is a blueprint for creating objects. It defines the structure and behavior of objects. Objects are created (instantiated) from classes.",
+        },
+        {
+          question: "How do you create an object in Java?",
+          options: [
+            "ClassName objectName = new ClassName();",
+            "objectName = ClassName();",
+            "ClassName objectName = ClassName.new();",
+            "new objectName = ClassName();",
+          ],
+          answer: 0,
+          citation:
+            "Page 7: In Java, an object is created from a class using the new keyword. Syntax: ClassName objectName = new ClassName();",
+        },
+        {
+          question:
+            "What happens when you create multiple objects from the same class?",
+          options: [
+            "They all share the same memory location",
+            "Each object has its own copy of the class's variables and methods",
+            "Only the first object gets its own variables, others share them",
+            "You can't create multiple objects from the same class",
+          ],
+          answer: 1,
+          citation:
+            "Page 8: You can create multiple independent objects from the same class. Each object has its own copy of fields and methods.",
+        },
+        {
+          question:
+            "How can you modify an attribute value after creating an object?",
+          options: [
+            "Using the dot operator: objectName.attributeName = newValue",
+            "You can't modify attributes after object creation",
+            "Using the set keyword: set objectName.attributeName = newValue",
+            "By calling a special modify() method",
+          ],
+          answer: 0,
+          citation:
+            "Page 12: You can modify the value of an attribute after an object is created. Use the dot operator to access and update the attribute.",
+        },
+        {
+          question:
+            "How do you prevent an attribute from being modified after initialization?",
+          options: [
+            "Use the const keyword",
+            "Use the final keyword",
+            "Use the static keyword",
+            "Use the private keyword",
+          ],
+          answer: 1,
+          citation:
+            "Page 14: To make an attribute constant and unchangeable, declare it with the final keyword. A final variable must be assigned once, and cannot be modified later.",
+        },
+        {
+          question: "What is a static field in Java?",
+          options: [
+            "A field that can't be changed",
+            "A field that belongs to the class rather than any object",
+            "A field that is only accessible within its own class",
+            "A field that automatically increments its value",
+          ],
+          answer: 1,
+          citation:
+            "Page 25: A static field belongs to the class, not to instances (objects). All objects share the same copy of the static field.",
+        },
+        {
+          question: "What is a constructor in Java?",
+          options: [
+            "A special method that returns a new object",
+            "A method that destroys objects",
+            "A special method used to initialize objects",
+            "A method that converts objects to strings",
+          ],
+          answer: 2,
+          citation:
+            "Page 29: A constructor is a special method used to initialize objects. It is automatically called when an object is created. Used to set initial values for attributes.",
+        },
+        {
+          question: "What is constructor overloading?",
+          options: [
+            "Creating too many constructors in a class",
+            "Having multiple constructors with different parameters",
+            "Making constructors that do too much work",
+            "Using constructors to overload the system memory",
+          ],
+          answer: 1,
+          citation:
+            "Page 31: Java allows a class to have multiple constructors with different parameters. This is called constructor overloading. It provides flexibility when creating objects.",
+        },
+        {
+          question: "What is method overloading in Java?",
+          options: [
+            "Creating methods with the same name but different implementations",
+            "Having methods with the same name but different parameter lists",
+            "Making methods do more work than they should",
+            "Using methods to overload the system memory",
+          ],
+          answer: 1,
+          citation:
+            "Page 38: Method overloading means multiple methods in the same class with the same name but different parameter lists. Allows you to reuse the same method name for similar actions.",
+        },
+      ];
+
+      // Shuffle the questions array
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      // Quiz state variables
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let shuffledQuestions = [];
+      let selectedOption = null;
+      let answerSubmitted = false;
+
+      // DOM elements
+      const questionElement = document.getElementById("question");
+      const optionsElement = document.getElementById("options");
+      const feedbackElement = document.getElementById("feedback");
+      const nextButton = document.getElementById("next-btn");
+      const currentQuestionSpan = document.getElementById("current-question");
+      const totalQuestionsSpan = document.getElementById("total-questions");
+      const scoreContainer = document.getElementById("score-container");
+      const scoreElement = document.getElementById("score");
+      const restartButton = document.getElementById("restart-btn");
+
+      // Initialize the quiz
+      function initQuiz() {
+        shuffledQuestions = shuffleArray([...questions]);
+        currentQuestionIndex = 0;
+        score = 0;
+        totalQuestionsSpan.textContent = shuffledQuestions.length;
+        showQuestion();
+        scoreContainer.style.display = "none";
+      }
+
+      // Display the current question
+      function showQuestion() {
+        answerSubmitted = false;
+        selectedOption = null;
+        feedbackElement.style.display = "none";
+        nextButton.disabled = true;
+        nextButton.textContent = "Next Question";
+
+        const currentQuestion = shuffledQuestions[currentQuestionIndex];
+        currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+        questionElement.textContent = currentQuestion.question;
+        optionsElement.innerHTML = "";
+
+        currentQuestion.options.forEach((option, index) => {
+          const optionElement = document.createElement("div");
+          optionElement.classList.add("option");
+          optionElement.textContent = option;
+          optionElement.dataset.index = index;
+          optionElement.addEventListener("click", selectOption);
+          optionsElement.appendChild(optionElement);
+        });
+      }
+
+      // Handle option selection
+      function selectOption(e) {
+        if (answerSubmitted) return;
+
+        // Remove selected class from all options
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
+
+        // Add selected class to clicked option
+        const selectedElement = e.target;
+        selectedElement.classList.add("selected");
+        selectedOption = parseInt(selectedElement.dataset.index);
+
+        // Enable next button
+        nextButton.disabled = false;
+      }
+
+      // Check the answer and show feedback
+      function checkAnswer() {
+        if (selectedOption === null || answerSubmitted) return;
+
+        answerSubmitted = true;
+        const currentQuestion = shuffledQuestions[currentQuestionIndex];
+        const isCorrect = selectedOption === currentQuestion.answer;
+
+        // Disable all options
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.style.pointerEvents = "none";
+        });
+
+        // Highlight correct answer
+        document.querySelectorAll(".option").forEach((opt, index) => {
+          if (index === currentQuestion.answer) {
+            opt.classList.add("correct");
+          } else if (index === selectedOption && !isCorrect) {
+            opt.classList.add("incorrect");
+          }
+        });
+
+        // Update score
+        if (isCorrect) {
+          score++;
+        }
+
+        // Show feedback
+        feedbackElement.textContent = isCorrect
+          ? "Correct! " + currentQuestion.citation
+          : "Incorrect. The correct answer is: " +
+            currentQuestion.options[currentQuestion.answer] +
+            ". " +
+            currentQuestion.citation;
+        feedbackElement.className =
+          "feedback " + (isCorrect ? "correct-feedback" : "incorrect-feedback");
+        feedbackElement.style.display = "block";
+
+        // Change button text if it's the last question
+        if (currentQuestionIndex === shuffledQuestions.length - 1) {
+          nextButton.textContent = "See Results";
+        }
+      }
+
+      // Move to the next question or show results
+      function nextQuestion() {
+        if (!answerSubmitted) {
+          checkAnswer();
+          return;
+        }
+
+        if (currentQuestionIndex < shuffledQuestions.length - 1) {
+          currentQuestionIndex++;
+          showQuestion();
+        } else {
+          showResults();
+        }
+      }
+
+      // Show the final results
+      function showResults() {
+        document.querySelector(".quiz-container").style.display = "none";
+
+        scoreElement.textContent = `You scored ${score} out of ${shuffledQuestions.length}!`;
+        scoreContainer.style.display = "block";
+      }
+
+      // Event listeners
+      nextButton.addEventListener("click", nextQuestion);
+      restartButton.addEventListener("click", () => {
+        document.querySelector(".quiz-container").style.display = "block";
+        initQuiz();
+      });
+
+      // Start the quiz
+      initQuiz();
+    </script>
+  </body>
+</html>
