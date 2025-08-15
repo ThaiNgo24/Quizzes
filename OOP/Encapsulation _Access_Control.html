@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Java Encapsulation & Access Control Quiz</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: #f5f7fa;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .quiz-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .progress {
+        text-align: right;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+      }
+
+      .question {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+
+      .options {
+        margin-bottom: 25px;
+      }
+
+      .option {
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .option:hover {
+        background-color: #f0f7fd;
+        border-color: #3498db;
+      }
+
+      .selected {
+        background-color: #d4edff;
+        border-color: #3498db;
+      }
+
+      .correct {
+        background-color: #d4edda;
+        border-color: #28a745;
+      }
+
+      .incorrect {
+        background-color: #f8d7da;
+        border-color: #dc3545;
+      }
+
+      .feedback {
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      .correct-feedback {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .incorrect-feedback {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      .citation {
+        font-style: italic;
+        color: #6c757d;
+        margin-top: 10px;
+        font-size: 0.9rem;
+      }
+
+      button {
+        background: linear-gradient(90deg, #3498db, #9b59b6);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: block;
+        margin: 0 auto;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      button:disabled {
+        background: #cccccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .score-container {
+        text-align: center;
+        display: none;
+      }
+
+      .score {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      .restart-btn {
+        background: linear-gradient(90deg, #2ecc71, #27ae60);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-container">
+      <h1>Java Encapsulation & Access Control Quiz</h1>
+
+      <div class="progress">
+        Question <span id="current-question">1</span> of
+        <span id="total-questions">0</span>
+      </div>
+
+      <div class="question" id="question"></div>
+
+      <div class="options" id="options"></div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <button id="next-btn" disabled>Next Question</button>
+    </div>
+
+    <div class="score-container" id="score-container">
+      <div class="score" id="score"></div>
+      <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+    </div>
+
+    <script>
+      // Quiz questions covering all content from the PDF
+      const questions = [
+        {
+          question: "What is the primary purpose of access modifiers in Java?",
+          options: [
+            "To control the visibility of classes and members",
+            "To improve performance of the application",
+            "To make code more colorful",
+            "To automatically document the code",
+          ],
+          answer: 0,
+          citation:
+            "Page 2: Access modifiers control visibility of classes, methods, fields, and constructors.",
+        },
+        {
+          question: "Which of these is NOT an access modifier in Java?",
+          options: ["public", "private", "protected", "static"],
+          answer: 3,
+          citation:
+            "Page 3: static is a non-access modifier, not an access modifier.",
+        },
+        {
+          question:
+            "What access level does a class member have when no modifier is specified?",
+          options: [
+            "public",
+            "private",
+            "protected",
+            "default (package-private)",
+          ],
+          answer: 3,
+          citation:
+            "Page 5: When no access modifier is specified, it's called default or package-private access.",
+        },
+        {
+          question:
+            "Which access modifier allows the widest accessibility for a class member?",
+          options: ["private", "protected", "default", "public"],
+          answer: 3,
+          citation: "Page 10: public members are accessible from any class.",
+        },
+        {
+          question: "What is the purpose of encapsulation in OOP?",
+          options: [
+            "To make code run faster",
+            "To wrap data and methods into a single unit and restrict direct access",
+            "To automatically generate documentation",
+            "To reduce the number of classes needed",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: Encapsulation means wrapping data and methods into a single unit and restricting direct access.",
+        },
+        {
+          question:
+            "Why should fields typically be declared private in a class?",
+          options: [
+            "To make them accessible only within the same package",
+            "To hide them from direct access outside the class",
+            "To allow only subclasses to access them",
+            "To make them automatically serializable",
+          ],
+          answer: 1,
+          citation:
+            "Page 20: Private fields are hidden from outside access, which is the first step of encapsulation.",
+        },
+        {
+          question: "What is the purpose of getter and setter methods?",
+          options: [
+            "To make code longer and more complicated",
+            "To provide controlled access to private fields",
+            "To automatically generate documentation",
+            "To improve performance of field access",
+          ],
+          answer: 1,
+          citation:
+            "Page 21-22: Getters and setters provide controlled access to private fields.",
+        },
+        {
+          question: "Which of these is a benefit of encapsulation?",
+          options: [
+            "It makes all fields public by default",
+            "It protects data integrity by preventing unauthorized access",
+            "It automatically generates documentation",
+            "It makes all methods static",
+          ],
+          answer: 1,
+          citation:
+            "Page 17: Encapsulation protects data integrity by preventing unauthorized or invalid access.",
+        },
+        {
+          question:
+            "What happens if you try to access a private field directly from another class?",
+          options: [
+            "It works fine",
+            "You get a compile-time error",
+            "The program crashes at runtime",
+            "The field becomes public automatically",
+          ],
+          answer: 1,
+          citation:
+            "Page 20: Attempting to access a private field directly from another class results in a compile error.",
+        },
+        {
+          question: "What is an immutable class?",
+          options: [
+            "A class that can't be instantiated",
+            "A class whose instances can't be modified after creation",
+            "A class with only static methods",
+            "A class that inherits from multiple superclasses",
+          ],
+          answer: 1,
+          citation:
+            "Page 31: An immutable class has fields that are private and final, with no setters.",
+        },
+        {
+          question: "Which modifier prevents a class from being subclassed?",
+          options: ["private", "final", "static", "abstract"],
+          answer: 1,
+          citation:
+            "Page 12: The final modifier prevents a class from being extended.",
+        },
+        {
+          question: "What is the purpose of the protected access modifier?",
+          options: [
+            "To make members accessible only within the same class",
+            "To make members accessible within the same package and by subclasses",
+            "To make members accessible from any class",
+            "To automatically serialize members",
+          ],
+          answer: 1,
+          citation:
+            "Page 10: protected members are accessible within the same package and by subclasses.",
+        },
+        {
+          question: "Which of these is a non-access modifier?",
+          options: ["public", "private", "protected", "final"],
+          answer: 3,
+          citation:
+            "Page 13: final is a non-access modifier that prevents modification or overriding.",
+        },
+        {
+          question: "What is the purpose of packages in Java?",
+          options: [
+            "To make code run faster",
+            "To organize related classes and prevent naming conflicts",
+            "To automatically generate documentation",
+            "To make all classes public",
+          ],
+          answer: 1,
+          citation:
+            "Page 33: Packages organize related classes and prevent naming conflicts.",
+        },
+        {
+          question:
+            "Which access modifier would you use for a method that should be accessible only within its own class?",
+          options: ["public", "private", "protected", "default"],
+          answer: 1,
+          citation:
+            "Page 10: private members are accessible only within the declaring class.",
+        },
+        {
+          question:
+            "What is the main advantage of using getter methods instead of making fields public?",
+          options: [
+            "It makes the code shorter",
+            "It allows you to add validation or computation when accessing the field",
+            "It automatically generates documentation",
+            "It improves performance",
+          ],
+          answer: 1,
+          citation:
+            "Page 18: Getters allow controlled access and can include validation or computation.",
+        },
+        {
+          question: "Which of these classes demonstrates proper encapsulation?",
+          options: [
+            "class A { public int x; }",
+            "class B { private int x; public int getX() { return x; } }",
+            "class C { protected int x; }",
+            "class D { int x; }",
+          ],
+          answer: 1,
+          citation:
+            "Page 26: Proper encapsulation uses private fields with public getter methods.",
+        },
+        {
+          question:
+            "What happens if you declare a class with no access modifier?",
+          options: [
+            "It becomes public by default",
+            "It becomes private by default",
+            "It has package-private (default) access",
+            "It becomes protected by default",
+          ],
+          answer: 2,
+          citation:
+            "Page 6: A class with no modifier has package-private (default) access.",
+        },
+        {
+          question:
+            "Which of these modifiers can be applied to a top-level class?",
+          options: [
+            "public and private",
+            "public and default",
+            "protected and private",
+            "public, protected, and private",
+          ],
+          answer: 1,
+          citation:
+            "Page 8: Top-level classes can only use public or default (no modifier) access.",
+        },
+        {
+          question: "What is the purpose of making a class final?",
+          options: [
+            "To make it immutable",
+            "To prevent it from being subclassed",
+            "To make all its methods final",
+            "To automatically serialize its instances",
+          ],
+          answer: 1,
+          citation:
+            "Page 12: A final class cannot be extended (no subclassing allowed).",
+        },
+      ];
+
+      // Shuffle the questions array
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      // Quiz state variables
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let shuffledQuestions = [];
+      let selectedOption = null;
+      let answerSubmitted = false;
+
+      // DOM elements
+      const questionElement = document.getElementById("question");
+      const optionsElement = document.getElementById("options");
+      const feedbackElement = document.getElementById("feedback");
+      const nextButton = document.getElementById("next-btn");
+      const currentQuestionSpan = document.getElementById("current-question");
+      const totalQuestionsSpan = document.getElementById("total-questions");
+      const scoreContainer = document.getElementById("score-container");
+      const scoreElement = document.getElementById("score");
+      const restartButton = document.getElementById("restart-btn");
+
+      // Initialize the quiz
+      function initQuiz() {
+        shuffledQuestions = shuffleArray([...questions]);
+        currentQuestionIndex = 0;
+        score = 0;
+        totalQuestionsSpan.textContent = shuffledQuestions.length;
+        showQuestion();
+        scoreContainer.style.display = "none";
+      }
+
+      // Display the current question
+      function showQuestion() {
+        answerSubmitted = false;
+        selectedOption = null;
+        feedbackElement.style.display = "none";
+        nextButton.disabled = true;
+        nextButton.textContent = "Next Question";
+
+        const currentQuestion = shuffledQuestions[currentQuestionIndex];
+        currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+        questionElement.textContent = currentQuestion.question;
+        optionsElement.innerHTML = "";
+
+        currentQuestion.options.forEach((option, index) => {
+          const optionElement = document.createElement("div");
+          optionElement.classList.add("option");
+          optionElement.textContent = option;
+          optionElement.dataset.index = index;
+          optionElement.addEventListener("click", selectOption);
+          optionsElement.appendChild(optionElement);
+        });
+      }
+
+      // Handle option selection
+      function selectOption(e) {
+        if (answerSubmitted) return;
+
+        // Remove selected class from all options
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
+
+        // Add selected class to clicked option
+        const selectedElement = e.target;
+        selectedElement.classList.add("selected");
+        selectedOption = parseInt(selectedElement.dataset.index);
+
+        // Enable next button
+        nextButton.disabled = false;
+      }
+
+      // Check the answer and show feedback
+      function checkAnswer() {
+        if (selectedOption === null || answerSubmitted) return;
+
+        answerSubmitted = true;
+        const currentQuestion = shuffledQuestions[currentQuestionIndex];
+        const isCorrect = selectedOption === currentQuestion.answer;
+
+        // Disable all options
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.style.pointerEvents = "none";
+        });
+
+        // Highlight correct answer
+        document.querySelectorAll(".option").forEach((opt, index) => {
+          if (index === currentQuestion.answer) {
+            opt.classList.add("correct");
+          } else if (index === selectedOption && !isCorrect) {
+            opt.classList.add("incorrect");
+          }
+        });
+
+        // Update score
+        if (isCorrect) {
+          score++;
+        }
+
+        // Show feedback
+        feedbackElement.textContent = isCorrect
+          ? "Correct! " + currentQuestion.citation
+          : "Incorrect. The correct answer is: " +
+            currentQuestion.options[currentQuestion.answer] +
+            ". " +
+            currentQuestion.citation;
+        feedbackElement.className =
+          "feedback " + (isCorrect ? "correct-feedback" : "incorrect-feedback");
+        feedbackElement.style.display = "block";
+
+        // Change button text if it's the last question
+        if (currentQuestionIndex === shuffledQuestions.length - 1) {
+          nextButton.textContent = "See Results";
+        }
+      }
+
+      // Move to the next question or show results
+      function nextQuestion() {
+        if (!answerSubmitted) {
+          checkAnswer();
+          return;
+        }
+
+        if (currentQuestionIndex < shuffledQuestions.length - 1) {
+          currentQuestionIndex++;
+          showQuestion();
+        } else {
+          showResults();
+        }
+      }
+
+      // Show the final results
+      function showResults() {
+        document.querySelector(".quiz-container").style.display = "none";
+
+        scoreElement.textContent = `You scored ${score} out of ${shuffledQuestions.length}!`;
+        scoreContainer.style.display = "block";
+      }
+
+      // Event listeners
+      nextButton.addEventListener("click", nextQuestion);
+      restartButton.addEventListener("click", () => {
+        document.querySelector(".quiz-container").style.display = "block";
+        initQuiz();
+      });
+
+      // Start the quiz
+      initQuiz();
+    </script>
+  </body>
+</html>
