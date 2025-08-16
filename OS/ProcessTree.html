@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>OS Process Simulator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css"
+    />
+    <style>
+      :root {
+        --primary: #3498db;
+        --secondary: #9b59b6;
+        --success: #2ecc71;
+        --danger: #e74c3c;
+        --warning: #f39c12;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --gray: #95a5a6;
+        --white: #ffffff;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --border-radius: 12px;
+        --panel-padding: 16px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        background-color: #f8f9fa;
+        color: var(--dark);
+        min-height: 100vh;
+        padding: 12px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 12px 0 24px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: clamp(1.8rem, 5vw, 2.2rem);
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 12px;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 3px;
+      }
+
+      .tabs {
+        display: flex;
+        margin-bottom: 16px;
+        border-bottom: 2px solid #dee2e6;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab {
+        padding: 10px 16px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: var(--transition);
+        font-weight: 500;
+        white-space: nowrap;
+        font-size: 0.95rem;
+      }
+
+      .tab.active {
+        border-bottom: 2px solid var(--primary);
+        color: var(--primary);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .game-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      @media (min-width: 768px) {
+        .game-container {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .panel {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: var(--panel-padding);
+        min-height: 300px;
+        transition: var(--transition);
+      }
+
+      .panel-title {
+        margin-bottom: 12px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+
+      .CodeMirror {
+        height: 300px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        font-family: "Fira Code", monospace;
+        font-size: 14px;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.9rem;
+        box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+        flex: 1 1 auto;
+        min-width: 100px;
+        text-align: center;
+      }
+
+      button:hover,
+      button:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+        outline: none;
+      }
+
+      button.run {
+        background: linear-gradient(90deg, var(--success), #27ae60);
+      }
+
+      button.reset {
+        background: linear-gradient(90deg, var(--danger), #c0392b);
+      }
+
+      button.example {
+        background: linear-gradient(90deg, var(--warning), #d35400);
+      }
+
+      .output-container {
+        background-color: #282a36;
+        color: #f8f8f2;
+        padding: 12px;
+        border-radius: 8px;
+        font-family: "Fira Code", monospace;
+        font-size: 13px;
+        height: 300px;
+        overflow-y: auto;
+        margin-bottom: 12px;
+        white-space: pre-wrap;
+        line-height: 1.5;
+      }
+
+      .process-tree {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 12px;
+        font-family: "Fira Code", monospace;
+        white-space: pre;
+        line-height: 1.5;
+        height: 150px;
+        overflow-y: auto;
+        font-size: 13px;
+      }
+
+      .example-list {
+        margin-top: 16px;
+        display: none;
+      }
+
+      .example-item {
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        background-color: #f0f4f8;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.9rem;
+      }
+
+      .example-item:hover {
+        background-color: #e0e8f0;
+      }
+
+      /* Drag and Drop Styles */
+      .toolbox {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: var(--panel-padding);
+        margin-bottom: 16px;
+      }
+
+      .command {
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        user-select: none;
+        transition: var(--transition);
+        box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+        font-size: 0.9rem;
+        touch-action: none;
+      }
+
+      .command:active {
+        transform: scale(0.98);
+      }
+
+      .command.fork {
+        background: linear-gradient(90deg, #2ecc71, #27ae60);
+      }
+
+      .command.exec {
+        background: linear-gradient(90deg, #e74c3c, #c0392b);
+      }
+
+      .command.wait {
+        background: linear-gradient(90deg, #f39c12, #d35400);
+      }
+
+      .command.exit {
+        background: linear-gradient(90deg, #9b59b6, #8e44ad);
+      }
+
+      .drop-area {
+        border: 2px dashed var(--gray);
+        border-radius: 10px;
+        padding: 16px;
+        text-align: center;
+        color: var(--gray);
+        margin-bottom: 16px;
+        min-height: 100px;
+        transition: var(--transition);
+      }
+
+      .drop-area.highlight {
+        border-color: var(--primary);
+        background-color: rgba(52, 152, 219, 0.1);
+      }
+
+      .drag-process-tree {
+        margin-top: 16px;
+        padding: 16px;
+        background-color: #f8f9fa;
+        border-radius: var(--border-radius);
+        border: 1px solid #dee2e6;
+        display: none;
+      }
+
+      .tree {
+        font-family: "Fira Code", monospace;
+        white-space: pre;
+        line-height: 1.5;
+        font-size: 13px;
+      }
+
+      .drag-button {
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.95rem;
+        margin-top: 12px;
+        box-shadow: 0 3px 8px rgba(52, 152, 219, 0.4);
+        width: 100%;
+      }
+
+      .drag-button:active,
+      .drag-button:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(52, 152, 219, 0.6);
+        outline: none;
+      }
+
+      .drag-button.run {
+        background: linear-gradient(90deg, var(--success), #27ae60);
+      }
+
+      .drag-button.reset {
+        background: linear-gradient(90deg, var(--danger), #c0392b);
+      }
+
+      .drag-button.generate {
+        background: linear-gradient(90deg, #9b59b6, #8e44ad);
+      }
+
+      #generated-code {
+        width: 100%;
+        height: 200px;
+        font-family: "Fira Code", monospace;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        resize: none;
+        margin-top: 12px;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .drag-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .drag-buttons button {
+        flex: 1;
+      }
+
+      /* Mobile specific adjustments */
+      @media (max-width: 480px) {
+        .panel {
+          padding: 12px;
+        }
+
+        .CodeMirror {
+          height: 250px;
+        }
+
+        .output-container {
+          height: 250px;
+        }
+
+        button,
+        .drag-button {
+          padding: 10px 12px;
+          font-size: 0.85rem;
+        }
+
+        .command {
+          padding: 8px 10px;
+          font-size: 0.85rem;
+        }
+      }
+
+      /* Animation for drag and drop */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .command.dragging {
+        animation: pulse 1.5s infinite;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>OS Process Simulator</h1>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="code">Code Editor</div>
+        <div class="tab" data-tab="drag">Visual Builder</div>
+      </div>
+
+      <div class="tab-content active" id="code-tab">
+        <div class="game-container">
+          <div class="panel">
+            <h3 class="panel-title">Code Editor</h3>
+            <textarea id="code-editor">
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int main() {
+    printf("Parent process (PID: %d)\\n", getpid());
+    
+    pid_t pid = fork();
+    
+    if (pid == 0) {
+        // Child process
+        printf("Child process (PID: %d)\\n", getpid());
+        sleep(1);
+    } else if (pid > 0) {
+        // Parent process
+        wait(NULL);
+        printf("Parent process done\\n");
+    } else {
+        // Fork failed
+        printf("Fork failed\\n");
+    }
+    
+    return 0;
+}</textarea
+            >
+
+            <div class="button-group">
+              <button class="run" id="run-code-btn">Run Code</button>
+              <button class="reset" id="reset-code-btn">Reset</button>
+              <button class="example" id="examples-btn">Examples</button>
+            </div>
+
+            <div class="example-list" id="example-list">
+              <div class="example-item" data-example="basic-fork">
+                Basic Fork Example
+              </div>
+              <div class="example-item" data-example="multiple-forks">
+                Multiple Forks
+              </div>
+              <div class="example-item" data-example="fork-exec">
+                Fork + Exec Example
+              </div>
+              <div class="example-item" data-example="fork-wait">
+                Fork with Wait
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3 class="panel-title">Output</h3>
+            <div class="output-container" id="output-container"></div>
+
+            <h3 class="panel-title">Process Tree</h3>
+            <div class="process-tree" id="process-tree"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="drag-tab">
+        <div class="game-container">
+          <div class="panel">
+            <h3 class="panel-title">Command Toolbox</h3>
+            <p>Tap and drag commands to build your process flow:</p>
+
+            <div class="command fork" draggable="true" data-command="fork">
+              fork() - Create child
+            </div>
+            <div class="command exec" draggable="true" data-command="exec">
+              exec() - Replace program
+            </div>
+            <div class="command wait" draggable="true" data-command="wait">
+              wait() - Wait for child
+            </div>
+            <div class="command exit" draggable="true" data-command="exit">
+              exit() - Terminate
+            </div>
+
+            <button class="drag-button generate" id="generate-code-btn">
+              Generate C Code
+            </button>
+          </div>
+
+          <div class="panel">
+            <h3 class="panel-title">Workspace</h3>
+            <p>Drop commands here to build your process flow:</p>
+
+            <div class="drop-area" id="drop-area">
+              <p>Drag commands here</p>
+            </div>
+
+            <div class="drag-buttons">
+              <button class="drag-button run" id="run-drag-btn">
+                Run Flow
+              </button>
+              <button class="drag-button reset" id="reset-drag-btn">
+                Reset
+              </button>
+            </div>
+
+            <div class="drag-process-tree" id="drag-process-tree">
+              <h3 class="panel-title">Process Tree</h3>
+              <div class="tree" id="drag-tree-output"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel-title">Generated C Code</h3>
+          <textarea
+            id="generated-code"
+            readonly
+            placeholder="Generated code will appear here..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 20px">
+        <h3 class="panel-title">How It Works</h3>
+        <p>
+          This simulator helps you understand process creation in operating
+          systems:
+        </p>
+        <ul style="margin: 10px 0 0 20px">
+          <li>
+            <strong>fork()</strong> - Creates a new process by duplicating the
+            calling process
+          </li>
+          <li>
+            <strong>exec()</strong> - Replaces the current process image with a
+            new one
+          </li>
+          <li>
+            <strong>wait()</strong> - Makes the parent process wait for child
+            processes
+          </li>
+          <li><strong>exit()</strong> - Terminates the current process</li>
+        </ul>
+        <p style="margin-top: 12px">
+          Use either the code editor or visual builder to create and visualize
+          process trees.
+        </p>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize CodeMirror
+        const editor = CodeMirror.fromTextArea(
+          document.getElementById("code-editor"),
+          {
+            mode: "text/x-csrc",
+            theme: "dracula",
+            lineNumbers: true,
+            indentUnit: 4,
+            tabSize: 4,
+            extraKeys: {
+              Tab: function (cm) {
+                cm.replaceSelection("    ", "end");
+              },
+            },
+            viewportMargin: Infinity,
+          }
+        );
+
+        // Tab switching
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.addEventListener("click", function () {
+            document
+              .querySelectorAll(".tab")
+              .forEach((t) => t.classList.remove("active"));
+            document
+              .querySelectorAll(".tab-content")
+              .forEach((c) => c.classList.remove("active"));
+
+            this.classList.add("active");
+            document
+              .getElementById(`${this.dataset.tab}-tab`)
+              .classList.add("active");
+          });
+        });
+
+        // Examples button
+        const examplesBtn = document.getElementById("examples-btn");
+        const exampleList = document.getElementById("example-list");
+
+        examplesBtn.addEventListener("click", function () {
+          exampleList.style.display =
+            exampleList.style.display === "none" ? "block" : "none";
+        });
+
+        // Example selection
+        document.querySelectorAll(".example-item").forEach((item) => {
+          item.addEventListener("click", function () {
+            loadExample(this.dataset.example);
+            exampleList.style.display = "none";
+          });
+        });
+
+        // Run code button
+        document
+          .getElementById("run-code-btn")
+          .addEventListener("click", function () {
+            const code = editor.getValue();
+            simulateProcesses(code);
+          });
+
+        // Reset button
+        document
+          .getElementById("reset-code-btn")
+          .addEventListener("click", function () {
+            editor.setValue(
+              `#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main() {\n    printf("Parent process (PID: %d)\\n", getpid());\n    \n    pid_t pid = fork();\n    \n    if (pid == 0) {\n        // Child process\n        printf("Child process (PID: %d)\\n", getpid());\n        sleep(1);\n    } else if (pid > 0) {\n        // Parent process\n        wait(NULL);\n        printf("Parent process done\\n");\n    } else {\n        // Fork failed\n        printf("Fork failed\\n");\n    }\n    \n    return 0;\n}`
+            );
+            document.getElementById("output-container").textContent = "";
+            document.getElementById("process-tree").textContent = "";
+          });
+
+        // Example code snippets
+        const examples = {
+          "basic-fork": `#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    printf("Parent process (PID: %d)\\n", getpid());
+    
+    pid_t pid = fork();
+    
+    if (pid == 0) {
+        printf("Child process (PID: %d)\\n", getpid());
+    } else if (pid > 0) {
+        printf("Parent process continuing\\n");
+    }
+    
+    return 0;
+}`,
+          "multiple-forks": `#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    printf("Main process (PID: %d)\\n", getpid());
+    
+    fork(); // First fork
+    fork(); // Second fork
+    
+    printf("Process (PID: %d) saying hello\\n", getpid());
+    
+    return 0;
+}`,
+          "fork-exec": `#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    printf("Parent process (PID: %d)\\n", getpid());
+    
+    pid_t pid = fork();
+    
+    if (pid == 0) {
+        printf("Child process (PID: %d) will now exec\\n", getpid());
+        execlp("ls", "ls", "-l", NULL);
+        printf("This won't print unless exec fails\\n");
+    } else if (pid > 0) {
+        wait(NULL);
+        printf("Parent process done\\n");
+    }
+    
+    return 0;
+}`,
+          "fork-wait": `#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    printf("Parent process (PID: %d)\\n", getpid());
+    
+    for (int i = 0; i < 3; i++) {
+        pid_t pid = fork();
+        
+        if (pid == 0) {
+            printf("Child %d (PID: %d)\\n", i+1, getpid());
+            sleep(1);
+            return 0;
+        }
+    }
+    
+    for (int i = 0; i < 3; i++) {
+        wait(NULL);
+    }
+    
+    printf("All children finished\\n");
+    return 0;
+}`,
+        };
+
+        function loadExample(exampleName) {
+          editor.setValue(examples[exampleName]);
+          document.getElementById("output-container").textContent = "";
+          document.getElementById("process-tree").textContent = "";
+        }
+
+        // Process simulation logic
+        function simulateProcesses(code) {
+          const outputContainer = document.getElementById("output-container");
+          const processTree = document.getElementById("process-tree");
+
+          outputContainer.textContent = "";
+          processTree.textContent = "";
+
+          // This is a simplified simulation - in a real app you'd use WebAssembly or server-side processing
+          try {
+            // Parse the code to identify process-related calls
+            const lines = code.split("\n");
+            let output = "";
+            let tree = "";
+            let pidCounter = 1;
+            let currentPid = 1;
+            const processes = [
+              { pid: 1, parent: 0, children: [], command: "main" },
+            ];
+            let parentStack = [];
+
+            // Simulate execution line by line
+            for (let i = 0; i < lines.length; i++) {
+              const line = lines[i].trim();
+
+              if (line.includes("fork()")) {
+                // Simulate fork
+                const newPid = ++pidCounter;
+                const childProcess = {
+                  pid: newPid,
+                  parent: currentPid,
+                  children: [],
+                  command: "forked",
+                };
+                processes
+                  .find((p) => p.pid === currentPid)
+                  .children.push(newPid);
+                processes.push(childProcess);
+
+                output += `[PID ${currentPid}] Fork created child ${newPid}\n`;
+
+                // Save current process to stack and switch to child
+                parentStack.push(currentPid);
+                currentPid = newPid;
+              } else if (
+                line.includes("exec") &&
+                (line.includes("execl") || line.includes("execv"))
+              ) {
+                // Simulate exec
+                const execedCommand =
+                  line.match(/execlp?\("([^"]+)"/)?.[1] || "new_program";
+                processes.find(
+                  (p) => p.pid === currentPid
+                ).command = `exec: ${execedCommand}`;
+                output += `[PID ${currentPid}] Executing ${execedCommand}\n`;
+              } else if (line.includes("wait(")) {
+                // Simulate wait
+                output += `[PID ${currentPid}] Waiting for children...\n`;
+
+                // Return to parent process
+                if (parentStack.length > 0) {
+                  currentPid = parentStack.pop();
+                  output += `[PID ${currentPid}] Child finished, continuing parent\n`;
+                }
+              } else if (line.includes("printf(") || line.includes("puts(")) {
+                // Simulate output
+                const message =
+                  line.match(/printf\("([^"]+)"/)?.[1] ||
+                  line.match(/puts\("([^"]+)"/)?.[1] ||
+                  "Printed output";
+                const formattedMessage = message
+                  .replace(/\\n/g, "\n")
+                  .replace(/\%d/g, currentPid);
+                output += `[PID ${currentPid}] ${formattedMessage}\n`;
+              } else if (line.includes("sleep(")) {
+                // Simulate sleep
+                const seconds = line.match(/sleep\((\d+)\)/)?.[1] || 1;
+                output += `[PID ${currentPid}] Sleeping for ${seconds} seconds\n`;
+              }
+            }
+
+            // Generate the process tree
+            tree = buildTreeVisualization(processes, 1, 0);
+
+            outputContainer.textContent = output;
+            processTree.textContent = tree;
+          } catch (error) {
+            outputContainer.textContent = `Error simulating processes: ${error.message}`;
+          }
+        }
+
+        function buildTreeVisualization(processes, pid, depth) {
+          const process = processes.find((p) => p.pid === pid);
+          if (!process) return "";
+
+          let tree = "";
+          const indent = "    ".repeat(depth);
+
+          if (depth > 0) {
+            tree += indent + "└── ";
+          }
+
+          tree += `Process ${pid} (${process.command})\n`;
+
+          process.children.forEach((childPid) => {
+            tree += buildTreeVisualization(processes, childPid, depth + 1);
+          });
+
+          return tree;
+        }
+
+        // Drag and Drop Functionality
+        const dropArea = document.getElementById("drop-area");
+        const runDragBtn = document.getElementById("run-drag-btn");
+        const resetDragBtn = document.getElementById("reset-drag-btn");
+        const dragProcessTree = document.getElementById("drag-process-tree");
+        const dragTreeOutput = document.getElementById("drag-tree-output");
+        const generateCodeBtn = document.getElementById("generate-code-btn");
+        const generatedCode = document.getElementById("generated-code");
+
+        let commands = [];
+
+        // Make commands draggable
+        document.querySelectorAll(".command").forEach((command) => {
+          command.addEventListener("dragstart", function (e) {
+            this.classList.add("dragging");
+            e.dataTransfer.setData("text/plain", this.dataset.command);
+          });
+
+          command.addEventListener("dragend", function () {
+            this.classList.remove("dragging");
+          });
+
+          // Touch support for mobile
+          command.addEventListener("touchstart", function (e) {
+            this.classList.add("dragging");
+            // Create a ghost image for dragging
+            const ghost = this.cloneNode(true);
+            ghost.style.position = "absolute";
+            ghost.style.opacity = "0.8";
+            ghost.style.pointerEvents = "none";
+            ghost.style.zIndex = "1000";
+            ghost.style.width = this.offsetWidth + "px";
+            document.body.appendChild(ghost);
+
+            const touch = e.touches[0];
+            const rect = this.getBoundingClientRect();
+            const offsetX = touch.clientX - rect.left;
+            const offsetY = touch.clientY - rect.top;
+
+            function moveGhost(e) {
+              const touch = e.touches[0];
+              ghost.style.left = touch.clientX - offsetX + "px";
+              ghost.style.top = touch.clientY - offsetY + "px";
+            }
+
+            function endTouch() {
+              document.removeEventListener("touchmove", moveGhost);
+              document.removeEventListener("touchend", endTouch);
+              ghost.remove();
+
+              // Check if we're over the drop area
+              const dropRect = dropArea.getBoundingClientRect();
+              const lastTouch = e.changedTouches[0];
+
+              if (
+                lastTouch.clientX >= dropRect.left &&
+                lastTouch.clientX <= dropRect.right &&
+                lastTouch.clientY >= dropRect.top &&
+                lastTouch.clientY <= dropRect.bottom
+              ) {
+                addCommandToWorkspace(this.dataset.command);
+              }
+            }
+
+            document.addEventListener("touchmove", moveGhost);
+            document.addEventListener("touchend", endTouch);
+          });
+        });
+
+        // Set up drop area
+        dropArea.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          this.classList.add("highlight");
+        });
+
+        dropArea.addEventListener("dragleave", function () {
+          this.classList.remove("highlight");
+        });
+
+        dropArea.addEventListener("drop", function (e) {
+          e.preventDefault();
+          this.classList.remove("highlight");
+
+          const commandType = e.dataTransfer.getData("text/plain");
+          addCommandToWorkspace(commandType);
+        });
+
+        function addCommandToWorkspace(commandType) {
+          const commandElement = document.createElement("div");
+          commandElement.className = `command ${commandType}`;
+          commandElement.textContent = getCommandText(commandType);
+          commandElement.dataset.command = commandType;
+          commandElement.draggable = true;
+
+          commandElement.addEventListener("dragstart", function (e) {
+            this.classList.add("dragging");
+            e.dataTransfer.setData("text/plain", this.dataset.command);
+          });
+
+          commandElement.addEventListener("dragend", function () {
+            this.classList.remove("dragging");
+          });
+
+          commandElement.addEventListener("click", function () {
+            this.remove();
+            commands = commands.filter((cmd) => cmd.element !== this);
+          });
+
+          // Touch support for removing commands
+          let touchStartTime = 0;
+          commandElement.addEventListener("touchstart", function () {
+            touchStartTime = Date.now();
+          });
+
+          commandElement.addEventListener("touchend", function () {
+            if (Date.now() - touchStartTime > 500) {
+              // Long press
+              this.remove();
+              commands = commands.filter((cmd) => cmd.element !== this);
+            }
+          });
+
+          dropArea.appendChild(commandElement);
+
+          commands.push({
+            type: commandType,
+            element: commandElement,
+          });
+        }
+
+        function getCommandText(commandType) {
+          const commandTexts = {
+            fork: "fork() - Create child",
+            exec: "exec() - Replace program",
+            wait: "wait() - Wait for child",
+            exit: "exit() - Terminate",
+          };
+          return commandTexts[commandType] || commandType;
+        }
+
+        // Run process flow
+        runDragBtn.addEventListener("click", function () {
+          if (commands.length === 0) {
+            alert("Please add commands to the workspace first!");
+            return;
+          }
+
+          const processFlow = commands.map((cmd) => cmd.type);
+          const tree = generateProcessTree(processFlow);
+
+          dragTreeOutput.textContent = tree;
+          dragProcessTree.style.display = "block";
+
+          // Scroll to the process tree
+          dragProcessTree.scrollIntoView({ behavior: "smooth" });
+        });
+
+        // Reset workspace
+        resetDragBtn.addEventListener("click", function () {
+          dropArea.innerHTML = "<p>Drag commands here</p>";
+          commands = [];
+          dragProcessTree.style.display = "none";
+          generatedCode.value = "";
+        });
+
+        // Generate C code from drag and drop
+        generateCodeBtn.addEventListener("click", function () {
+          if (commands.length === 0) {
+            alert("Please add commands to the workspace first!");
+            return;
+          }
+
+          const code = generateCCodeFromCommands(
+            commands.map((cmd) => cmd.type)
+          );
+          generatedCode.value = code;
+
+          // Highlight the generated code
+          generatedCode.select();
+        });
+
+        // Process tree generation logic
+        function generateProcessTree(commands) {
+          let pidCounter = 1;
+          let currentPid = 1;
+          const processes = [
+            { pid: 1, parent: 0, children: [], command: "init" },
+          ];
+          let currentProcess = processes[0];
+          let parentStack = [];
+
+          commands.forEach((cmd, index) => {
+            switch (cmd) {
+              case "fork":
+                const newPid = ++pidCounter;
+                const childProcess = {
+                  pid: newPid,
+                  parent: currentPid,
+                  children: [],
+                  command: `forked from ${currentPid}`,
+                };
+                currentProcess.children.push(newPid);
+                processes.push(childProcess);
+
+                // Save current process to stack and switch to child
+                parentStack.push(currentProcess);
+                currentProcess = childProcess;
+                currentPid = newPid;
+                break;
+
+              case "exec":
+                currentProcess.command = "exec()";
+                break;
+
+              case "wait":
+                currentProcess.command += " (waiting)";
+                // Return to parent process
+                if (parentStack.length > 0) {
+                  currentProcess = parentStack.pop();
+                  currentPid = currentProcess.pid;
+                }
+                break;
+
+              case "exit":
+                currentProcess.command += " (exited)";
+                // Return to parent process
+                if (parentStack.length > 0) {
+                  currentProcess = parentStack.pop();
+                  currentPid = currentProcess.pid;
+                }
+                break;
+            }
+          });
+
+          // Generate tree visualization
+          return buildTreeVisualization(processes, 1, 0);
+        }
+
+        function generateCCodeFromCommands(commands) {
+          let code = `#include <stdio.h>\n#include <unistd.h>\n#include <sys/wait.h>\n\nint main() {\n`;
+          let indent = "    ";
+          let inChildBlock = false;
+          let hasFork = false;
+
+          // Add initial parent process output
+          code += `${indent}printf("Parent process (PID: %d)\\n", getpid());\n\n`;
+
+          for (let i = 0; i < commands.length; i++) {
+            const cmd = commands[i];
+
+            switch (cmd) {
+              case "fork":
+                hasFork = true;
+                code += `${indent}pid_t pid = fork();\n`;
+                code += `${indent}if (pid == 0) {\n`;
+                code += `${indent}    // Child process\n`;
+                code += `${indent}    printf("Child process (PID: %d)\\n", getpid());\n`;
+                indent += "    ";
+                inChildBlock = true;
+                break;
+
+              case "exec":
+                code += `${indent}execlp("ls", "ls", "-l", NULL);\n`;
+                code += `${indent}printf("This won't print unless exec fails\\n");\n`;
+                break;
+
+              case "wait":
+                if (inChildBlock) {
+                  // Close child block first
+                  indent = indent.slice(0, -4);
+                  code += `${indent}} else if (pid > 0) {\n`;
+                  code += `${indent}    // Parent process\n`;
+                  code += `${indent}    wait(NULL);\n`;
+                  code += `${indent}    printf("Parent process continuing\\n");\n`;
+                  code += `${indent}}\n`;
+                  inChildBlock = false;
+                } else {
+                  code += `${indent}wait(NULL);\n`;
+                  code += `${indent}printf("Parent process waiting for children\\n");\n`;
+                }
+                break;
+
+              case "exit":
+                code += `${indent}exit(0);\n`;
+                break;
+            }
+          }
+
+          // Close any open child block
+          if (inChildBlock) {
+            indent = indent.slice(0, -4);
+            if (hasFork) {
+              code += `${indent}} else if (pid > 0) {\n`;
+              code += `${indent}    // Parent process\n`;
+              code += `${indent}    wait(NULL);\n`;
+              code += `${indent}    printf("Parent process done\\n");\n`;
+              code += `${indent}} else {\n`;
+              code += `${indent}    printf("Fork failed\\n");\n`;
+              code += `${indent}}\n`;
+            }
+          }
+
+          code += `\n${indent}return 0;\n}`;
+          return code;
+        }
+
+        // Initialize with example list hidden
+        document.getElementById("example-list").style.display = "none";
+      });
+    </script>
+  </body>
+</html>
