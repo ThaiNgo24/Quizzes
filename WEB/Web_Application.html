@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Application Design Patterns Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #3498db;
+        --secondary: #9b59b6;
+        --success: #2ecc71;
+        --danger: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --gray: #95a5a6;
+        --white: #ffffff;
+        --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+        background-color: #f8f9fa;
+        color: var(--dark);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+      
+      .quiz-container {
+        background-color: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        padding: 40px;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px;
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0);
+        transition: var(--transition);
+      }
+      
+      .quiz-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+      
+      .quiz-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+      }
+      
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2.2rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 15px;
+      }
+      
+      h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 3px;
+      }
+      
+      .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+      
+      .progress {
+        color: var(--gray);
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      
+      .progress-bar {
+        flex-grow: 1;
+        height: 8px;
+        background-color: var(--light);
+        border-radius: 4px;
+        margin-left: 15px;
+        overflow: hidden;
+      }
+      
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 4px;
+        transition: width 0.6s ease;
+      }
+      
+      .question {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: var(--dark);
+        line-height: 1.5;
+        animation: fadeIn 0.5s ease;
+      }
+      
+      .options {
+        margin-bottom: 30px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      
+      .option {
+        padding: 15px 20px;
+        border: 2px solid var(--light);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .option::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+        transition: 0.6s;
+      }
+      
+      .option:hover {
+        border-color: var(--primary);
+        transform: translateX(5px);
+      }
+      
+      .option:hover::before {
+        left: 100%;
+      }
+      
+      .selected {
+        background-color: rgba(52, 152, 219, 0.1);
+        border-color: var(--primary);
+        transform: translateX(5px);
+      }
+      
+      .correct {
+        background-color: rgba(46, 204, 113, 0.1);
+        border-color: var(--success);
+        color: var(--success);
+      }
+      
+      .incorrect {
+        background-color: rgba(231, 76, 60, 0.1);
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+      
+      .feedback {
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      
+      .correct-feedback {
+        background-color: rgba(46, 204, 113, 0.1);
+        color: #155724;
+        border-left: 4px solid var(--success);
+      }
+      
+      .incorrect-feedback {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: #721c24;
+        border-left: 4px solid var(--danger);
+      }
+      
+      .citation {
+        font-style: italic;
+        color: var(--gray);
+        margin-top: 10px;
+        font-size: 0.9rem;
+        display: block;
+      }
+      
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      
+      button {
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+      
+      button::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.6s;
+      }
+      
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+      }
+      
+      button:hover::after {
+        left: 100%;
+      }
+      
+      button:disabled {
+        background: var(--gray);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+      
+      button:disabled:hover::after {
+        left: -100%;
+      }
+      
+      .score-container {
+        text-align: center;
+        display: none;
+        animation: fadeIn 0.8s ease;
+      }
+      
+      .score {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: var(--dark);
+      }
+      
+      .score-percentage {
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 20px 0;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .score-message {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: var(--gray);
+      }
+      
+      .restart-btn {
+        background: linear-gradient(90deg, var(--success), #27ae60);
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+      }
+      
+      .restart-btn:hover {
+        box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+      }
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .quiz-container {
+          padding: 25px;
+        }
+        
+        h1 {
+          font-size: 1.8rem;
+        }
+        
+        .question {
+          font-size: 1.1rem;
+        }
+        
+        button {
+          padding: 12px 25px;
+          font-size: 0.9rem;
+        }
+        
+        .score-percentage {
+          font-size: 3rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+      <h1>Web Application Design Patterns Quiz</h1>
+
+      <div class="progress-container">
+        <div class="progress">
+          Question <span id="current-question">1</span> of
+          <span id="total-questions">0</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="question" id="question"></div>
+
+      <div class="options" id="options"></div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <div class="button-container">
+        <button id="next-btn" disabled>Next Question</button>
+      </div>
+    </div>
+
+    <div class="score-container" id="score-container">
+      <div class="score">Your Score:</div>
+      <div class="score-percentage" id="score-percentage"></div>
+      <div class="score-message" id="score-message"></div>
+      <div class="button-container">
+        <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+      </div>
+    </div>
+
+    <script>
+      // Quiz questions based on the provided content
+      const questions = [
+        {
+          question: "What is a design pattern in web application development?",
+          options: [
+            "A pre-designed user interface template",
+            "A reusable solution to common design problems",
+            "A programming language syntax rule",
+            "A type of web server configuration"
+          ],
+          answer: 1,
+          citation: "Design Pattern Concept: Reusable solutions to common design problems."
+        },
+        {
+          question: "Which of these is NOT typically a characteristic of web applications?",
+          options: [
+            "Interactivity",
+            "Integration with other systems",
+            "Authentication requirements",
+            "Static content delivery only"
+          ],
+          answer: 3,
+          citation: "A web application offers interactivity, integration, and often authentication."
+        },
+        {
+          question: "In the N-Tier Architecture, which tier is responsible for business logic?",
+          options: [
+            "Client tier",
+            "Web tier",
+            "Presentation & Business Logic tier",
+            "Data tier"
+          ],
+          answer: 2,
+          citation: "Tiers in N-Tier Architecture: Client, Web, Presentation & Business Logic (Script/Service), Data Access, Data."
+        },
+        {
+          question: "In the MVC pattern, which component is responsible for querying the database?",
+          options: [
+            "Model",
+            "View",
+            "Controller",
+            "Router"
+          ],
+          answer: 0,
+          citation: "Model-View-Controller (MVC): Model queries database, returns data. View renders data (pages). Controller handles user requests."
+        },
+        {
+          question: "Which of these is NOT a typical UI/UX design pattern category?",
+          options: [
+            "Navigation patterns",
+            "Form patterns",
+            "Database schema patterns",
+            "Search/Filtering patterns"
+          ],
+          answer: 2,
+          citation: "UI/UX Design Patterns: Navigation, Form, Table & List, Search/Classification/Filtering, Graphic."
+        },
+        {
+          question: "What is a key difference between MPA and SPA applications?",
+          options: [
+            "MPA uses multiple pages while SPA uses a single page",
+            "SPA requires page reloads while MPA doesn't",
+            "MPA is faster than SPA",
+            "SPA doesn't use JavaScript"
+          ],
+          answer: 0,
+          citation: "Multi-page (MPA) & Single-page (SPA) Applications: Revisited in context of design."
+        },
+        {
+          question: "What architectural style is RESTful API based on?",
+          options: [
+            "Client-Server model",
+            "Peer-to-Peer model",
+            "Monolithic architecture",
+            "Event-driven architecture"
+          ],
+          answer: 0,
+          citation: "RESTful API: Revisited as a design pattern (based on Client-Server model)."
+        },
+        {
+          question: "Which is NOT a characteristic of Microservice Architecture?",
+          options: [
+            "Tightly coupled services",
+            "Highly maintainable",
+            "Independently deployable",
+            "Developed by small teams"
+          ],
+          answer: 0,
+          citation: "Microservice Architecture characteristics: Highly maintainable, testable, independent, independently deployable, developed by small teams."
+        },
+        {
+          question: "Which pattern is NOT typically related to Microservices?",
+          options: [
+            "API Gateway",
+            "Service Discovery",
+            "Circuit Breaker",
+            "Singleton Factory"
+          ],
+          answer: 3,
+          citation: "Microservice Related Patterns: API Gateway, Service Discovery, Circuit Breaker, etc."
+        },
+        {
+          question: "What technology enables Progressive Web Apps (PWAs) to work offline?",
+          options: [
+            "Service workers",
+            "Web components",
+            "CSS preprocessors",
+            "WebAssembly"
+          ],
+          answer: 0,
+          citation: "Progressive Web Apps (PWAs) enhance web apps with offline capabilities, installability, and push notifications via service workers and manifests."
+        },
+        {
+          question: "In MVC, which component handles user requests and coordinates between models and views?",
+          options: [
+            "Model",
+            "View",
+            "Controller",
+            "Middleware"
+          ],
+          answer: 2,
+          citation: "Controller: Handles user requests, retrieves data from models, passes to views."
+        },
+        {
+          question: "What do Web Components represent in front-end development?",
+          options: [
+            "Complete applications",
+            "Microservices for Front-End",
+            "Backend API services",
+            "Database schemas"
+          ],
+          answer: 1,
+          citation: "Web Components: Microservices for Front-End (e.g., Polymer Project)."
+        },
+        {
+          question: "Which of these is a benefit of Microservice Architecture?",
+          options: [
+            "Services can be scaled independently",
+            "Simpler debugging due to monolithic structure",
+            "Tight coupling between components",
+            "Single codebase for entire application"
+          ],
+          answer: 0,
+          citation: "Microservice Architecture characteristics include independent scalability and deployment."
+        },
+        {
+          question: "What is the primary purpose of the API Gateway pattern in Microservices?",
+          options: [
+            "To serve as a single entry point for all client requests",
+            "To replace all individual microservices",
+            "To handle database migrations",
+            "To manage front-end styling"
+          ],
+          answer: 0,
+          citation: "API Gateway is a related pattern in Microservice Architecture that acts as a single entry point."
+        },
+        {
+          question: "Which technology is NOT typically associated with PWAs?",
+          options: [
+            "Service workers",
+            "Web app manifests",
+            "Web components",
+            "Relational database schemas"
+          ],
+          answer: 3,
+          citation: "Progressive Web Apps (PWAs) enhance web apps with offline capabilities via service workers and manifests."
+        }
+      ];
+
+      // Shuffle the questions array
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      // Quiz state variables
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let shuffledQuestions = [];
+      let selectedOption = null;
+      let answerSubmitted = false;
+
+      // DOM elements
+      const questionElement = document.getElementById("question");
+      const optionsElement = document.getElementById("options");
+      const feedbackElement = document.getElementById("feedback");
+      const nextButton = document.getElementById("next-btn");
+      const currentQuestionSpan = document.getElementById("current-question");
+      const totalQuestionsSpan = document.getElementById("total-questions");
+      const progressFill = document.getElementById("progress-fill");
+      const scoreContainer = document.getElementById("score-container");
+      const scorePercentage = document.getElementById("score-percentage");
+      const scoreMessage = document.getElementById("score-message");
+      const restartButton = document.getElementById("restart-btn");
+
+      // Initialize the quiz
+      function initQuiz() {
+        shuffledQuestions = shuffleArray([...questions]);
+        currentQuestionIndex = 0;
+        score = 0;
+        totalQuestionsSpan.textContent = shuffledQuestions.length;
+        updateProgressBar();
+        showQuestion();
+        scoreContainer.style.display = "none";
+        document.querySelector(".quiz-container").style.display = "block";
+      }
+
+      // Update progress bar
+      function updateProgressBar() {
+        const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+        progressFill.style.width = `${progress}%`;
+      }
+
+      // Display the current question
+      function showQuestion() {
+        answerSubmitted = false;
+        selectedOption = null;
+        feedbackElement.style.display = "none";
+        nextButton.disabled = true;
+        nextButton.textContent = "Next Question";
+
+        const currentQuestion = shuffledQuestions[currentQuestionIndex];
+        currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+        questionElement.textContent = currentQuestion.question;
+        optionsElement.innerHTML = "";
+
+        currentQuestion.options.forEach((option, index) => {
+          const optionElement = document.createElement("div");
+          optionElement.classList.add("option");
+          optionElement.textContent = option;
+          optionElement.dataset.index = index;
+          optionElement.addEventListener("click", selectOption);
+          optionsElement.appendChild(optionElement);
+        });
+        
+        // Add fade-in animation
+        questionElement.style.animation = "fadeIn 0.5s ease";
+        optionsElement.style.animation = "fadeIn 0.5s ease";
+      }
+
+      // Handle option selection
+      function selectOption(e) {
+        if (answerSubmitted) return;
+
+        // Remove selected class from all options
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
+
+        // Add selected class to clicked option
+        const selectedElement = e.target;
+        selectedElement.classList.add("selected");
+        selectedOption = parseInt(selectedElement.dataset.index);
+
+        // Enable next button
+        nextButton.disabled = false;
+      }
+
+      // Check the answer and show feedback
+      function checkAnswer() {
+        if (selectedOption === null || answerSubmitted) return;
+
+        answerSubmitted = true;
+        const currentQuestion = shuffledQuestions[currentQuestionIndex];
+        const isCorrect = selectedOption === currentQuestion.answer;
+
+        // Disable all options
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.style.pointerEvents = "none";
+        });
+
+        // Highlight correct answer
+        document.querySelectorAll(".option").forEach((opt, index) => {
+          if (index === currentQuestion.answer) {
+            opt.classList.add("correct");
+          } else if (index === selectedOption && !isCorrect) {
+            opt.classList.add("incorrect");
+          }
+        });
+
+        // Update score
+        if (isCorrect) {
+          score++;
+        }
+
+        // Show feedback
+        feedbackElement.textContent = isCorrect
+          ? "✓ Correct! " + currentQuestion.citation
+          : "✗ Incorrect. The correct answer is: " +
+            currentQuestion.options[currentQuestion.answer] +
+            ". " +
+            currentQuestion.citation;
+        feedbackElement.className =
+          "feedback " + (isCorrect ? "correct-feedback" : "incorrect-feedback");
+        feedbackElement.style.display = "block";
+        feedbackElement.style.animation = "fadeIn 0.5s ease";
+
+        // Change button text if it's the last question
+        if (currentQuestionIndex === shuffledQuestions.length - 1) {
+          nextButton.textContent = "See Results";
+        }
+      }
+
+      // Move to the next question or show results
+      function nextQuestion() {
+        if (!answerSubmitted) {
+          checkAnswer();
+          return;
+        }
+
+        if (currentQuestionIndex < shuffledQuestions.length - 1) {
+          currentQuestionIndex++;
+          updateProgressBar();
+          showQuestion();
+        } else {
+          showResults();
+        }
+      }
+
+      // Show the final results
+      function showResults() {
+        document.querySelector(".quiz-container").style.display = "none";
+        
+        const percentage = Math.round((score / shuffledQuestions.length) * 100);
+        scorePercentage.textContent = `${percentage}%`;
+        
+        let message;
+        if (percentage >= 80) {
+          message = "Excellent! You have a strong understanding of Web Application Design Patterns.";
+        } else if (percentage >= 60) {
+          message = "Good job! You understand the basics but could use some more practice.";
+        } else {
+          message = "Keep practicing! Review the concepts and try again.";
+        }
+        
+        scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
+        
+        scoreContainer.style.display = "block";
+      }
+
+      // Event listeners
+      nextButton.addEventListener("click", nextQuestion);
+      restartButton.addEventListener("click", initQuiz);
+
+      // Start the quiz
+      initQuiz();
+    </script>
+</body>
+</html>
