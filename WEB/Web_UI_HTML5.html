@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Java OOP - Inheritance Quiz</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web UI & HTML5 Quiz</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
       :root {
@@ -27,7 +27,7 @@
       
       body {
         font-family: 'Poppins', sans-serif;
-        line-height: 1.7;
+        line-height: 1.6;
         background-color: #f8f9fa;
         color: var(--dark);
         min-height: 100vh;
@@ -336,10 +336,10 @@
         }
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="quiz-container">
-      <h1>Java OOP - Inheritance Quiz</h1>
+      <h1>Web UI & HTML5 Quiz</h1>
 
       <div class="progress-container">
         <div class="progress">
@@ -372,392 +372,173 @@
     </div>
 
     <script>
-      // Quiz questions - now expanded to 35 questions covering all concepts
+      // Quiz questions covering all the concepts from the provided material
       const questions = [
-        // Basic Inheritance (5 questions)
         {
-          question: "What is the primary purpose of inheritance in Java?",
+          question: "Which of these is NOT a core aspect of web design?",
           options: [
-            "To hide implementation details",
-            "To allow code reuse and create hierarchical relationships",
-            "To improve performance",
-            "To make all methods static",
-          ],
-          answer: 1,
-          citation:
-            "Page 2: Inheritance allows one class to inherit fields and methods from another, enabling code reuse and hierarchy.",
-        },
-        {
-          question: "Which keyword implements inheritance in Java?",
-          options: ["inherits", "extends", "implements", "super"],
-          answer: 1,
-          citation:
-            "Page 2: The 'extends' keyword is used to implement inheritance.",
-        },
-        {
-          question: "What is a superclass?",
-          options: [
-            "A class that inherits from another",
-            "A class that is inherited from",
-            "A static class",
-            "A class with only final methods",
-          ],
-          answer: 1,
-          citation:
-            "Page 2: Superclass is the parent class containing common properties.",
-        },
-        {
-          question: "In the hierarchy Animal → Dog, which is the subclass?",
-          options: ["Animal", "Dog", "Both", "Neither"],
-          answer: 1,
-          citation: "Page 3: Dog extends Animal, making Dog the subclass.",
-        },
-        {
-          question: "What can a subclass inherit from its superclass?",
-          options: [
-            "Only public methods",
-            "Only protected fields",
-            "All non-private members",
-            "Static members only",
+            "Interaction Design (IxD)",
+            "User Experience Design (UX)",
+            "Database Normalization",
+            "Content Strategy"
           ],
           answer: 2,
-          citation:
-            "Page 6: Subclasses inherit all non-private members (public, protected, default if same package).",
+          citation: "Web Design Overview includes: Design, Interaction Design (IxD), User Experience Design (UX), User Interface Design (UI), Content Strategy, Multimedia. Database normalization is a backend concept."
         },
-
-        // super keyword (4 questions)
         {
-          question: "What does super() do in a constructor?",
+          question: "What is the primary purpose of semantic HTML elements like <header> and <article>?",
           options: [
-            "Calls same class constructor",
-            "Calls superclass constructor",
-            "Creates a super object",
-            "Initializes static variables",
+            "To make the page look more stylish",
+            "To provide meaning and structure to content",
+            "To improve page loading speed",
+            "To add interactivity to the page"
           ],
           answer: 1,
-          citation: "Page 4: super() calls the superclass constructor.",
+          citation: "HTML (HyperText Markup Language) is used for structuring content using semantic elements (<header>, <article>, <section>, etc.) which provide meaning to both browsers and developers."
         },
         {
-          question: "Where must super() appear in a constructor?",
+          question: "Which CSS feature is essential for creating responsive designs?",
           options: [
-            "First statement",
-            "Last statement",
-            "Anywhere",
-            "Only if needed",
+            "Media queries",
+            "CSS sprites",
+            "Pseudo-classes",
+            "CSS resets"
           ],
           answer: 0,
-          citation: "Page 15: super(...) must be the first statement.",
+          citation: "Responsive design is achieved with media queries, which apply different styles based on device characteristics like screen size."
         },
         {
-          question:
-            "What happens if you omit super() in a subclass constructor?",
+          question: "What is the main advantage of using CSS preprocessors like SASS?",
           options: [
-            "Compiler inserts super() if superclass has no-arg constructor",
-            "Runtime error occurs",
-            "Subclass won't compile",
-            "Fields get default values",
+            "They make CSS run faster in browsers",
+            "They allow variables, nesting, and mixins for better maintainability",
+            "They automatically fix browser compatibility issues",
+            "They replace the need for JavaScript"
           ],
-          answer: 0,
-          citation:
-            "Page 16-17: Java inserts super() automatically if superclass has no-arg constructor.",
+          answer: 1,
+          citation: "Preprocessors (SASS, LESS) and techniques boost maintainability and performance by adding features like variables, nesting, and mixins."
         },
         {
-          question: "How to call an overridden superclass method?",
+          question: "What is the primary role of JavaScript in web development?",
           options: [
-            "super.method()",
-            "this.method()",
-            "parent.method()",
-            "superclass.method()",
+            "To style HTML elements",
+            "To add interactivity and dynamism to web pages",
+            "To structure content on the page",
+            "To optimize images for the web"
           ],
-          answer: 0,
-          citation:
-            "Page 23: Use super.method() to call overridden superclass method.",
-        },
-
-        // Method Overriding (6 questions)
-        {
-          question: "Which annotation ensures proper method overriding?",
-          options: ["@Override", "@Overrides", "@Inherit", "@Super"],
-          answer: 0,
-          citation: "Page 41: @Override helps catch overriding mistakes.",
+          answer: 1,
+          citation: "JavaScript is the language of web interactivity, used for DOM manipulation, events, asynchronous requests (AJAX), and more."
         },
         {
-          question: "What must match when overriding a method?",
+          question: "Which of these is NOT an HTML5 API?",
           options: [
-            "Only method name",
-            "Name and return type",
-            "Name, parameters, and return type",
-            "Only parameters",
+            "Web Storage",
+            "Geolocation",
+            "Web Workers",
+            "TCP Socket"
+          ],
+          answer: 3,
+          citation: "HTML5 introduced APIs like Media Player, Session History, Offline Web App, Editing, Drag and Drop, Canvas, Web Storage, Geolocation, Web Workers, and Web Sockets."
+        },
+        {
+          question: "What is the difference between absolute and relative paths in HTML?",
+          options: [
+            "Absolute paths are faster to load than relative paths",
+            "Absolute paths include the full URL, while relative paths are relative to the current page",
+            "Relative paths only work on local development machines",
+            "Absolute paths are more secure than relative paths"
+          ],
+          answer: 1,
+          citation: "Absolute paths include the full URL (https://example.com/page.html) while relative paths are relative to the current page location (../images/pic.jpg)."
+        },
+        {
+          question: "Which HTTP method is typically used when submitting form data?",
+          options: [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          answer: 1,
+          citation: "HTTP messages consist of request methods like GET (retrieve data) and POST (submit data to be processed). Forms typically use POST for submissions."
+        },
+        {
+          question: "What does DNS do?",
+          options: [
+            "Secures website connections with encryption",
+            "Translates domain names to IP addresses",
+            "Optimizes website performance",
+            "Creates backups of website content"
+          ],
+          answer: 1,
+          citation: "DNS (Domain Name System) translates human-friendly domain names (like example.com) to machine-readable IP addresses (like 192.0.2.1)."
+        },
+        {
+          question: "Which HTML5 element is specifically designed for drawing graphics via JavaScript?",
+          options: [
+            "<svg>",
+            "<canvas>",
+            "<div>",
+            "<picture>"
+          ],
+          answer: 1,
+          citation: "HTML5 introduced the <canvas> element for drawing graphics, animations, game graphics, etc. via JavaScript."
+        },
+        {
+          question: "What is the purpose of the HTML5 Web Storage API?",
+          options: [
+            "To store large files on the user's device",
+            "To store data on the server",
+            "To store key-value pairs locally in the browser",
+            "To cache entire web pages"
           ],
           answer: 2,
-          citation:
-            "Page 31: Overriding requires same name, parameters, and compatible return type.",
+          citation: "The Web Storage API (localStorage and sessionStorage) allows storing key-value pairs in the browser, persisting beyond page refreshes (localStorage) or for a session (sessionStorage)."
         },
         {
-          question: "Can you override a private method?",
+          question: "Which CSS layout system provides two-dimensional layout capabilities?",
           options: [
-            "Yes",
-            "No - private methods aren't inherited",
-            "Only in same package",
-            "Only if marked final",
+            "Flexbox",
+            "CSS Grid",
+            "Float-based layout",
+            "Positioning"
           ],
           answer: 1,
-          citation:
-            "Page 39: Private methods aren't inherited so can't be overridden.",
+          citation: "CSS Grid provides two-dimensional layout capabilities (rows and columns), while Flexbox is one-dimensional (either row or column)."
         },
         {
-          question: "What happens when overriding static methods?",
+          question: "What is the main purpose of the HTML5 <section> element?",
           options: [
-            "Normal overriding occurs",
-            "Method hiding occurs",
-            "Compile error",
-            "Runtime polymorphism works",
-          ],
-          answer: 1,
-          citation:
-            "Page 36-37: Static methods can't be overridden - it's method hiding.",
-        },
-        {
-          question: "Can you override a final method?",
-          options: [
-            "Yes",
-            "No - compile error",
-            "Only in same package",
-            "Only if superclass allows it",
-          ],
-          answer: 1,
-          citation: "Page 40: Final methods cannot be overridden.",
-        },
-        {
-          question: "What is covariant return type in overriding?",
-          options: [
-            "Returning void instead of a value",
-            "Returning a subclass of original return type",
-            "Changing return type completely",
-            "Making return type final",
-          ],
-          answer: 1,
-          citation:
-            "Page 34: Subclass can return a subtype of superclass return type.",
-        },
-
-        // Access Modifiers (4 questions)
-        {
-          question: "Which modifier allows widest subclass access?",
-          options: ["private", "protected", "public", "default"],
-          answer: 2,
-          citation: "Page 6: public members are accessible everywhere.",
-        },
-        {
-          question: "What happens if you reduce access in overriding?",
-          options: [
-            "Compile error",
-            "Runtime error",
-            "Works fine",
-            "Method becomes private",
+            "To group related content together thematically",
+            "To create a clickable navigation section",
+            "To define a section of external content",
+            "To create a container for styling purposes"
           ],
           answer: 0,
-          citation:
-            "Page 32-33: Can't reduce access (e.g. public → protected).",
+          citation: "The <section> element represents a thematic grouping of content, typically with a heading, used to organize page content semantically."
         },
         {
-          question: "Which modifier shows 'default' access?",
+          question: "Which of these is NOT a valid HTTP status code?",
           options: [
-            "No modifier",
-            "default keyword",
-            "package keyword",
-            "local keyword",
+            "200 OK",
+            "404 Not Found",
+            "500 Internal Server Error",
+            "310 Redirect"
           ],
-          answer: 0,
-          citation:
-            "Page 6: Default (package-private) access uses no modifier.",
+          answer: 3,
+          citation: "Common HTTP status codes include 200 (OK), 404 (Not Found), and 500 (Server Error). Redirects use 301 (Moved Permanently) or 302 (Found)."
         },
         {
-          question: "Where are protected members accessible?",
+          question: "What is the primary benefit of using semantic HTML?",
           options: [
-            "Same class only",
-            "Same package and subclasses",
-            "Anywhere",
-            "Subclasses only",
+            "Better search engine optimization",
+            "Improved accessibility",
+            "Easier code maintenance",
+            "All of the above"
           ],
-          answer: 1,
-          citation:
-            "Page 6: protected allows access in same package and subclasses.",
-        },
-
-        // Multiple Inheritance (3 questions)
-        {
-          question: "Why no multiple class inheritance in Java?",
-          options: [
-            "Performance issues",
-            "Avoids diamond problem",
-            "Hard to implement",
-            "Security concerns",
-          ],
-          answer: 1,
-          citation: "Page 8-9: Prevents ambiguity (diamond problem).",
-        },
-        {
-          question: "How does Java support multiple inheritance?",
-          options: [
-            "Using interfaces",
-            "With abstract classes",
-            "Through final classes",
-            "It doesn't",
-          ],
-          answer: 0,
-          citation:
-            "Page 10-11: Interfaces allow multiple inheritance of behavior.",
-        },
-        {
-          question: "What must a class do with interface methods?",
-          options: [
-            "Ignore them",
-            "Provide implementations",
-            "Make them static",
-            "Declare them final",
-          ],
-          answer: 1,
-          citation: "Page 11: Class must implement interface methods.",
-        },
-
-        // Constructors (5 questions)
-        {
-          question: "Are constructors inherited?",
-          options: ["Yes", "No", "Only if public", "Only no-arg constructors"],
-          answer: 1,
-          citation: "Page 14: Constructors are not inherited.",
-        },
-        {
-          question: "What if superclass lacks no-arg constructor?",
-          options: [
-            "Subclass must call super(...)",
-            "Java provides one",
-            "Compile error always",
-            "Runtime exception",
-          ],
-          answer: 0,
-          citation:
-            "Page 16: Must explicitly call super(...) if no default super() exists.",
-        },
-        {
-          question: "Can constructors be overridden?",
-          options: ["Yes", "No", "Only if final", "Only in abstract classes"],
-          answer: 1,
-          citation: "Page 20: Constructors cannot be overridden.",
-        },
-        {
-          question: "What's constructor chaining?",
-          options: [
-            "Calling other constructors in same class",
-            "Making constructors final",
-            "Overriding constructors",
-            "Hiding constructors",
-          ],
-          answer: 0,
-          citation:
-            "Page 18: Using this() to call other constructors in same class.",
-        },
-        {
-          question: "Can you use super() and this() together?",
-          options: [
-            "Yes",
-            "No - only one allowed",
-            "Only in static methods",
-            "Only in final classes",
-          ],
-          answer: 1,
-          citation: "Page 18: Cannot use super() and this() together.",
-        },
-
-        // Field Hiding (3 questions)
-        {
-          question: "What happens with same-named fields in subclass?",
-          options: [
-            "Compile error",
-            "Fields merge",
-            "Subclass field hides superclass field",
-            "Runtime exception",
-          ],
-          answer: 2,
-          citation: "Page 26: Subclass field hides superclass field.",
-        },
-        {
-          question: "How to access hidden superclass field?",
-          options: [
-            "super.field",
-            "this.field",
-            "parent.field",
-            "Cannot access",
-          ],
-          answer: 0,
-          citation:
-            "Page 26: Use super.field to access hidden superclass field.",
-        },
-        {
-          question: "Why avoid field hiding?",
-          options: [
-            "Causes memory leaks",
-            "Makes code confusing",
-            "Slows performance",
-            "Prevents garbage collection",
-          ],
-          answer: 1,
-          citation:
-            "Page 27-28: Field hiding can be confusing and is generally discouraged.",
-        },
-
-        // Object Class (2 questions)
-        {
-          question: "What's Java's universal superclass?",
-          options: ["Class", "Object", "Super", "Parent"],
-          answer: 1,
-          citation: "Page 49: All classes implicitly extend Object.",
-        },
-        {
-          question: "Which Object method provides string representation?",
-          options: ["toString()", "equals()", "hashCode()", "getClass()"],
-          answer: 0,
-          citation: "Page 49: toString() provides string representation.",
-        },
-
-        // Polymorphism (3 questions)
-        {
-          question: "What can reference variables of superclass type hold?",
-          options: [
-            "Only superclass objects",
-            "Only subclass objects",
-            "Superclass or subclass objects",
-            "Nothing - must be initialized",
-          ],
-          answer: 2,
-          citation:
-            "Page 51: Superclass reference can point to subclass object.",
-        },
-        {
-          question: "What determines which overridden method executes?",
-          options: [
-            "Reference type",
-            "Actual object type",
-            "Compile-time type",
-            "Random selection",
-          ],
-          answer: 1,
-          citation:
-            "Page 30: Method called depends on actual object type (runtime polymorphism).",
-        },
-        {
-          question: "What can you store in superclass-type arrays?",
-          options: [
-            "Only superclass objects",
-            "Only one type of subclass",
-            "Any subclass objects",
-            "Nothing - arrays are fixed",
-          ],
-          answer: 2,
-          citation:
-            "Page 52: Can store different subclass objects in superclass array.",
-        },
+          answer: 3,
+          citation: "Semantic HTML improves SEO, accessibility (screen readers can better interpret content), and makes code more maintainable by clearly indicating content structure."
+        }
       ];
 
       // Shuffle the questions array
@@ -923,11 +704,11 @@
         
         let message;
         if (percentage >= 80) {
-          message = "Excellent! You have mastered Java inheritance concepts.";
+          message = "Excellent! You have a strong understanding of Web UI and HTML5 concepts.";
         } else if (percentage >= 60) {
           message = "Good job! You understand the basics but could use some more practice.";
         } else {
-          message = "Keep practicing! Review the inheritance concepts and try again.";
+          message = "Keep practicing! Review the concepts and try again.";
         }
         
         scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
@@ -942,5 +723,5 @@
       // Start the quiz
       initQuiz();
     </script>
-  </body>
+</body>
 </html>

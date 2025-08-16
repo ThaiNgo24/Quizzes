@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Polymorphism Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #9b59b6;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --white: #ffffff;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            background-color: #f8f9fa;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .quiz-container {
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: var(--transition);
+        }
+        
+        .quiz-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.2rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .progress {
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            flex-grow: 1;
+            height: 8px;
+            background-color: var(--light);
+            border-radius: 4px;
+            margin-left: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        
+        .question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--dark);
+            line-height: 1.5;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .options {
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 15px 20px;
+            border: 2px solid var(--light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+            transition: 0.6s;
+        }
+        
+        .option:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .option:hover::before {
+            left: 100%;
+        }
+        
+        .selected {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .correct {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+        
+        .incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        
+        .feedback {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .correct-feedback {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #155724;
+            border-left: 4px solid var(--success);
+        }
+        
+        .incorrect-feedback {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #721c24;
+            border-left: 4px solid var(--danger);
+        }
+        
+        .citation {
+            font-style: italic;
+            color: var(--gray);
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: block;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.6s;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+        }
+        
+        button:hover::after {
+            left: 100%;
+        }
+        
+        button:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        button:disabled:hover::after {
+            left: -100%;
+        }
+        
+        .score-container {
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .score {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .score-percentage {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 20px 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .score-message {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--gray);
+        }
+        
+        .restart-btn {
+            background: linear-gradient(90deg, var(--success), #27ae60);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+        
+        .restart-btn:hover {
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+            
+            button {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .score-percentage {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Java Polymorphism Quiz</h1>
+
+        <div class="progress-container">
+            <div class="progress">
+                Question <span id="current-question">1</span> of
+                <span id="total-questions">0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="question" id="question"></div>
+
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="button-container">
+            <button id="next-btn" disabled>Next Question</button>
+        </div>
+    </div>
+
+    <div class="score-container" id="score-container">
+        <div class="score">Your Score:</div>
+        <div class="score-percentage" id="score-percentage"></div>
+        <div class="score-message" id="score-message"></div>
+        <div class="button-container">
+            <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        // Quiz questions and answers
+        const questions = [
+            {
+                question: "What is polymorphism in Java?",
+                options: [
+                    "The ability of an object to take many forms",
+                    "The process of converting data types",
+                    "A special type of loop in Java",
+                    "A method for memory management"
+                ],
+                answer: 0,
+                citation: "Page 2: Polymorphism is the ability of an object to take many forms. In object-oriented programming (OOP), it refers to one interface with multiple possible implementations."
+            },
+            {
+                question: "What is the real-world analogy given for polymorphism?",
+                options: [
+                    "A calculator performing different operations",
+                    "A remote control operating different devices",
+                    "A car with different gears",
+                    "A book with multiple chapters"
+                ],
+                answer: 1,
+                citation: "Page 2: A remote control can operate different devices such as a TV, an air conditioner, or a speaker. The same button (e.g., 'power on') triggers different behaviors depending on the device."
+            },
+            {
+                question: "In Java, how is polymorphism typically implemented?",
+                options: [
+                    "A superclass reference can refer to different subclass objects",
+                    "Using multiple inheritance",
+                    "Through static methods only",
+                    "By creating multiple objects of the same class"
+                ],
+                answer: 0,
+                citation: "Page 3: In Java: A superclass reference can refer to different subclass objects."
+            },
+            {
+                question: "What are the two types of polymorphism in Java?",
+                options: [
+                    "Static and Dynamic polymorphism",
+                    "Compile-time and Runtime polymorphism",
+                    "Inheritance and Encapsulation polymorphism",
+                    "Class and Interface polymorphism"
+                ],
+                answer: 1,
+                citation: "Page 4: Java supports two types of polymorphism: 1. Compile-time Polymorphism (Method Overloading), 2. Runtime Polymorphism (Method Overriding)"
+            },
+            {
+                question: "What is compile-time polymorphism also called?",
+                options: [
+                    "Method Overriding",
+                    "Method Overloading",
+                    "Dynamic Dispatch",
+                    "Virtual Method Invocation"
+                ],
+                answer: 1,
+                citation: "Page 4: Compile-time Polymorphism - Also called Method Overloading"
+            },
+            {
+                question: "What is runtime polymorphism also called?",
+                options: [
+                    "Method Overloading",
+                    "Method Overriding",
+                    "Static Binding",
+                    "Constructor Chaining"
+                ],
+                answer: 1,
+                citation: "Page 4: Runtime Polymorphism - Also called Method Overriding"
+            },
+            {
+                question: "How is the method to be executed determined in compile-time polymorphism?",
+                options: [
+                    "At runtime based on the actual object type",
+                    "At compile time based on method signatures",
+                    "By the Java Virtual Machine during execution",
+                    "Through reflection API"
+                ],
+                answer: 1,
+                citation: "Page 4: Compile-time Polymorphism - The method to be executed is determined at compile time. Based on method signatures (name + parameters)."
+            },
+            {
+                question: "How is the method to be executed determined in runtime polymorphism?",
+                options: [
+                    "At compile time based on reference type",
+                    "At runtime based on the actual object type",
+                    "By the number of parameters",
+                    "Through static analysis"
+                ],
+                answer: 1,
+                citation: "Page 4: Runtime Polymorphism - The method to be executed is determined at runtime. Based on the actual object type, not the reference type."
+            },
+            {
+                question: "What are the rules for method overloading?",
+                options: [
+                    "Methods must have same name and same parameters",
+                    "Methods must have same name but different parameters",
+                    "Methods must have different names and same parameters",
+                    "Methods must be in different classes"
+                ],
+                answer: 1,
+                citation: "Page 5: Rules for method overloading: Must differ in number, type, or order of parameters. Return type alone is not enough to distinguish methods."
+            },
+            {
+                question: "What is required for method overriding?",
+                options: [
+                    "Method names and parameter lists must be different",
+                    "Method names and parameter lists must be identical",
+                    "Only the method name must be the same",
+                    "The return type must be different"
+                ],
+                answer: 1,
+                citation: "Page 7: Key Points for method overriding: Method names and parameter lists must be identical."
+            },
+            {
+                question: "What annotation is recommended to ensure correct method overriding?",
+                options: [
+                    "@Overload",
+                    "@Override",
+                    "@Polymorphic",
+                    "@Virtual"
+                ],
+                answer: 1,
+                citation: "Page 7: Use @Override annotation to ensure correctness."
+            },
+            {
+                question: "What happens when you call a.makeSound() where Animal a = new Dog()?",
+                options: [
+                    "The Animal class version is called",
+                    "The Dog class version is called",
+                    "Both versions are called",
+                    "It results in a compile error"
+                ],
+                answer: 1,
+                citation: "Page 8: Animal a = new Dog(); a.makeSound(); // Output: Dog barks"
+            },
+            {
+                question: "Why does runtime polymorphism matter?",
+                options: [
+                    "It makes code harder to extend",
+                    "It allows code to work with general types while executing specific behavior",
+                    "It reduces code flexibility",
+                    "It prevents method overriding"
+                ],
+                answer: 1,
+                citation: "Page 9: Runtime polymorphism allows code to work with general types (superclasses) while executing specific behavior (subclass methods)."
+            },
+            {
+                question: "What is the difference between compile-time and runtime polymorphism regarding when the method is decided?",
+                options: [
+                    "Compile-time: at runtime, Runtime: at compile time",
+                    "Compile-time: at compile time, Runtime: at runtime",
+                    "Both are decided at compile time",
+                    "Both are decided at runtime"
+                ],
+                answer: 1,
+                citation: "Page 10: Aspect | When decided - Compile-time: At compile time, Runtime: At runtime"
+            },
+            {
+                question: "Which type of polymorphism requires inheritance?",
+                options: [
+                    "Compile-time polymorphism",
+                    "Runtime polymorphism",
+                    "Both require inheritance",
+                    "Neither requires inheritance"
+                ],
+                answer: 1,
+                citation: "Page 10: Aspect | Requires extends - Compile-time: No, Runtime: Yes"
+            },
+            {
+                question: "What is dynamic method dispatch?",
+                options: [
+                    "When methods are selected at compile time",
+                    "When Java uses the actual type of the object at runtime to resolve which method to invoke",
+                    "A technique for overloading methods",
+                    "A way to prevent polymorphism"
+                ],
+                answer: 1,
+                citation: "Page 12: Answer: Dynamic Method Dispatch - At runtime, Java uses the actual type of the object to resolve which method to invoke — not the reference type."
+            },
+            {
+                question: "What does the JVM use to find the right method during runtime polymorphism?",
+                options: [
+                    "The reference type's method table",
+                    "The actual object type's virtual method table (vtable)",
+                    "The class loader's cache",
+                    "The static method registry"
+                ],
+                answer: 1,
+                citation: "Page 14: Behind the scenes (JVM): Each class has a virtual method table (vtable). When a.makeSound() is called, JVM uses the vtable of the actual object type (Dog) to find the right method."
+            },
+            {
+                question: "How does Java's approach to polymorphism differ from C++?",
+                options: [
+                    "Java requires virtual keyword, C++ doesn't",
+                    "Java methods are virtual by default, C++ requires virtual keyword",
+                    "C++ methods are virtual by default, Java requires virtual keyword",
+                    "There is no difference"
+                ],
+                answer: 1,
+                citation: "Page 16: In C++, you must explicitly declare virtual methods to enable polymorphism. In Java, all instance methods are virtual by default unless restricted."
+            },
+            {
+                question: "What happens if you forget to use @Override and make a mistake in the method name or parameter list?",
+                options: [
+                    "The method will still be overridden correctly",
+                    "The compiler will create a new overloaded method instead of overriding",
+                    "It will cause a runtime error",
+                    "The program will crash immediately"
+                ],
+                answer: 1,
+                citation: "Page 21: Reflection question 2: What happens if you forget to use @Override and make a mistake in the method name or parameter list?"
+            },
+            {
+                question: "What would happen if a polymorphic method were declared as static?",
+                options: [
+                    "It would work the same as instance methods",
+                    "It would not be polymorphic - resolved at compile time",
+                    "It would cause a runtime exception",
+                    "It would automatically become final"
+                ],
+                answer: 1,
+                citation: "Page 21: Reflection question 3: What would happen if process() were declared as static? (Also Page 24: STATIC METHODS: NOT POLYMORPHIC)"
+            },
+            {
+                question: "Can static methods be overridden?",
+                options: [
+                    "Yes, exactly like instance methods",
+                    "No, they can only be hidden",
+                    "Only if they are declared final",
+                    "Only in abstract classes"
+                ],
+                answer: 1,
+                citation: "Page 24: Key Points: Static methods - Cannot be overridden – only hidden"
+            },
+            {
+                question: "What happens when you call a static method through a reference variable?",
+                options: [
+                    "The method is resolved based on the actual object type",
+                    "The method is resolved based on the reference type",
+                    "It causes a compile error",
+                    "It always calls the subclass version"
+                ],
+                answer: 1,
+                citation: "Page 25: Example: A ref = new B(); ref.greet(); // Output: A - Explanation: ref.greet() calls A.greet() because ref is of type A."
+            },
+            {
+                question: "Can private methods be overridden?",
+                options: [
+                    "Yes, exactly like public methods",
+                    "No, they are not inherited",
+                    "Only if they are marked @Override",
+                    "Only in the same package"
+                ],
+                answer: 1,
+                citation: "Page 26: Key Points: private methods are not inherited, Cannot be overridden"
+            },
+            {
+                question: "What happens when a subclass defines a method with the same name as a private superclass method?",
+                options: [
+                    "It overrides the superclass method",
+                    "It creates a completely new method",
+                    "It causes a compile error",
+                    "It makes the superclass method public"
+                ],
+                answer: 1,
+                citation: "Page 26: Same-named method in subclass is a new method"
+            },
+            {
+                question: "Do protected methods support polymorphism?",
+                options: [
+                    "No, they behave like private methods",
+                    "Yes, they fully participate in runtime polymorphism",
+                    "Only if they are also declared final",
+                    "Only within the same package"
+                ],
+                answer: 1,
+                citation: "Page 28: Key Points: protected methods are inherited and can be overridden, Fully participate in runtime polymorphism"
+            },
+            {
+                question: "What is an abstract class?",
+                options: [
+                    "A class that can be instantiated directly",
+                    "A base class with incomplete implementation that cannot be instantiated",
+                    "A class with only static methods",
+                    "A class that inherits from multiple superclasses"
+                ],
+                answer: 1,
+                citation: "Page 33: Key Points: Abstract Class for Polymorphism - A base class with incomplete implementation, Declared with abstract keyword, Cannot be instantiated"
+            },
+            {
+                question: "What must subclasses do with abstract methods?",
+                options: [
+                    "Ignore them",
+                    "Override them with concrete implementations",
+                    "Make them private",
+                    "Declare them static"
+                ],
+                answer: 1,
+                citation: "Page 33: Key Points: Subclasses must override abstract methods"
+            },
+            {
+                question: "What happens if a subclass doesn't implement all abstract methods?",
+                options: [
+                    "It works fine with the missing methods",
+                    "The subclass must also be declared abstract",
+                    "The program will crash at runtime",
+                    "The missing methods get default implementations"
+                ],
+                answer: 1,
+                citation: "Page 46: If a subclass does not implement all abstract methods, it must also be declared abstract."
+            },
+            {
+                question: "Can abstract classes have constructors?",
+                options: [
+                    "No, they cannot have constructors",
+                    "Yes, they can and often should have constructors",
+                    "Only if they are also declared final",
+                    "Only if they have no abstract methods"
+                ],
+                answer: 1,
+                citation: "Page 49: Do Abstract Classes Have Constructors? Yes. Abstract classes can and often should have constructors."
+            },
+            {
+                question: "When are abstract class constructors called?",
+                options: [
+                    "When the abstract class is instantiated directly",
+                    "When a subclass object is created",
+                    "Never, they are just for documentation",
+                    "Only when explicitly called with super()"
+                ],
+                answer: 1,
+                citation: "Page 49: Constructors are called when a subclass is instantiated"
+            },
+            {
+                question: "Can a regular (non-abstract) class have abstract methods?",
+                options: [
+                    "Yes, if it extends another class",
+                    "No, only abstract classes can declare abstract methods",
+                    "Yes, if it implements an interface",
+                    "Yes, but only one abstract method"
+                ],
+                answer: 1,
+                citation: "Page 54: Can a Regular Class Have Abstract Methods? No. Only abstract classes can declare abstract methods."
+            },
+            {
+                question: "Which modifiers cannot be used with abstract methods?",
+                options: [
+                    "public and protected",
+                    "private, static, and final",
+                    "transient and volatile",
+                    "synchronized and native"
+                ],
+                answer: 1,
+                citation: "Page 65: Rule Summary: private (No), static (No), final (No) cannot be used with abstract methods"
+            }
+        ];
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Quiz state variables
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let shuffledQuestions = [];
+        let selectedOption = null;
+        let answerSubmitted = false;
+
+        // DOM elements
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const nextButton = document.getElementById('next-btn');
+        const currentQuestionSpan = document.getElementById('current-question');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const progressFill = document.getElementById('progress-fill');
+        const scoreContainer = document.getElementById('score-container');
+        const scorePercentage = document.getElementById('score-percentage');
+        const scoreMessage = document.getElementById('score-message');
+        const restartButton = document.getElementById('restart-btn');
+
+        // Initialize the quiz
+        function initQuiz() {
+            shuffledQuestions = shuffleArray([...questions]);
+            currentQuestionIndex = 0;
+            score = 0;
+            totalQuestionsSpan.textContent = shuffledQuestions.length;
+            updateProgressBar();
+            showQuestion();
+            scoreContainer.style.display = 'none';
+            document.querySelector('.quiz-container').style.display = 'block';
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // Display the current question
+        function showQuestion() {
+            answerSubmitted = false;
+            selectedOption = null;
+            feedbackElement.style.display = 'none';
+            nextButton.disabled = true;
+            nextButton.textContent = 'Next Question';
+
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+            questionElement.textContent = currentQuestion.question;
+            optionsElement.innerHTML = '';
+
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.textContent = option;
+                optionElement.dataset.index = index;
+                optionElement.addEventListener('click', selectOption);
+                optionsElement.appendChild(optionElement);
+            });
+            
+            // Add fade-in animation
+            questionElement.style.animation = 'fadeIn 0.5s ease';
+            optionsElement.style.animation = 'fadeIn 0.5s ease';
+        }
+
+        // Handle option selection
+        function selectOption(e) {
+            if (answerSubmitted) return;
+            
+            // Remove selected class from all options
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            const selectedElement = e.target;
+            selectedElement.classList.add('selected');
+            selectedOption = parseInt(selectedElement.dataset.index);
+            
+            // Enable next button
+            nextButton.disabled = false;
+        }
+
+        // Check the answer and show feedback
+        function checkAnswer() {
+            if (selectedOption === null || answerSubmitted) return;
+            
+            answerSubmitted = true;
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            const isCorrect = selectedOption === currentQuestion.answer;
+            
+            // Disable all options
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // Highlight correct answer
+            document.querySelectorAll('.option').forEach((opt, index) => {
+                if (index === currentQuestion.answer) {
+                    opt.classList.add('correct');
+                } else if (index === selectedOption && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // Update score
+            if (isCorrect) {
+                score++;
+            }
+            
+            // Show feedback
+            feedbackElement.textContent = isCorrect 
+                ? '✓ Correct! ' + currentQuestion.citation 
+                : '✗ Incorrect. The correct answer is: ' + currentQuestion.options[currentQuestion.answer] + '. ' + currentQuestion.citation;
+            feedbackElement.className = 'feedback ' + (isCorrect ? 'correct-feedback' : 'incorrect-feedback');
+            feedbackElement.style.display = 'block';
+            feedbackElement.style.animation = 'fadeIn 0.5s ease';
+
+            // Change button text if it's the last question
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                nextButton.textContent = 'See Results';
+            }
+        }
+
+        // Move to the next question or show results
+        function nextQuestion() {
+            if (!answerSubmitted) {
+                checkAnswer();
+                return;
+            }
+            
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                currentQuestionIndex++;
+                updateProgressBar();
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Show the final results
+        function showResults() {
+            document.querySelector('.quiz-container').style.display = 'none';
+            
+            const percentage = Math.round((score / shuffledQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            let message;
+            if (percentage >= 80) {
+                message = "Excellent! You have mastered Java polymorphism concepts.";
+            } else if (percentage >= 60) {
+                message = "Good job! You understand the basics but could use some more practice.";
+            } else {
+                message = "Keep practicing! Review the polymorphism concepts and try again.";
+            }
+            
+            scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
+            
+            scoreContainer.style.display = 'block';
+        }
+
+        // Event listeners
+        nextButton.addEventListener('click', nextQuestion);
+        restartButton.addEventListener('click', initQuiz);
+
+        // Start the quiz
+        initQuiz();
+    </script>
+</body>
+</html>

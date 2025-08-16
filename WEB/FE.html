@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Front-End Development Quiz</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #9b59b6;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --white: #ffffff;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .quiz-container {
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .progress {
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            flex-grow: 1;
+            height: 8px;
+            background-color: var(--light);
+            border-radius: 4px;
+            margin-left: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        
+        .question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+        
+        .options {
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 15px 20px;
+            border: 2px solid var(--light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .option:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .selected {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .correct {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+        
+        .incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        
+        .feedback {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: none;
+        }
+        
+        .correct-feedback {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #155724;
+            border-left: 4px solid var(--success);
+        }
+        
+        .incorrect-feedback {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #721c24;
+            border-left: 4px solid var(--danger);
+        }
+        
+        .citation {
+            font-style: italic;
+            color: var(--gray);
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        button {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+        }
+        
+        button:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .score-container {
+            text-align: center;
+            display: none;
+        }
+        
+        .score-percentage {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 20px 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .restart-btn {
+            background: linear-gradient(90deg, var(--success), #27ae60);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+        
+        .restart-btn:hover {
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+            
+            button {
+                padding: 12px 25px;
+            }
+            
+            .score-percentage {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Complete Front-End Development Quiz</h1>
+
+        <div class="progress-container">
+            <div class="progress">
+                Question <span id="current-question">1</span> of
+                <span id="total-questions">0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="question" id="question"></div>
+
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="button-container">
+            <button id="next-btn" disabled>Next Question</button>
+        </div>
+
+        <div class="score-container" id="score-container">
+            <div class="score-percentage" id="score-percentage"></div>
+            <div id="score-message"></div>
+            <div class="button-container">
+                <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive quiz questions covering ALL topics from the material
+        const questions = [
+            // ============ CSS QUESTIONS ============
+            {
+                question: "What is the primary purpose of CSS?",
+                options: [
+                    "To add interactivity to web pages",
+                    "To structure content on web pages",
+                    "To style and layout web pages",
+                    "To perform calculations on web pages"
+                ],
+                answer: 2,
+                citation: "CSS (Cascading Style Sheets) is a language for styling HTML documents and controlling their presentation (Overview)"
+            },
+            {
+                question: "Which of these is NOT a valid way to add CSS to an HTML document?",
+                options: [
+                    "External CSS file linked with <link> tag",
+                    "Internal CSS in the <head> section",
+                    "Inline CSS using style attributes",
+                    "Embedded CSS in <script> tags"
+                ],
+                answer: 3,
+                citation: "CSS can be added via external files, internal style blocks, or inline styles, but not through <script> tags (Adding CSS to HTML)"
+            },
+            {
+                question: "Which CSS selector has the highest specificity?",
+                options: [
+                    "Element selector (e.g., p)",
+                    "Class selector (e.g., .my-class)",
+                    "ID selector (e.g., #my-id)",
+                    "Universal selector (*)"
+                ],
+                answer: 2,
+                citation: "ID selectors have higher specificity than class selectors, which in turn have higher specificity than element selectors (Fundamentals: Selectors)"
+            },
+            {
+                question: "What does the CSS box model consist of?",
+                options: [
+                    "Content, Border, Margin, Padding",
+                    "Header, Body, Footer, Aside",
+                    "Width, Height, Depth, Position",
+                    "Color, Font, Size, Spacing"
+                ],
+                answer: 0,
+                citation: "The CSS box model consists of content, padding, border, and margin areas (Fundamentals: Box Model)"
+            },
+            {
+                question: "Which CSS property enables smooth transitions between values?",
+                options: [
+                    "animation",
+                    "transform",
+                    "transition",
+                    "translate"
+                ],
+                answer: 2,
+                citation: "The transition property enables smooth animations between property changes when values change (Transitions: CSS animations)"
+            },
+            {
+                question: "What is the purpose of CSS preprocessors like SASS?",
+                options: [
+                    "To minify CSS files",
+                    "To add programming features like variables and nesting",
+                    "To automatically prefix CSS properties",
+                    "To validate CSS syntax"
+                ],
+                answer: 1,
+                citation: "CSS preprocessors extend CSS with features like variables, nesting, mixins, and functions (Techniques: CSS Preprocessors)"
+            },
+            
+            // ============ JAVASCRIPT QUESTIONS ============
+            {
+                question: "What will 'typeof null' return in JavaScript?",
+                options: [
+                    "'null'",
+                    "'undefined'",
+                    "'object'",
+                    "'number'"
+                ],
+                answer: 2,
+                citation: "This is a known quirk in JavaScript - typeof null returns 'object' due to early design decisions (Basic Syntax: data types)"
+            },
+            {
+                question: "What is the main difference between 'let' and 'var' in JavaScript?",
+                options: [
+                    "'let' is block-scoped while 'var' is function-scoped",
+                    "'var' is block-scoped while 'let' is function-scoped",
+                    "'let' can be redeclared while 'var' cannot",
+                    "There is no difference"
+                ],
+                answer: 0,
+                citation: "ES6 introduced 'let' with block scope, while 'var' declarations are function-scoped (Variable Scope: let/const)"
+            },
+            {
+                question: "Which operator checks for both value and type equality?",
+                options: [
+                    "==",
+                    "===",
+                    "=",
+                    "!=="
+                ],
+                answer: 1,
+                citation: "The strict equality operator (===) checks both value and type, unlike == which does type coercion (Operators: Comparison)"
+            },
+            {
+                question: "What does the 'this' keyword refer to in a global context?",
+                options: [
+                    "The DOM document",
+                    "The current function",
+                    "The window object",
+                    "It's undefined"
+                ],
+                answer: 2,
+                citation: "In the global context, 'this' refers to the window object (Browser/Window Object)"
+            },
+            {
+                question: "Which method is NOT part of the DOM API?",
+                options: [
+                    "getElementById()",
+                    "querySelectorAll()",
+                    "getElementsByTagName()",
+                    "findElement()"
+                ],
+                answer: 3,
+                citation: "The DOM provides methods like getElementById and querySelectorAll but not findElement (Document Object Model)"
+            },
+            {
+                question: "What is the purpose of JSON in JavaScript?",
+                options: [
+                    "To style web pages",
+                    "To store and transport data",
+                    "To create animations",
+                    "To validate forms"
+                ],
+                answer: 1,
+                citation: "JSON is a lightweight data format used for storing and transporting data (JSON)"
+            },
+            
+            // ============ RESPONSIVE WEB QUESTIONS ============
+            {
+                question: "What is the purpose of the viewport meta tag?",
+                options: [
+                    "To set the page title",
+                    "To control page dimensions and scaling on mobile devices",
+                    "To link external CSS files",
+                    "To define character encoding"
+                ],
+                answer: 1,
+                citation: "The viewport meta tag controls layout on mobile browsers with settings like width and initial-scale (Techniques: Setting viewport)"
+            },
+            {
+                question: "Which CSS unit is most appropriate for responsive typography?",
+                options: [
+                    "px",
+                    "pt",
+                    "rem",
+                    "in"
+                ],
+                answer: 2,
+                citation: "REM units are relative to the root element's font size, making them ideal for responsive typography (Responsive Web Design)"
+            },
+            {
+                question: "What does a mobile-first CSS approach typically use?",
+                options: [
+                    "min-width media queries",
+                    "max-width media queries",
+                    "only screen media types",
+                    "orientation media features"
+                ],
+                answer: 0,
+                citation: "Mobile-first design uses min-width media queries to progressively enhance layouts for larger screens (Responsive Web Design)"
+            },
+            {
+                question: "What is the purpose of CSS media queries?",
+                options: [
+                    "To import media files",
+                    "To apply styles based on device characteristics",
+                    "To query multimedia databases",
+                    "To create video player controls"
+                ],
+                answer: 1,
+                citation: "Media queries allow CSS to apply different styles based on device characteristics like width, height, and orientation (Responsive Web Design)"
+            },
+            {
+                question: "Which Bootstrap class creates a full-width container?",
+                options: [
+                    ".container",
+                    ".container-fluid",
+                    ".full-width",
+                    ".row"
+                ],
+                answer: 1,
+                citation: "Bootstrap's .container-fluid class creates a full-width container that spans the entire viewport width (Bootstrap 4.x)"
+            },
+            
+            // ============ REACT QUESTIONS ============
+            {
+                question: "What is JSX in React?",
+                options: [
+                    "A JavaScript extension that allows HTML-like syntax",
+                    "A state management library",
+                    "A build tool for React applications",
+                    "A testing framework"
+                ],
+                answer: 0,
+                citation: "JSX is a syntax extension that allows writing HTML-like code in JavaScript files (ReactJS: JSX)"
+            },
+            {
+                question: "In React, what triggers a component to re-render?",
+                options: [
+                    "Changes to props",
+                    "Changes to state",
+                    "Both props and state changes",
+                    "Manual DOM updates"
+                ],
+                answer: 2,
+                citation: "React components re-render when their props or state changes (ReactJS: State)"
+            },
+            {
+                question: "What is the purpose of keys in React lists?",
+                options: [
+                    "For encryption and security",
+                    "To help React identify which items have changed",
+                    "To provide unique CSS classes",
+                    "They're required for list styling"
+                ],
+                answer: 1,
+                citation: "Keys help React efficiently update and reorder list items by providing stable identity (ReactJS: Virtual DOM)"
+            },
+            {
+                question: "Which lifecycle method is called after a component renders?",
+                options: [
+                    "componentWillMount",
+                    "componentDidMount",
+                    "shouldComponentUpdate",
+                    "componentWillUnmount"
+                ],
+                answer: 1,
+                citation: "componentDidMount is called after a component is rendered to the DOM (ReactJS: Component lifecycle)"
+            },
+            {
+                question: "What is the correct way to update state based on previous state?",
+                options: [
+                    "this.state.count++",
+                    "this.setState({count: this.state.count + 1})",
+                    "this.setState(prevState => ({count: prevState.count + 1}))",
+                    "this.state = {count: this.state.count + 1}"
+                ],
+                answer: 2,
+                citation: "When state updates depend on previous state, use the function form of setState() (ReactJS: State)"
+            }
+        ];
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Quiz state variables
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let shuffledQuestions = [];
+        let selectedOption = null;
+        let answerSubmitted = false;
+
+        // DOM elements
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+        const feedbackElement = document.getElementById("feedback");
+        const nextButton = document.getElementById("next-btn");
+        const currentQuestionSpan = document.getElementById("current-question");
+        const totalQuestionsSpan = document.getElementById("total-questions");
+        const progressFill = document.getElementById("progress-fill");
+        const scoreContainer = document.getElementById("score-container");
+        const scorePercentage = document.getElementById("score-percentage");
+        const scoreMessage = document.getElementById("score-message");
+        const restartButton = document.getElementById("restart-btn");
+
+        // Initialize the quiz
+        function initQuiz() {
+            shuffledQuestions = shuffleArray([...questions]);
+            currentQuestionIndex = 0;
+            score = 0;
+            totalQuestionsSpan.textContent = shuffledQuestions.length;
+            updateProgressBar();
+            showQuestion();
+            scoreContainer.style.display = "none";
+            document.querySelector(".quiz-container > div:not(#score-container)").style.display = "block";
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // Display the current question
+        function showQuestion() {
+            answerSubmitted = false;
+            selectedOption = null;
+            feedbackElement.style.display = "none";
+            nextButton.disabled = true;
+            nextButton.textContent = "Next Question";
+
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+            questionElement.textContent = currentQuestion.question;
+            optionsElement.innerHTML = "";
+
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement("div");
+                optionElement.classList.add("option");
+                optionElement.textContent = option;
+                optionElement.dataset.index = index;
+                optionElement.addEventListener("click", selectOption);
+                optionsElement.appendChild(optionElement);
+            });
+        }
+
+        // Handle option selection
+        function selectOption(e) {
+            if (answerSubmitted) return;
+
+            // Remove selected class from all options
+            document.querySelectorAll(".option").forEach((opt) => {
+                opt.classList.remove("selected");
+            });
+
+            // Add selected class to clicked option
+            const selectedElement = e.target;
+            selectedElement.classList.add("selected");
+            selectedOption = parseInt(selectedElement.dataset.index);
+
+            // Enable next button
+            nextButton.disabled = false;
+        }
+
+        // Check the answer and show feedback
+        function checkAnswer() {
+            if (selectedOption === null || answerSubmitted) return;
+
+            answerSubmitted = true;
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            const isCorrect = selectedOption === currentQuestion.answer;
+
+            // Disable all options
+            document.querySelectorAll(".option").forEach((opt) => {
+                opt.style.pointerEvents = "none";
+            });
+
+            // Highlight correct answer
+            document.querySelectorAll(".option").forEach((opt, index) => {
+                if (index === currentQuestion.answer) {
+                    opt.classList.add("correct");
+                } else if (index === selectedOption && !isCorrect) {
+                    opt.classList.add("incorrect");
+                }
+            });
+
+            // Update score
+            if (isCorrect) {
+                score++;
+            }
+
+            // Show feedback
+            feedbackElement.textContent = isCorrect
+                ? "✓ Correct! " + currentQuestion.citation
+                : "✗ Incorrect. The correct answer is: " +
+                  currentQuestion.options[currentQuestion.answer] +
+                  ". " +
+                  currentQuestion.citation;
+            feedbackElement.className =
+                "feedback " + (isCorrect ? "correct-feedback" : "incorrect-feedback");
+            feedbackElement.style.display = "block";
+
+            // Change button text if it's the last question
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                nextButton.textContent = "See Results";
+            }
+        }
+
+        // Move to the next question or show results
+        function nextQuestion() {
+            if (!answerSubmitted) {
+                checkAnswer();
+                return;
+            }
+
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                currentQuestionIndex++;
+                updateProgressBar();
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Show the final results
+        function showResults() {
+            document.querySelector(".quiz-container > div:not(#score-container)").style.display = "none";
+            
+            const percentage = Math.round((score / shuffledQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            let message;
+            if (percentage >= 80) {
+                message = "Excellent! You have mastered front-end development concepts.";
+            } else if (percentage >= 60) {
+                message = "Good job! You understand the fundamentals but could use more practice.";
+            } else {
+                message = "Keep practicing! Review the concepts and try again.";
+            }
+            
+            scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
+            
+            scoreContainer.style.display = "block";
+        }
+
+        // Event listeners
+        nextButton.addEventListener("click", nextQuestion);
+        restartButton.addEventListener("click", initQuiz);
+
+        // Start the quiz
+        initQuiz();
+    </script>
+</body>
+</html>

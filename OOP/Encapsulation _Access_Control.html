@@ -5,141 +5,358 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Java Encapsulation & Access Control Quiz</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      :root {
+        --primary-color: #3498db;
+        --secondary-color: #9b59b6;
+        --success-color: #2ecc71;
+        --error-color: #e74c3c;
+        --text-color: #2c3e50;
+        --light-gray: #ecf0f1;
+        --medium-gray: #bdc3c7;
+        --dark-gray: #7f8c8d;
+        --white: #ffffff;
+        --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        background-color: #f5f7fa;
-        color: #333;
-        max-width: 800px;
-        margin: 0 auto;
+        font-family: "Poppins", sans-serif;
+        line-height: 1.7;
+        background-color: #f8f9fa;
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         padding: 20px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       }
 
       .quiz-container {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        padding: 30px;
-        margin-bottom: 30px;
+        background-color: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--box-shadow);
+        padding: 40px;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px;
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0);
+        transition: var(--transition);
+      }
+
+      .quiz-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .quiz-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
       }
 
       h1 {
-        color: #2c3e50;
+        color: var(--text-color);
         text-align: center;
         margin-bottom: 30px;
-        background: linear-gradient(90deg, #3498db, #9b59b6);
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        font-size: 2.2rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border-radius: 3px;
       }
 
       .progress {
-        text-align: right;
-        color: #7f8c8d;
-        margin-bottom: 20px;
-        font-size: 0.9rem;
+        text-align: center;
+        color: var(--dark-gray);
+        margin-bottom: 30px;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .progress-bar {
+        height: 6px;
+        background-color: var(--light-gray);
+        border-radius: 3px;
+        margin-top: 10px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border-radius: 3px;
+        transition: width 0.6s ease;
       }
 
       .question {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         font-weight: 600;
-        margin-bottom: 20px;
-        color: #2c3e50;
+        margin-bottom: 25px;
+        color: var(--text-color);
+        line-height: 1.5;
+        animation: fadeIn 0.5s ease;
       }
 
       .options {
-        margin-bottom: 25px;
+        margin-bottom: 30px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
       }
 
       .option {
-        padding: 12px 15px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        padding: 15px 20px;
+        border: 2px solid var(--light-gray);
+        border-radius: 8px;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: var(--transition);
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(52, 152, 219, 0.1),
+          transparent
+        );
+        transition: 0.6s;
       }
 
       .option:hover {
-        background-color: #f0f7fd;
-        border-color: #3498db;
+        border-color: var(--primary-color);
+        transform: translateX(5px);
+      }
+
+      .option:hover::before {
+        left: 100%;
       }
 
       .selected {
-        background-color: #d4edff;
-        border-color: #3498db;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-color: var(--primary-color);
+        transform: translateX(5px);
       }
 
       .correct {
-        background-color: #d4edda;
-        border-color: #28a745;
+        background-color: rgba(46, 204, 113, 0.1);
+        border-color: var(--success-color);
+        color: var(--success-color);
       }
 
       .incorrect {
-        background-color: #f8d7da;
-        border-color: #dc3545;
+        background-color: rgba(231, 76, 60, 0.1);
+        border-color: var(--error-color);
+        color: var(--error-color);
       }
 
       .feedback {
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
         display: none;
+        animation: fadeIn 0.5s ease;
       }
 
       .correct-feedback {
-        background-color: #d4edda;
+        background-color: rgba(46, 204, 113, 0.1);
         color: #155724;
+        border-left: 4px solid var(--success-color);
       }
 
       .incorrect-feedback {
-        background-color: #f8d7da;
+        background-color: rgba(231, 76, 60, 0.1);
         color: #721c24;
+        border-left: 4px solid var(--error-color);
       }
 
       .citation {
         font-style: italic;
-        color: #6c757d;
+        color: var(--dark-gray);
         margin-top: 10px;
         font-size: 0.9rem;
+        display: block;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
       }
 
       button {
-        background: linear-gradient(90deg, #3498db, #9b59b6);
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         color: white;
         border: none;
-        padding: 12px 25px;
+        padding: 14px 30px;
         border-radius: 50px;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s;
-        display: block;
-        margin: 0 auto;
+        transition: var(--transition);
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.6s;
       }
 
       button:hover {
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+      }
+
+      button:hover::after {
+        left: 100%;
       }
 
       button:disabled {
-        background: #cccccc;
+        background: var(--medium-gray);
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
       }
 
+      button:disabled:hover::after {
+        left: -100%;
+      }
+
       .score-container {
         text-align: center;
         display: none;
+        animation: fadeIn 0.8s ease;
       }
 
       .score {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
+        font-size: 2rem;
+        margin-bottom: 30px;
+        font-weight: 700;
+        color: var(--text-color);
+      }
+
+      .score-percentage {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin: 20px 0;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       .restart-btn {
-        background: linear-gradient(90deg, #2ecc71, #27ae60);
+        background: linear-gradient(90deg, var(--success-color), #27ae60);
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+      }
+
+      .restart-btn:hover {
+        box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .quiz-container {
+          padding: 25px;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .question {
+          font-size: 1.1rem;
+        }
+
+        button {
+          padding: 12px 25px;
+          font-size: 0.9rem;
+        }
       }
     </style>
   </head>
@@ -150,6 +367,9 @@
       <div class="progress">
         Question <span id="current-question">1</span> of
         <span id="total-questions">0</span>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
       </div>
 
       <div class="question" id="question"></div>
@@ -158,12 +378,18 @@
 
       <div class="feedback" id="feedback"></div>
 
-      <button id="next-btn" disabled>Next Question</button>
+      <div class="button-container">
+        <button id="next-btn" disabled>Next Question</button>
+      </div>
     </div>
 
     <div class="score-container" id="score-container">
-      <div class="score" id="score"></div>
-      <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+      <div class="score">Your Score:</div>
+      <div class="score-percentage" id="score-percentage"></div>
+      <div class="score" id="score-text"></div>
+      <div class="button-container">
+        <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+      </div>
     </div>
 
     <script>
@@ -416,8 +642,10 @@
       const nextButton = document.getElementById("next-btn");
       const currentQuestionSpan = document.getElementById("current-question");
       const totalQuestionsSpan = document.getElementById("total-questions");
+      const progressFill = document.getElementById("progress-fill");
       const scoreContainer = document.getElementById("score-container");
-      const scoreElement = document.getElementById("score");
+      const scorePercentage = document.getElementById("score-percentage");
+      const scoreText = document.getElementById("score-text");
       const restartButton = document.getElementById("restart-btn");
 
       // Initialize the quiz
@@ -426,8 +654,17 @@
         currentQuestionIndex = 0;
         score = 0;
         totalQuestionsSpan.textContent = shuffledQuestions.length;
+        updateProgressBar();
         showQuestion();
         scoreContainer.style.display = "none";
+        document.querySelector(".quiz-container").style.display = "block";
+      }
+
+      // Update progress bar
+      function updateProgressBar() {
+        const progress =
+          (currentQuestionIndex / shuffledQuestions.length) * 100;
+        progressFill.style.width = `${progress}%`;
       }
 
       // Display the current question
@@ -452,6 +689,10 @@
           optionElement.addEventListener("click", selectOption);
           optionsElement.appendChild(optionElement);
         });
+
+        // Add fade-in animation
+        questionElement.style.animation = "fadeIn 0.5s ease";
+        optionsElement.style.animation = "fadeIn 0.5s ease";
       }
 
       // Handle option selection
@@ -501,14 +742,15 @@
 
         // Show feedback
         feedbackElement.textContent = isCorrect
-          ? "Correct! " + currentQuestion.citation
-          : "Incorrect. The correct answer is: " +
+          ? "✓ Correct! " + currentQuestion.citation
+          : "✗ Incorrect. The correct answer is: " +
             currentQuestion.options[currentQuestion.answer] +
             ". " +
             currentQuestion.citation;
         feedbackElement.className =
           "feedback " + (isCorrect ? "correct-feedback" : "incorrect-feedback");
         feedbackElement.style.display = "block";
+        feedbackElement.style.animation = "fadeIn 0.5s ease";
 
         // Change button text if it's the last question
         if (currentQuestionIndex === shuffledQuestions.length - 1) {
@@ -525,6 +767,7 @@
 
         if (currentQuestionIndex < shuffledQuestions.length - 1) {
           currentQuestionIndex++;
+          updateProgressBar();
           showQuestion();
         } else {
           showResults();
@@ -535,16 +778,16 @@
       function showResults() {
         document.querySelector(".quiz-container").style.display = "none";
 
-        scoreElement.textContent = `You scored ${score} out of ${shuffledQuestions.length}!`;
+        const percentage = Math.round((score / shuffledQuestions.length) * 100);
+        scorePercentage.textContent = `${percentage}%`;
+        scoreText.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly!`;
+
         scoreContainer.style.display = "block";
       }
 
       // Event listeners
       nextButton.addEventListener("click", nextQuestion);
-      restartButton.addEventListener("click", () => {
-        document.querySelector(".quiz-container").style.display = "block";
-        initQuiz();
-      });
+      restartButton.addEventListener("click", initQuiz);
 
       // Start the quiz
       initQuiz();

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Java OOP - Inheritance Quiz</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESTful API & Node.js Quiz</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
       :root {
@@ -27,7 +27,7 @@
       
       body {
         font-family: 'Poppins', sans-serif;
-        line-height: 1.7;
+        line-height: 1.6;
         background-color: #f8f9fa;
         color: var(--dark);
         min-height: 100vh;
@@ -336,10 +336,10 @@
         }
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="quiz-container">
-      <h1>Java OOP - Inheritance Quiz</h1>
+      <h1>RESTful API & Node.js Quiz</h1>
 
       <div class="progress-container">
         <div class="progress">
@@ -372,392 +372,173 @@
     </div>
 
     <script>
-      // Quiz questions - now expanded to 35 questions covering all concepts
+      // Quiz questions based on the provided content
       const questions = [
-        // Basic Inheritance (5 questions)
         {
-          question: "What is the primary purpose of inheritance in Java?",
+          question: "What is an API in the context of web development?",
           options: [
-            "To hide implementation details",
-            "To allow code reuse and create hierarchical relationships",
-            "To improve performance",
-            "To make all methods static",
+            "A programming language for building web applications",
+            "Rules and mechanisms for application interaction and data exchange",
+            "A database management system",
+            "A type of web browser"
           ],
           answer: 1,
-          citation:
-            "Page 2: Inheritance allows one class to inherit fields and methods from another, enabling code reuse and hierarchy.",
+          citation: "Application Programming Interface (API): Rules and mechanisms for application interaction, data return (JSON, XML)."
         },
         {
-          question: "Which keyword implements inheritance in Java?",
-          options: ["inherits", "extends", "implements", "super"],
-          answer: 1,
-          citation:
-            "Page 2: The 'extends' keyword is used to implement inheritance.",
-        },
-        {
-          question: "What is a superclass?",
+          question: "What does REST stand for in RESTful APIs?",
           options: [
-            "A class that inherits from another",
-            "A class that is inherited from",
-            "A static class",
-            "A class with only final methods",
+            "Remote Execution of System Tasks",
+            "Representational State Transfer",
+            "Resource Exchange Standard Template",
+            "Rapid Endpoint Service Technology"
           ],
           answer: 1,
-          citation:
-            "Page 2: Superclass is the parent class containing common properties.",
+          citation: "REST (Representational State Transfer): Architectural style for distributed hypermedia systems."
         },
         {
-          question: "In the hierarchy Animal → Dog, which is the subclass?",
-          options: ["Animal", "Dog", "Both", "Neither"],
-          answer: 1,
-          citation: "Page 3: Dog extends Animal, making Dog the subclass.",
-        },
-        {
-          question: "What can a subclass inherit from its superclass?",
+          question: "Which of these is NOT one of the 6 REST constraints?",
           options: [
-            "Only public methods",
-            "Only protected fields",
-            "All non-private members",
-            "Static members only",
+            "Client-Server Architecture",
+            "Statelessness",
+            "Real-time Synchronization",
+            "Uniform Interface"
           ],
           answer: 2,
-          citation:
-            "Page 6: Subclasses inherit all non-private members (public, protected, default if same package).",
+          citation: "6 REST Constraints: 1. Client-Server Architecture, 2. Statelessness, 3. Cacheability, 4. Layered System, 5. Code on Demand (Optional), 6. Uniform Interface."
         },
-
-        // super keyword (4 questions)
         {
-          question: "What does super() do in a constructor?",
+          question: "What is the correct way to name resources in RESTful APIs?",
           options: [
-            "Calls same class constructor",
-            "Calls superclass constructor",
-            "Creates a super object",
-            "Initializes static variables",
-          ],
-          answer: 1,
-          citation: "Page 4: super() calls the superclass constructor.",
-        },
-        {
-          question: "Where must super() appear in a constructor?",
-          options: [
-            "First statement",
-            "Last statement",
-            "Anywhere",
-            "Only if needed",
-          ],
-          answer: 0,
-          citation: "Page 15: super(...) must be the first statement.",
-        },
-        {
-          question:
-            "What happens if you omit super() in a subclass constructor?",
-          options: [
-            "Compiler inserts super() if superclass has no-arg constructor",
-            "Runtime error occurs",
-            "Subclass won't compile",
-            "Fields get default values",
-          ],
-          answer: 0,
-          citation:
-            "Page 16-17: Java inserts super() automatically if superclass has no-arg constructor.",
-        },
-        {
-          question: "How to call an overridden superclass method?",
-          options: [
-            "super.method()",
-            "this.method()",
-            "parent.method()",
-            "superclass.method()",
-          ],
-          answer: 0,
-          citation:
-            "Page 23: Use super.method() to call overridden superclass method.",
-        },
-
-        // Method Overriding (6 questions)
-        {
-          question: "Which annotation ensures proper method overriding?",
-          options: ["@Override", "@Overrides", "@Inherit", "@Super"],
-          answer: 0,
-          citation: "Page 41: @Override helps catch overriding mistakes.",
-        },
-        {
-          question: "What must match when overriding a method?",
-          options: [
-            "Only method name",
-            "Name and return type",
-            "Name, parameters, and return type",
-            "Only parameters",
+            "Use verbs in the resource names",
+            "Use singular nouns for collections",
+            "Use pluralized nouns with lowercase and dashes",
+            "Use camelCase with mixed case letters"
           ],
           answer: 2,
-          citation:
-            "Page 31: Overriding requires same name, parameters, and compatible return type.",
+          citation: "Resource Naming: Nouns (pluralized), hierarchy with slashes, punctuation for lists, lowercase with dashes, query parameters for filtering/sorting, standard American English."
         },
         {
-          question: "Can you override a private method?",
+          question: "Which HTTP method should be used to retrieve a resource?",
           options: [
-            "Yes",
-            "No - private methods aren't inherited",
-            "Only in same package",
-            "Only if marked final",
+            "POST",
+            "GET",
+            "PUT",
+            "DELETE"
           ],
           answer: 1,
-          citation:
-            "Page 39: Private methods aren't inherited so can't be overridden.",
+          citation: "HTTP Methods: GET (retrieve), POST (create), PUT (update/replace), PATCH (partial update), DELETE (remove)."
         },
         {
-          question: "What happens when overriding static methods?",
+          question: "What status code range indicates client errors in REST APIs?",
           options: [
-            "Normal overriding occurs",
-            "Method hiding occurs",
-            "Compile error",
-            "Runtime polymorphism works",
-          ],
-          answer: 1,
-          citation:
-            "Page 36-37: Static methods can't be overridden - it's method hiding.",
-        },
-        {
-          question: "Can you override a final method?",
-          options: [
-            "Yes",
-            "No - compile error",
-            "Only in same package",
-            "Only if superclass allows it",
-          ],
-          answer: 1,
-          citation: "Page 40: Final methods cannot be overridden.",
-        },
-        {
-          question: "What is covariant return type in overriding?",
-          options: [
-            "Returning void instead of a value",
-            "Returning a subclass of original return type",
-            "Changing return type completely",
-            "Making return type final",
-          ],
-          answer: 1,
-          citation:
-            "Page 34: Subclass can return a subtype of superclass return type.",
-        },
-
-        // Access Modifiers (4 questions)
-        {
-          question: "Which modifier allows widest subclass access?",
-          options: ["private", "protected", "public", "default"],
-          answer: 2,
-          citation: "Page 6: public members are accessible everywhere.",
-        },
-        {
-          question: "What happens if you reduce access in overriding?",
-          options: [
-            "Compile error",
-            "Runtime error",
-            "Works fine",
-            "Method becomes private",
-          ],
-          answer: 0,
-          citation:
-            "Page 32-33: Can't reduce access (e.g. public → protected).",
-        },
-        {
-          question: "Which modifier shows 'default' access?",
-          options: [
-            "No modifier",
-            "default keyword",
-            "package keyword",
-            "local keyword",
-          ],
-          answer: 0,
-          citation:
-            "Page 6: Default (package-private) access uses no modifier.",
-        },
-        {
-          question: "Where are protected members accessible?",
-          options: [
-            "Same class only",
-            "Same package and subclasses",
-            "Anywhere",
-            "Subclasses only",
-          ],
-          answer: 1,
-          citation:
-            "Page 6: protected allows access in same package and subclasses.",
-        },
-
-        // Multiple Inheritance (3 questions)
-        {
-          question: "Why no multiple class inheritance in Java?",
-          options: [
-            "Performance issues",
-            "Avoids diamond problem",
-            "Hard to implement",
-            "Security concerns",
-          ],
-          answer: 1,
-          citation: "Page 8-9: Prevents ambiguity (diamond problem).",
-        },
-        {
-          question: "How does Java support multiple inheritance?",
-          options: [
-            "Using interfaces",
-            "With abstract classes",
-            "Through final classes",
-            "It doesn't",
-          ],
-          answer: 0,
-          citation:
-            "Page 10-11: Interfaces allow multiple inheritance of behavior.",
-        },
-        {
-          question: "What must a class do with interface methods?",
-          options: [
-            "Ignore them",
-            "Provide implementations",
-            "Make them static",
-            "Declare them final",
-          ],
-          answer: 1,
-          citation: "Page 11: Class must implement interface methods.",
-        },
-
-        // Constructors (5 questions)
-        {
-          question: "Are constructors inherited?",
-          options: ["Yes", "No", "Only if public", "Only no-arg constructors"],
-          answer: 1,
-          citation: "Page 14: Constructors are not inherited.",
-        },
-        {
-          question: "What if superclass lacks no-arg constructor?",
-          options: [
-            "Subclass must call super(...)",
-            "Java provides one",
-            "Compile error always",
-            "Runtime exception",
-          ],
-          answer: 0,
-          citation:
-            "Page 16: Must explicitly call super(...) if no default super() exists.",
-        },
-        {
-          question: "Can constructors be overridden?",
-          options: ["Yes", "No", "Only if final", "Only in abstract classes"],
-          answer: 1,
-          citation: "Page 20: Constructors cannot be overridden.",
-        },
-        {
-          question: "What's constructor chaining?",
-          options: [
-            "Calling other constructors in same class",
-            "Making constructors final",
-            "Overriding constructors",
-            "Hiding constructors",
-          ],
-          answer: 0,
-          citation:
-            "Page 18: Using this() to call other constructors in same class.",
-        },
-        {
-          question: "Can you use super() and this() together?",
-          options: [
-            "Yes",
-            "No - only one allowed",
-            "Only in static methods",
-            "Only in final classes",
-          ],
-          answer: 1,
-          citation: "Page 18: Cannot use super() and this() together.",
-        },
-
-        // Field Hiding (3 questions)
-        {
-          question: "What happens with same-named fields in subclass?",
-          options: [
-            "Compile error",
-            "Fields merge",
-            "Subclass field hides superclass field",
-            "Runtime exception",
+            "1xx",
+            "2xx",
+            "4xx",
+            "5xx"
           ],
           answer: 2,
-          citation: "Page 26: Subclass field hides superclass field.",
+          citation: "Errors: Standard HTTP status codes (2xx, 4xx, 5xx), custom error messages."
         },
         {
-          question: "How to access hidden superclass field?",
+          question: "Which REST constraint means each request must contain all information needed to understand it?",
           options: [
-            "super.field",
-            "this.field",
-            "parent.field",
-            "Cannot access",
+            "Cacheability",
+            "Statelessness",
+            "Layered System",
+            "Code on Demand"
+          ],
+          answer: 1,
+          citation: "Statelessness: Each request is independent, state managed by client."
+        },
+        {
+          question: "What is Node.js primarily known for?",
+          options: [
+            "Being a frontend JavaScript framework",
+            "Its event-driven, asynchronous I/O model",
+            "Strictly typed JavaScript implementation",
+            "Native GUI application development"
+          ],
+          answer: 1,
+          citation: "Node.js Overview: Event-driven, asynchronous I/O, server-side JavaScript runtime, single-threaded but scalable, no buffering, open source."
+        },
+        {
+          question: "Which of these is NOT a common Node.js module?",
+          options: [
+            "Express",
+            "Mongoose",
+            "Socket.IO",
+            "jQuery"
+          ],
+          answer: 3,
+          citation: "Common Node.js Modules: Async.js, PM2, Socket.IO, Passport, Nodemailer, Mongoose, Sharp, Multer, Validator, Bcryptjs, Cron, Extract-zip, Fluent-ffmpeg, Jsonwebtoken, Body-parser, Fs-extra, Moment, Sequelize, Apidoc."
+        },
+        {
+          question: "What does HATEOAS stand for in REST constraints?",
+          options: [
+            "Hypermedia As The Engine Of Application State",
+            "HTTP Access To External Object Access Service",
+            "Hierarchical Address Translation and Endpoint Organization System",
+            "High Availability Transaction Engine for Object Access Services"
           ],
           answer: 0,
-          citation:
-            "Page 26: Use super.field to access hidden superclass field.",
+          citation: "Uniform Interface includes HATEOAS (Hypermedia As The Engine Of Application State) as part of REST constraints."
         },
         {
-          question: "Why avoid field hiding?",
+          question: "Which HTTP method is typically used for partial updates to a resource?",
           options: [
-            "Causes memory leaks",
-            "Makes code confusing",
-            "Slows performance",
-            "Prevents garbage collection",
+            "POST",
+            "PUT",
+            "PATCH",
+            "UPDATE"
+          ],
+          answer: 2,
+          citation: "PATCH is used for partial updates while PUT is used for complete replacement of a resource."
+        },
+        {
+          question: "What is the main advantage of Node.js's event loop architecture?",
+          options: [
+            "It allows for true parallel processing across multiple CPU cores",
+            "It enables handling many concurrent connections with a single thread",
+            "It makes JavaScript strongly typed",
+            "It eliminates the need for callbacks"
           ],
           answer: 1,
-          citation:
-            "Page 27-28: Field hiding can be confusing and is generally discouraged.",
-        },
-
-        // Object Class (2 questions)
-        {
-          question: "What's Java's universal superclass?",
-          options: ["Class", "Object", "Super", "Parent"],
-          answer: 1,
-          citation: "Page 49: All classes implicitly extend Object.",
+          citation: "Node.js Architecture & Event Loop: Single-threaded but scalable through asynchronous, non-blocking I/O operations."
         },
         {
-          question: "Which Object method provides string representation?",
-          options: ["toString()", "equals()", "hashCode()", "getClass()"],
+          question: "Which of these is a best practice for REST API versioning?",
+          options: [
+            "Include version in the URI path (e.g., /v1/resource)",
+            "Never version your API to avoid breaking changes",
+            "Use different domain names for each version",
+            "Only version when completely rewriting the API"
+          ],
           answer: 0,
-          citation: "Page 49: toString() provides string representation.",
-        },
-
-        // Polymorphism (3 questions)
-        {
-          question: "What can reference variables of superclass type hold?",
-          options: [
-            "Only superclass objects",
-            "Only subclass objects",
-            "Superclass or subclass objects",
-            "Nothing - must be initialized",
-          ],
-          answer: 2,
-          citation:
-            "Page 51: Superclass reference can point to subclass object.",
+          citation: "Other Conventions: API versioning (commonly in URL or headers), HTTPS, password hashing, input validation, timestamp in requests."
         },
         {
-          question: "What determines which overridden method executes?",
+          question: "What does the 'Layered System' constraint in REST mean?",
           options: [
-            "Reference type",
-            "Actual object type",
-            "Compile-time type",
-            "Random selection",
+            "The client must implement multiple protocol layers",
+            "Clients can't tell if they're connected directly to the server or through intermediaries",
+            "Each resource must have multiple representation layers",
+            "The API must separate business logic into strict layers"
           ],
           answer: 1,
-          citation:
-            "Page 30: Method called depends on actual object type (runtime polymorphism).",
+          citation: "Layered System: Clients cannot tell if connected directly or via intermediary (like proxies or load balancers)."
         },
         {
-          question: "What can you store in superclass-type arrays?",
+          question: "Which Express middleware would you use to parse JSON request bodies?",
           options: [
-            "Only superclass objects",
-            "Only one type of subclass",
-            "Any subclass objects",
-            "Nothing - arrays are fixed",
+            "body-parser",
+            "cookie-parser",
+            "express-session",
+            "morgan"
           ],
-          answer: 2,
-          citation:
-            "Page 52: Can store different subclass objects in superclass array.",
-        },
+          answer: 0,
+          citation: "Common Node.js Modules include body-parser for parsing request bodies."
+        }
       ];
 
       // Shuffle the questions array
@@ -923,11 +704,11 @@
         
         let message;
         if (percentage >= 80) {
-          message = "Excellent! You have mastered Java inheritance concepts.";
+          message = "Excellent! You have mastered RESTful API and Node.js concepts.";
         } else if (percentage >= 60) {
-          message = "Good job! You understand the basics but could use some more practice.";
+          message = "Good job! You understand the key concepts but could use some more practice.";
         } else {
-          message = "Keep practicing! Review the inheritance concepts and try again.";
+          message = "Keep practicing! Review the concepts and try again.";
         }
         
         scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
@@ -942,5 +723,5 @@
       // Start the quiz
       initQuiz();
     </script>
-  </body>
+</body>
 </html>

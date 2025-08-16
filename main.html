@@ -4,79 +4,130 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Programming Quiz Platform</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-      /* Reset and base styles */
+      :root {
+        --primary-color: #3498db;
+        --secondary-color: #9b59b6;
+        --success-color: #2ecc71;
+        --error-color: #e74c3c;
+        --text-color: #2c3e50;
+        --light-gray: #ecf0f1;
+        --medium-gray: #bdc3c7;
+        --dark-gray: #7f8c8d;
+        --white: #ffffff;
+        --box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
 
       body {
-        background-color: #f5f7fa;
-        color: #333;
-        line-height: 1.6;
+        font-family: "Poppins", sans-serif;
+        background-color: #f8f9fa;
+        color: var(--text-color);
+        line-height: 1.7;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
       }
 
       /* Main container */
       .main-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 30px 20px;
         min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
 
       /* Header */
       .header {
         text-align: center;
         margin-bottom: 50px;
-        padding: 40px 0 20px;
+        padding: 40px 0;
         position: relative;
+        animation: fadeInDown 0.8s ease;
       }
 
       .header h1 {
-        font-size: 3rem;
-        color: #2c3e50;
+        font-size: 3.2rem;
         margin-bottom: 15px;
         font-weight: 700;
-        background: linear-gradient(90deg, #3498db, #9b59b6);
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        position: relative;
+        display: inline-block;
+      }
+
+      .header h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border-radius: 2px;
       }
 
       .header p {
         font-size: 1.2rem;
-        color: #7f8c8d;
+        color: var(--dark-gray);
         max-width: 700px;
         margin: 0 auto;
+        font-weight: 300;
       }
 
       /* Subject cards */
       .subjects-container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 30px;
-        margin-top: 50px;
+        margin-top: 30px;
+        padding: 20px;
       }
 
       .subject-card {
-        background: white;
+        background: var(--white);
         border-radius: 15px;
-        width: 320px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
+        padding: 35px 30px;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
         cursor: pointer;
         position: relative;
         overflow: hidden;
         text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        transform: translateY(0);
+        animation: fadeInUp 0.6s ease;
       }
 
       .subject-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
       }
 
       .subject-card::before {
@@ -86,44 +137,107 @@
         left: 0;
         width: 100%;
         height: 5px;
-        background: linear-gradient(90deg, #3498db, #9b59b6);
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
+
+      .subject-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        z-index: 1;
+        pointer-events: none;
       }
 
       .subject-icon {
-        font-size: 4rem;
+        font-size: 4.5rem;
         margin-bottom: 20px;
-        background: linear-gradient(135deg, #3498db, #9b59b6);
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        display: inline-block;
+        transition: var(--transition);
+      }
+
+      .subject-card:hover .subject-icon {
+        transform: scale(1.1);
       }
 
       .subject-card h2 {
         font-size: 1.8rem;
         margin-bottom: 15px;
-        color: #2c3e50;
+        color: var(--text-color);
+        position: relative;
+        z-index: 2;
       }
 
       .subject-card p {
-        color: #7f8c8d;
-        margin-bottom: 20px;
+        color: var(--dark-gray);
+        margin-bottom: 25px;
+        font-weight: 300;
+        position: relative;
+        z-index: 2;
       }
 
       .btn {
         display: inline-block;
-        padding: 12px 25px;
-        background: linear-gradient(90deg, #3498db, #9b59b6);
-        color: white;
+        padding: 14px 30px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: var(--white);
         border-radius: 50px;
         text-decoration: none;
         font-weight: 600;
-        transition: all 0.3s ease;
+        transition: var(--transition);
         border: none;
         cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.6s;
       }
 
       .btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+      }
+
+      .btn:hover::before {
+        left: 100%;
       }
 
       /* Quiz list page */
@@ -132,21 +246,26 @@
         margin: 0 auto;
         padding: 40px 20px;
         display: none;
+        animation: fadeIn 0.6s ease;
       }
 
       .back-btn {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         margin-bottom: 30px;
-        color: #3498db;
+        color: var(--primary-color);
         text-decoration: none;
         font-weight: 600;
-        transition: all 0.3s ease;
-        padding: 8px 15px;
-        border-radius: 5px;
+        transition: var(--transition);
+        padding: 10px 15px;
+        border-radius: 50px;
+        background-color: rgba(52, 152, 219, 0.1);
       }
 
       .back-btn:hover {
-        background-color: #f0f7fd;
+        background-color: rgba(52, 152, 219, 0.2);
+        transform: translateX(-5px);
       }
 
       .quiz-list-header {
@@ -156,11 +275,36 @@
 
       .quiz-list-header h2 {
         font-size: 2.5rem;
-        color: #2c3e50;
         margin-bottom: 10px;
-        background: linear-gradient(90deg, #3498db, #9b59b6);
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        position: relative;
+      }
+
+      .quiz-list-header h2::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border-radius: 2px;
+      }
+
+      .quiz-list-header p {
+        color: var(--dark-gray);
+        font-weight: 300;
       }
 
       .quiz-list {
@@ -168,45 +312,95 @@
       }
 
       .quiz-item {
-        background: white;
-        border-radius: 10px;
-        padding: 20px;
+        background: var(--white);
+        border-radius: 12px;
+        padding: 20px 25px;
         margin-bottom: 15px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
+        transition: var(--transition);
         cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
         text-decoration: none;
         color: inherit;
+        border-left: 4px solid var(--primary-color);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .quiz-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(52, 152, 219, 0.05),
+          transparent
+        );
+        transition: 0.6s;
       }
 
       .quiz-item:hover {
         transform: translateX(10px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .quiz-item:hover::before {
+        left: 100%;
       }
 
       .quiz-info h3 {
-        color: #2c3e50;
+        color: var(--text-color);
         margin-bottom: 5px;
+        font-size: 1.2rem;
       }
 
       .quiz-info p {
-        color: #7f8c8d;
+        color: var(--dark-gray);
         font-size: 0.9rem;
+        font-weight: 300;
       }
 
       .quiz-arrow {
-        color: #3498db;
+        color: var(--primary-color);
         font-size: 1.5rem;
+        transition: var(--transition);
+      }
+
+      .quiz-item:hover .quiz-arrow {
+        transform: translateX(5px);
       }
 
       /* Animations */
       @keyframes fadeIn {
         from {
           opacity: 0;
-          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
         }
         to {
           opacity: 1;
@@ -221,16 +415,37 @@
       /* Responsive design */
       @media (max-width: 768px) {
         .header h1 {
-          font-size: 2.2rem;
+          font-size: 2.5rem;
+        }
+
+        .header p {
+          font-size: 1rem;
         }
 
         .subject-card {
-          width: 100%;
-          max-width: 350px;
+          padding: 25px 20px;
         }
 
         .quiz-list-header h2 {
           font-size: 2rem;
+        }
+
+        .quiz-item {
+          padding: 18px 20px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .subjects-container {
+          grid-template-columns: 1fr;
+        }
+
+        .quiz-list-header h2 {
+          font-size: 1.8rem;
         }
       }
     </style>
@@ -245,43 +460,39 @@
 
       <div class="subjects-container">
         <!-- OOP Card -->
-        <div class="subject-card" id="oop-card">
+        <div class="subject-card" id="oop-card" onclick="showQuizList('oop')">
           <div class="subject-icon">🧩</div>
           <h2>Object-Oriented Programming</h2>
           <p>
             Master OOP concepts: classes, objects, inheritance, polymorphism and
             more
           </p>
-          <button class="btn" onclick="showQuizList('oop')">
-            Start Learning
-          </button>
+          <!-- <button class="btn">Start Learning</button> -->
         </div>
 
         <!-- OS Card -->
-        <div class="subject-card" id="os-card">
+        <div class="subject-card" id="os-card" onclick="showQuizList('os')">
           <div class="subject-icon">💻</div>
           <h2>Operating Systems</h2>
           <p>Understand processes, threads, memory management and scheduling</p>
-          <button class="btn" onclick="showQuizList('os')">
-            Start Learning
-          </button>
+          <!-- <button class="btn">Start Learning</button> -->
         </div>
 
         <!-- Web Card -->
-        <div class="subject-card" id="web-card">
+        <div class="subject-card" id="web-card" onclick="showQuizList('web')">
           <div class="subject-icon">🌐</div>
           <h2>Web Development</h2>
           <p>Learn HTML, CSS, JavaScript and modern frameworks</p>
-          <button class="btn" onclick="showQuizList('web')">
-            Start Learning
-          </button>
+          <!-- <button class="btn">Start Learning</button> -->
         </div>
       </div>
     </div>
 
     <!-- OOP Quiz List -->
     <div class="quiz-list-container" id="oop-quiz-list">
-      <a href="#" class="back-btn" onclick="backToHome()">← Back to Subjects</a>
+      <a href="#" class="back-btn" onclick="backToHome()">
+        <i class="fas fa-arrow-left"></i> Back to Subjects
+      </a>
 
       <div class="quiz-list-header">
         <h2>OOP Quizzes</h2>
@@ -289,81 +500,128 @@
       </div>
 
       <ul class="quiz-list">
-        <a href="./OOP/Class_Object.html" class="quiz-item fade-in">
+        <a
+          href="./OOP/Class_Object.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.1s"
+        >
           <div class="quiz-info">
             <h3>Java OOP - Class and Object Quiz</h3>
-            <!-- <p>Classes, Objects, Constructors, Access Modifiers</p> -->
+            <p>Classes, Objects, Constructors, Access Modifiers</p>
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="./OOP/Inheritance.html" class="quiz-item fade-in">
+        <a
+          href="./OOP/Inheritance.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.2s"
+        >
           <div class="quiz-info">
             <h3>Inheritance</h3>
-            <!-- <p>Inheritance, Polymorphism, Method Overriding</p> -->
+            <p>Inheritance, Polymorphism, Method Overriding</p>
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="./OOP/Encapsulation _Access_Control.html" class="quiz-item fade-in">
+        <a
+          href="./OOP/Encapsulation _Access_Control.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.3s"
+        >
           <div class="quiz-info">
             <h3>Encapsulation & Access Control</h3>
-            <!-- <p>Abstract methods, Interfaces, Implementation</p> -->
+            <!-- <p>Data hiding, Getters/Setters, Access modifiers</p> -->
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="oop-solid-quiz.html" class="quiz-item fade-in">
+        <a
+          href="/OOP/Polymorphism_Abstract.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.4s"
+        >
           <div class="quiz-info">
-            <h3>SOLID Principles</h3>
-            <p>Five object-oriented design principles</p>
+            <h3>Polymorphism & Abstract</h3>
+            <!-- <p>Five object-oriented design principles</p> -->
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a
+          href="./OOP/Interface_UML.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.4s"
+        >
+          <div class="quiz-info">
+            <h3>Interface & UML</h3>
+            <!-- <p>Five object-oriented design principles</p> -->
+          </div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
       </ul>
     </div>
 
     <!-- OS Quiz List -->
     <div class="quiz-list-container" id="os-quiz-list">
-      <a href="#" class="back-btn" onclick="backToHome()">← Back to Subjects</a>
+      <a href="#" class="back-btn" onclick="backToHome()">
+        <i class="fas fa-arrow-left"></i> Back to Subjects
+      </a>
 
       <div class="quiz-list-header">
         <h2>Operating System Quizzes</h2>
         <p>Select a quiz to test your knowledge</p>
       </div>
 
-      <ul class="quiz-list">
-        <a href="os-process-quiz.html" class="quiz-item fade-in">
+      <!-- <ul class="quiz-list">
+        <a
+          href="./OS/Processes_Threads.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.1s"
+        >
           <div class="quiz-info">
             <h3>Processes & Threads</h3>
             <p>Process management, threading models</p>
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="os-scheduling-quiz.html" class="quiz-item fade-in">
+        <a
+          href="./OS/CPU_Scheduling.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.2s"
+        >
           <div class="quiz-info">
             <h3>CPU Scheduling</h3>
             <p>Scheduling algorithms and policies</p>
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="os-memory-quiz.html" class="quiz-item fade-in">
+        <a
+          href="./OS/Memory_Management.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.3s"
+        >
           <div class="quiz-info">
             <h3>Memory Management</h3>
             <p>Paging, segmentation, virtual memory</p>
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="os-deadlock-quiz.html" class="quiz-item fade-in">
+        <a
+          href="./OS/Deadlocks.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.4s"
+        >
           <div class="quiz-info">
             <h3>Deadlocks</h3>
             <p>Deadlock conditions and prevention</p>
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-      </ul>
+      </ul> -->
     </div>
 
     <!-- Web Quiz List -->
     <div class="quiz-list-container" id="web-quiz-list">
-      <a href="#" class="back-btn" onclick="backToHome()">← Back to Subjects</a>
+      <a href="#" class="back-btn" onclick="backToHome()">
+        <i class="fas fa-arrow-left"></i> Back to Subjects
+      </a>
 
       <div class="quiz-list-header">
         <h2>Web Development Quizzes</h2>
@@ -371,33 +629,49 @@
       </div>
 
       <ul class="quiz-list">
-        <a href="web-html-quiz.html" class="quiz-item fade-in">
+        <a
+          href="./Web/Web_Development_Fundamentals.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.1s"
+        >
           <div class="quiz-info">
-            <h3>HTML Fundamentals</h3>
-            <p>HTML tags, structure, and semantics</p>
+            <h3>Web Development Fundamentals</h3>
+            <!-- <p>HTML tags, structure, and semantics</p> -->
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="web-css-quiz.html" class="quiz-item fade-in">
+        <a
+          href="./Web/Web_UI_HTML5.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.2s"
+        >
           <div class="quiz-info">
-            <h3>CSS Styling</h3>
-            <p>Selectors, layout, flexbox, grid</p>
+            <h3>Web UI and HTML5</h3>
+            <!-- <p>Selectors, layout, flexbox, grid</p> -->
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="web-js-quiz.html" class="quiz-item fade-in">
+        <a
+          href="./Web/Restful_API_NodeJS.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.3s"
+        >
           <div class="quiz-info">
-            <h3>JavaScript Basics</h3>
-            <p>Variables, functions, DOM manipulation</p>
+            <h3>RESTful API & Node.js</h3>
+            <!-- <p>Variables, functions, DOM manipulation</p> -->
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
-        <a href="web-react-quiz.html" class="quiz-item fade-in">
+        <a
+          href="./Web/FE.html"
+          class="quiz-item fade-in"
+          style="animation-delay: 0.4s"
+        >
           <div class="quiz-info">
-            <h3>React Framework</h3>
-            <p>Components, state, props, hooks</p>
+            <h3>Front-End Development</h3>
+            <!-- <p>Components, state, props, hooks</p> -->
           </div>
-          <div class="quiz-arrow">→</div>
+          <div class="quiz-arrow"><i class="fas fa-chevron-right"></i></div>
         </a>
       </ul>
     </div>
@@ -426,33 +700,13 @@
         document.getElementById("home-page").style.display = "block";
       }
 
-      // Start selected quiz (navigate to quiz page)
-      function startQuiz(quizId) {
-        // In a real implementation, this would navigate to the quiz page
-        // For this demo, we'll simulate navigation by changing the URL
-        // without actually loading a new page
-        window.location.hash = `#quiz-${quizId}`;
-
-        // Show a message (replace with actual navigation in production)
-        console.log(`Navigating to quiz: ${quizId}`);
-        alert(
-          `In a real implementation, this would navigate to ${quizId}.html`
-        );
-
-        // Actual implementation would be:
-        // window.location.href = `${quizId}.html`;
-      }
-
       // Initialize animations when page loads
       document.addEventListener("DOMContentLoaded", function () {
-        // Check URL hash for direct navigation
-        if (window.location.hash) {
-          const hash = window.location.hash.substring(1);
-          if (hash.startsWith("quiz-")) {
-            const quizId = hash.substring(5);
-            startQuiz(quizId);
-          }
-        }
+        // Animate subject cards with delay
+        const subjectCards = document.querySelectorAll(".subject-card");
+        subjectCards.forEach((card, index) => {
+          card.style.animationDelay = `${index * 0.1}s`;
+        });
       });
     </script>
   </body>

@@ -4,142 +4,349 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Java OOP - Class and Object Quiz</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        --primary: #3498db;
+        --secondary: #9b59b6;
+        --success: #2ecc71;
+        --danger: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --gray: #95a5a6;
+        --white: #ffffff;
+        --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Poppins", sans-serif;
         line-height: 1.6;
-        background-color: #f5f7fa;
-        color: #333;
-        max-width: 800px;
-        margin: 0 auto;
+        background-color: #f8f9fa;
+        color: var(--dark);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         padding: 20px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       }
 
       .quiz-container {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        padding: 30px;
-        margin-bottom: 30px;
+        background-color: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        padding: 40px;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px;
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0);
+        transition: var(--transition);
+      }
+
+      .quiz-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .quiz-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
       }
 
       h1 {
-        color: #2c3e50;
         text-align: center;
         margin-bottom: 30px;
-        background: linear-gradient(90deg, #3498db, #9b59b6);
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        font-size: 2.2rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 3px;
+      }
+
+      .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
       }
 
       .progress {
-        text-align: right;
-        color: #7f8c8d;
-        margin-bottom: 20px;
-        font-size: 0.9rem;
+        color: var(--gray);
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .progress-bar {
+        flex-grow: 1;
+        height: 8px;
+        background-color: var(--light);
+        border-radius: 4px;
+        margin-left: 15px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 4px;
+        transition: width 0.6s ease;
       }
 
       .question {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         font-weight: 600;
-        margin-bottom: 20px;
-        color: #2c3e50;
+        margin-bottom: 25px;
+        color: var(--dark);
+        line-height: 1.5;
+        animation: fadeIn 0.5s ease;
       }
 
       .options {
-        margin-bottom: 25px;
+        margin-bottom: 30px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
       }
 
       .option {
-        padding: 12px 15px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        padding: 15px 20px;
+        border: 2px solid var(--light);
+        border-radius: 8px;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: var(--transition);
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(52, 152, 219, 0.1),
+          transparent
+        );
+        transition: 0.6s;
       }
 
       .option:hover {
-        background-color: #f0f7fd;
-        border-color: #3498db;
+        border-color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .option:hover::before {
+        left: 100%;
       }
 
       .selected {
-        background-color: #d4edff;
-        border-color: #3498db;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-color: var(--primary);
+        transform: translateX(5px);
       }
 
       .correct {
-        background-color: #d4edda;
-        border-color: #28a745;
+        background-color: rgba(46, 204, 113, 0.1);
+        border-color: var(--success);
+        color: var(--success);
       }
 
       .incorrect {
-        background-color: #f8d7da;
-        border-color: #dc3545;
+        background-color: rgba(231, 76, 60, 0.1);
+        border-color: var(--danger);
+        color: var(--danger);
       }
 
       .feedback {
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
         display: none;
+        animation: fadeIn 0.5s ease;
       }
 
       .correct-feedback {
-        background-color: #d4edda;
+        background-color: rgba(46, 204, 113, 0.1);
         color: #155724;
+        border-left: 4px solid var(--success);
       }
 
       .incorrect-feedback {
-        background-color: #f8d7da;
+        background-color: rgba(231, 76, 60, 0.1);
         color: #721c24;
+        border-left: 4px solid var(--danger);
       }
 
       .citation {
         font-style: italic;
-        color: #6c757d;
+        color: var(--gray);
         margin-top: 10px;
         font-size: 0.9rem;
+        display: block;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
       }
 
       button {
-        background: linear-gradient(90deg, #3498db, #9b59b6);
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
         color: white;
         border: none;
-        padding: 12px 25px;
+        padding: 14px 30px;
         border-radius: 50px;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s;
-        display: block;
-        margin: 0 auto;
+        transition: var(--transition);
+        font-size: 1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.6s;
       }
 
       button:hover {
         transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+      }
+
+      button:hover::after {
+        left: 100%;
       }
 
       button:disabled {
-        background: #cccccc;
+        background: var(--gray);
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
       }
 
+      button:disabled:hover::after {
+        left: -100%;
+      }
+
       .score-container {
         text-align: center;
         display: none;
+        animation: fadeIn 0.8s ease;
       }
 
       .score {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
+        font-size: 2rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: var(--dark);
+      }
+
+      .score-percentage {
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 20px 0;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .score-message {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: var(--gray);
       }
 
       .restart-btn {
-        background: linear-gradient(90deg, #2ecc71, #27ae60);
+        background: linear-gradient(90deg, var(--success), #27ae60);
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+      }
+
+      .restart-btn:hover {
+        box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .quiz-container {
+          padding: 25px;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .question {
+          font-size: 1.1rem;
+        }
+
+        button {
+          padding: 12px 25px;
+          font-size: 0.9rem;
+        }
+
+        .score-percentage {
+          font-size: 3rem;
+        }
       }
     </style>
   </head>
@@ -147,9 +354,14 @@
     <div class="quiz-container">
       <h1>Java OOP - Class and Object Quiz</h1>
 
-      <div class="progress">
-        Question <span id="current-question">1</span> of
-        <span id="total-questions">0</span>
+      <div class="progress-container">
+        <div class="progress">
+          Question <span id="current-question">1</span> of
+          <span id="total-questions">0</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
       </div>
 
       <div class="question" id="question"></div>
@@ -158,12 +370,18 @@
 
       <div class="feedback" id="feedback"></div>
 
-      <button id="next-btn" disabled>Next Question</button>
+      <div class="button-container">
+        <button id="next-btn" disabled>Next Question</button>
+      </div>
     </div>
 
     <div class="score-container" id="score-container">
-      <div class="score" id="score"></div>
-      <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+      <div class="score">Your Score:</div>
+      <div class="score-percentage" id="score-percentage"></div>
+      <div class="score-message" id="score-message"></div>
+      <div class="button-container">
+        <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+      </div>
     </div>
 
     <script>
@@ -317,8 +535,10 @@
       const nextButton = document.getElementById("next-btn");
       const currentQuestionSpan = document.getElementById("current-question");
       const totalQuestionsSpan = document.getElementById("total-questions");
+      const progressFill = document.getElementById("progress-fill");
       const scoreContainer = document.getElementById("score-container");
-      const scoreElement = document.getElementById("score");
+      const scorePercentage = document.getElementById("score-percentage");
+      const scoreMessage = document.getElementById("score-message");
       const restartButton = document.getElementById("restart-btn");
 
       // Initialize the quiz
@@ -327,8 +547,17 @@
         currentQuestionIndex = 0;
         score = 0;
         totalQuestionsSpan.textContent = shuffledQuestions.length;
+        updateProgressBar();
         showQuestion();
         scoreContainer.style.display = "none";
+        document.querySelector(".quiz-container").style.display = "block";
+      }
+
+      // Update progress bar
+      function updateProgressBar() {
+        const progress =
+          (currentQuestionIndex / shuffledQuestions.length) * 100;
+        progressFill.style.width = `${progress}%`;
       }
 
       // Display the current question
@@ -353,6 +582,10 @@
           optionElement.addEventListener("click", selectOption);
           optionsElement.appendChild(optionElement);
         });
+
+        // Add fade-in animation
+        questionElement.style.animation = "fadeIn 0.5s ease";
+        optionsElement.style.animation = "fadeIn 0.5s ease";
       }
 
       // Handle option selection
@@ -402,14 +635,15 @@
 
         // Show feedback
         feedbackElement.textContent = isCorrect
-          ? "Correct! " + currentQuestion.citation
-          : "Incorrect. The correct answer is: " +
+          ? "✓ Correct! " + currentQuestion.citation
+          : "✗ Incorrect. The correct answer is: " +
             currentQuestion.options[currentQuestion.answer] +
             ". " +
             currentQuestion.citation;
         feedbackElement.className =
           "feedback " + (isCorrect ? "correct-feedback" : "incorrect-feedback");
         feedbackElement.style.display = "block";
+        feedbackElement.style.animation = "fadeIn 0.5s ease";
 
         // Change button text if it's the last question
         if (currentQuestionIndex === shuffledQuestions.length - 1) {
@@ -426,6 +660,7 @@
 
         if (currentQuestionIndex < shuffledQuestions.length - 1) {
           currentQuestionIndex++;
+          updateProgressBar();
           showQuestion();
         } else {
           showResults();
@@ -436,16 +671,28 @@
       function showResults() {
         document.querySelector(".quiz-container").style.display = "none";
 
-        scoreElement.textContent = `You scored ${score} out of ${shuffledQuestions.length}!`;
+        const percentage = Math.round((score / shuffledQuestions.length) * 100);
+        scorePercentage.textContent = `${percentage}%`;
+
+        let message;
+        if (percentage >= 80) {
+          message =
+            "Excellent! You have a strong understanding of Java OOP concepts.";
+        } else if (percentage >= 60) {
+          message =
+            "Good job! You understand the basics but could use some more practice.";
+        } else {
+          message = "Keep practicing! Review the concepts and try again.";
+        }
+
+        scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
+
         scoreContainer.style.display = "block";
       }
 
       // Event listeners
       nextButton.addEventListener("click", nextQuestion);
-      restartButton.addEventListener("click", () => {
-        document.querySelector(".quiz-container").style.display = "block";
-        initQuiz();
-      });
+      restartButton.addEventListener("click", initQuiz);
 
       // Start the quiz
       initQuiz();
