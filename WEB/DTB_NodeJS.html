@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database and NodeJS API Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #3498db;
+        --secondary: #9b59b6;
+        --success: #2ecc71;
+        --danger: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --gray: #95a5a6;
+        --white: #ffffff;
+        --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+        background-color: #f8f9fa;
+        color: var(--dark);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+      
+      .quiz-container {
+        background-color: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        padding: 40px;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px;
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0);
+        transition: var(--transition);
+      }
+      
+      .quiz-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+      
+      .quiz-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+      }
+      
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2.2rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 15px;
+      }
+      
+      h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 3px;
+      }
+      
+      .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+      
+      .progress {
+        color: var(--gray);
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      
+      .progress-bar {
+        flex-grow: 1;
+        height: 8px;
+        background-color: var(--light);
+        border-radius: 4px;
+        margin-left: 15px;
+        overflow: hidden;
+      }
+      
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 4px;
+        transition: width 0.6s ease;
+      }
+      
+      .question {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: var(--dark);
+        line-height: 1.5;
+        animation: fadeIn 0.5s ease;
+      }
+      
+      .options {
+        margin-bottom: 30px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      
+      .option {
+        padding: 15px 20px;
+        border: 2px solid var(--light);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .option::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+        transition: 0.6s;
+      }
+      
+      .option:hover {
+        border-color: var(--primary);
+        transform: translateX(5px);
+      }
+      
+      .option:hover::before {
+        left: 100%;
+      }
+      
+      .selected {
+        background-color: rgba(52, 152, 219, 0.1);
+        border-color: var(--primary);
+        transform: translateX(5px);
+      }
+      
+      .correct {
+        background-color: rgba(46, 204, 113, 0.1);
+        border-color: var(--success);
+        color: var(--success);
+      }
+      
+      .incorrect {
+        background-color: rgba(231, 76, 60, 0.1);
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+      
+      .feedback {
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      
+      .correct-feedback {
+        background-color: rgba(46, 204, 113, 0.1);
+        color: #155724;
+        border-left: 4px solid var(--success);
+      }
+      
+      .incorrect-feedback {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: #721c24;
+        border-left: 4px solid var(--danger);
+      }
+      
+      .citation {
+        font-style: italic;
+        color: var(--gray);
+        margin-top: 10px;
+        font-size: 0.9rem;
+        display: block;
+      }
+      
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      
+      button {
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+      
+      button::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.6s;
+      }
+      
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+      }
+      
+      button:hover::after {
+        left: 100%;
+      }
+      
+      button:disabled {
+        background: var(--gray);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+      
+      button:disabled:hover::after {
+        left: -100%;
+      }
+      
+      .score-container {
+        text-align: center;
+        display: none;
+        animation: fadeIn 0.8s ease;
+      }
+      
+      .score {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: var(--dark);
+      }
+      
+      .score-percentage {
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 20px 0;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .score-message {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: var(--gray);
+      }
+      
+      .restart-btn {
+        background: linear-gradient(90deg, var(--success), #27ae60);
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+      }
+      
+      .restart-btn:hover {
+        box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+      }
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .quiz-container {
+          padding: 25px;
+        }
+        
+        h1 {
+          font-size: 1.8rem;
+        }
+        
+        .question {
+          font-size: 1.1rem;
+        }
+        
+        button {
+          padding: 12px 25px;
+          font-size: 0.9rem;
+        }
+        
+        .score-percentage {
+          font-size: 3rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Database and NodeJS API Quiz</h1>
+
+        <div class="progress-container">
+            <div class="progress">
+                Question <span id="current-question">1</span> of
+                <span id="total-questions">0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="question" id="question"></div>
+
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="button-container">
+            <button id="next-btn" disabled>Next Question</button>
+        </div>
+    </div>
+
+    <div class="score-container" id="score-container">
+        <div class="score">Your Score:</div>
+        <div class="score-percentage" id="score-percentage"></div>
+        <div class="score-message" id="score-message"></div>
+        <div class="button-container">
+            <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        // Quiz questions based on the provided content
+        const questions = [
+            {
+                question: "Which of these is NOT a type of database structure?",
+                options: [
+                    "Single File/Flat File (unstructured)",
+                    "Single File/Flat File (semi-structured)",
+                    "Multi-file Relational/Structured Database",
+                    "Hierarchical Network Database"
+                ],
+                answer: 3,
+                citation: "Database Types: Single File/Flat File (unstructured like text/binary or semi-structured like XML, JSON) and Multi-file Relational/Structured Database (RDBMS)."
+            },
+            {
+                question: "Which of these is NOT an example of a relational database?",
+                options: [
+                    "MySQL",
+                    "Microsoft SQL Server",
+                    "MongoDB",
+                    "PostgreSQL"
+                ],
+                answer: 2,
+                citation: "Relational Databases (SQL) examples: MySQL, Microsoft SQL Server, Oracle, PostgreSQL. MongoDB is a NoSQL database."
+            },
+            {
+                question: "What does the 'A' in ACID properties stand for?",
+                options: [
+                    "Availability",
+                    "Atomicity",
+                    "Authentication",
+                    "Authorization"
+                ],
+                answer: 1,
+                citation: "ACID Properties: Atomicity (transactions are all-or-nothing), Consistency (database remains in consistent state), Isolation (concurrent transactions don't interfere), Durability (completed transactions persist)."
+            },
+            {
+                question: "Which of these is a characteristic of NoSQL databases?",
+                options: [
+                    "They strictly enforce schemas",
+                    "They are always relational",
+                    "They are flexible and schema-less",
+                    "They don't support document-oriented storage"
+                ],
+                answer: 2,
+                citation: "NoSQL Databases: flexible, schema-less documents; use Mongoose ODM in Node.js. Examples: MongoDB (document-oriented)."
+            },
+            {
+                question: "What is Mongoose in the context of Node.js?",
+                options: [
+                    "A web framework",
+                    "An Object Data Modeling (ODM) library for MongoDB",
+                    "A relational database management system",
+                    "A testing framework"
+                ],
+                answer: 1,
+                citation: "Mongoose: Object Data Modeling (ODM) library for MongoDB and Node.js. Usage: Install (npm install mongoose), load, connect, create Models (equivalent to documents), operate (find, update, save)."
+            },
+            {
+                question: "What is the correct sequence for using Mongoose with MongoDB in Node.js?",
+                options: [
+                    "Connect, Install, Create Models, Operate",
+                    "Install, Load, Connect, Create Models, Operate",
+                    "Create Models, Install, Connect, Operate",
+                    "Operate, Install, Connect, Create Models"
+                ],
+                answer: 1,
+                citation: "Mongoose usage sequence: Install (npm install mongoose), load, connect, create Models (equivalent to documents), operate (find, update, save)."
+            },
+            {
+                question: "What are Mongoose middleware functions used for?",
+                options: [
+                    "Only for handling HTTP requests",
+                    "Only for database connection",
+                    "Running before/after certain operations on documents",
+                    "Only for schema validation"
+                ],
+                answer: 2,
+                citation: "Middleware: Functions that run before/after certain operations (init, validate, save, remove) on Aggregate, Document, Model, Query."
+            },
+            {
+                question: "Which of these is NOT a supported database by Sequelize?",
+                options: [
+                    "PostgreSQL",
+                    "MySQL",
+                    "MongoDB",
+                    "SQLite"
+                ],
+                answer: 2,
+                citation: "Sequelize: Promise-based Object Relational Mapping (ORM) for Node.js, supports PostgreSQL, MySQL, SQLite, MSSQL. MongoDB is supported by Mongoose, not Sequelize."
+            },
+            {
+                question: "What is the correct way to install Sequelize and MySQL support in a Node.js project?",
+                options: [
+                    "npm install sequelize-mysql",
+                    "npm install sequelize && npm install mysql2",
+                    "npm install sequelize-mysql2",
+                    "npm install sequelize --with-mysql"
+                ],
+                answer: 1,
+                citation: "Sequelize installation: Install (npm install sequelize, npm install mysql2), load, connect, create Models (equivalent to table schemas), operate (find, update, save)."
+            },
+            {
+                question: "What is the purpose of ORM/ODM tools like Sequelize and Mongoose?",
+                options: [
+                    "To replace databases entirely",
+                    "To abstract database operations and provide a higher-level API",
+                    "To only handle database migrations",
+                    "To serve as database administration tools"
+                ],
+                answer: 1,
+                citation: "ORM/ODM tools (Sequelize for SQL, Mongoose for MongoDB) abstract database operations, providing a more convenient interface for developers to work with databases."
+            },
+            {
+                question: "Which of these is NOT an example of a cloud database service?",
+                options: [
+                    "AWS RDS",
+                    "Microsoft Azure SQL Database",
+                    "Google Cloud SQL",
+                    "Localhost MySQL"
+                ],
+                answer: 3,
+                citation: "Cloud Databases: AWS, Microsoft Azure, Google Cloud SQL, Mongo Atlas, db4free. Localhost MySQL is a local installation, not a cloud service."
+            },
+            {
+                question: "What is the primary advantage of using cloud databases?",
+                options: [
+                    "They don't require any configuration",
+                    "They are always free to use",
+                    "They provide managed services with scalability and reliability",
+                    "They don't need any security measures"
+                ],
+                answer: 2,
+                citation: "Cloud databases provide managed services that handle infrastructure, scaling, backups, and high availability, allowing developers to focus on application logic rather than database administration."
+            },
+            {
+                question: "In Mongoose, what is a Model equivalent to in MongoDB?",
+                options: [
+                    "A single record",
+                    "A collection of documents",
+                    "A database index",
+                    "A query operation"
+                ],
+                answer: 1,
+                citation: "In Mongoose, Models are fancy constructors compiled from Schema definitions. An instance of a model is called a document. Models are responsible for creating and reading documents from the underlying MongoDB database."
+            },
+            {
+                question: "What is the purpose of plugins in Mongoose?",
+                options: [
+                    "To extend browser functionality",
+                    "To add reusable functionality to schemas",
+                    "To replace the entire Mongoose library",
+                    "To handle HTTP requests"
+                ],
+                answer: 1,
+                citation: "Plugins: Reusable code for schemas in Mongoose. They allow you to package reusable functionality into plugins that can be shared across multiple schemas and models."
+            },
+            {
+                question: "Which of these operations is common to both Sequelize and Mongoose?",
+                options: [
+                    "find() - to query data",
+                    "save() - to persist data",
+                    "update() - to modify data",
+                    "All of the above"
+                ],
+                answer: 3,
+                citation: "Both Sequelize (for SQL databases) and Mongoose (for MongoDB) provide similar high-level operations like find(), save(), and update() to work with data, despite the underlying databases being different."
+            }
+        ];
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Quiz state variables
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let shuffledQuestions = [];
+        let selectedOption = null;
+        let answerSubmitted = false;
+
+        // DOM elements
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+        const feedbackElement = document.getElementById("feedback");
+        const nextButton = document.getElementById("next-btn");
+        const currentQuestionSpan = document.getElementById("current-question");
+        const totalQuestionsSpan = document.getElementById("total-questions");
+        const progressFill = document.getElementById("progress-fill");
+        const scoreContainer = document.getElementById("score-container");
+        const scorePercentage = document.getElementById("score-percentage");
+        const scoreMessage = document.getElementById("score-message");
+        const restartButton = document.getElementById("restart-btn");
+
+        // Initialize the quiz
+        function initQuiz() {
+            shuffledQuestions = shuffleArray([...questions]);
+            currentQuestionIndex = 0;
+            score = 0;
+            totalQuestionsSpan.textContent = shuffledQuestions.length;
+            updateProgressBar();
+            showQuestion();
+            scoreContainer.style.display = "none";
+            document.querySelector(".quiz-container").style.display = "block";
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // Display the current question
+        function showQuestion() {
+            answerSubmitted = false;
+            selectedOption = null;
+            feedbackElement.style.display = "none";
+            nextButton.disabled = true;
+            nextButton.textContent = "Next Question";
+
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+            questionElement.textContent = currentQuestion.question;
+            optionsElement.innerHTML = "";
+
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement("div");
+                optionElement.classList.add("option");
+                optionElement.textContent = option;
+                optionElement.dataset.index = index;
+                optionElement.addEventListener("click", selectOption);
+                optionsElement.appendChild(optionElement);
+            });
+            
+            // Add fade-in animation
+            questionElement.style.animation = "fadeIn 0.5s ease";
+            optionsElement.style.animation = "fadeIn 0.5s ease";
+        }
+
+        // Handle option selection
+        function selectOption(e) {
+            if (answerSubmitted) return;
+
+            // Remove selected class from all options
+            document.querySelectorAll(".option").forEach((opt) => {
+                opt.classList.remove("selected");
+            });
+
+            // Add selected class to clicked option
+            const selectedElement = e.target;
+            selectedElement.classList.add("selected");
+            selectedOption = parseInt(selectedElement.dataset.index);
+
+            // Enable next button
+            nextButton.disabled = false;
+        }
+
+        // Check the answer and show feedback
+        function checkAnswer() {
+            if (selectedOption === null || answerSubmitted) return;
+
+            answerSubmitted = true;
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            const isCorrect = selectedOption === currentQuestion.answer;
+
+            // Disable all options
+            document.querySelectorAll(".option").forEach((opt) => {
+                opt.style.pointerEvents = "none";
+            });
+
+            // Highlight correct answer
+            document.querySelectorAll(".option").forEach((opt, index) => {
+                if (index === currentQuestion.answer) {
+                    opt.classList.add("correct");
+                } else if (index === selectedOption && !isCorrect) {
+                    opt.classList.add("incorrect");
+                }
+            });
+
+            // Update score
+            if (isCorrect) {
+                score++;
+            }
+
+            // Show feedback
+            feedbackElement.textContent = isCorrect
+                ? "✓ Correct! " + currentQuestion.citation
+                : "✗ Incorrect. The correct answer is: " +
+                  currentQuestion.options[currentQuestion.answer] +
+                  ". " +
+                  currentQuestion.citation;
+            feedbackElement.className =
+              "feedback " + (isCorrect ? "correct-feedback" : "incorrect-feedback");
+            feedbackElement.style.display = "block";
+            feedbackElement.style.animation = "fadeIn 0.5s ease";
+
+            // Change button text if it's the last question
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                nextButton.textContent = "See Results";
+            }
+        }
+
+        // Move to the next question or show results
+        function nextQuestion() {
+            if (!answerSubmitted) {
+                checkAnswer();
+                return;
+            }
+
+            if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                currentQuestionIndex++;
+                updateProgressBar();
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Show the final results
+        function showResults() {
+            document.querySelector(".quiz-container").style.display = "none";
+            
+            const percentage = Math.round((score / shuffledQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            let message;
+            if (percentage >= 80) {
+                message = "Excellent! You have a strong understanding of databases and NodeJS API concepts.";
+            } else if (percentage >= 60) {
+                message = "Good job! You understand the basics but could use some more practice.";
+            } else {
+                message = "Keep practicing! Review the concepts and try again.";
+            }
+            
+            scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
+            
+            scoreContainer.style.display = "block";
+        }
+
+        // Event listeners
+        nextButton.addEventListener("click", nextQuestion);
+        restartButton.addEventListener("click", initQuiz);
+
+        // Start the quiz
+        initQuiz();
+    </script>
+</body>
+</html>
