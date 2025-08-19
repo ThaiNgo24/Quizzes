@@ -388,127 +388,2538 @@
       // Quiz questions based on the provided file content
       const questions = [
         {
-          question: "What is an object in Java?",
+          question:
+            "What is Java described as in the context of object-oriented programming?",
           options: [
-            "A primitive data type like int or double",
-            "A real-world entity with attributes and methods",
-            "A special type of variable that can store multiple values",
-            "A function that performs a specific task",
+            "A partially object-oriented programming language where some elements are procedural",
+            "A fully object-oriented programming language where everything revolves around classes and objects",
+            "A functional programming language focused on functions and immutability",
+            "A scripting language primarily used for web development",
           ],
           answer: 1,
           citation:
-            "Page 3: An object represents a real-world entity. It has attributes (data) and methods (behavior). Example: A car is an object with attributes like weight, color and methods like drive(), brake().",
+            "Page 2: 'Java is a fully object-oriented programming language where everything revolves around classes and objects.'",
+        },
+        {
+          question: "What does an object represent in Java?",
+          options: [
+            "A blueprint for creating classes",
+            "A real-world entity with attributes and methods",
+            "A method that performs actions",
+            "A variable that stores data",
+          ],
+          answer: 1,
+          citation:
+            "Page 3: 'An object represents a real-world entity and has two main components.'",
+        },
+        {
+          question: "What are the two main components of an object?",
+          options: [
+            "Classes and instances",
+            "Attributes (data) and Methods (behavior)",
+            "Constructors and destructors",
+            "Fields and parameters",
+          ],
+          answer: 1,
+          citation:
+            "Page 3: 'Attributes (data): Properties that describe the object; Methods (behavior): Actions that the object can perform'",
+        },
+        {
+          question:
+            "According to the example, what is a car as an object with?",
+          options: [
+            "Attributes: speed, fuel; Methods: accelerate, stop",
+            "Attributes: weight, color; Methods: drive, brake",
+            "Attributes: model, year; Methods: start, park",
+            "Attributes: size, shape; Methods: move, turn",
+          ],
+          answer: 1,
+          citation:
+            "Page 3: 'Example: A car is an object with: Attributes: weight, color; Methods: drive, brake'",
         },
         {
           question: "What is a class in Java?",
           options: [
-            "A collection of unrelated methods",
+            "An instance of an object",
+            "A blueprint for creating objects that defines the structure and behavior of objects",
+            "A method that initializes objects",
+            "A variable that holds object references",
+          ],
+          answer: 1,
+          citation:
+            "Page 4: 'A class is a blueprint for creating objects that defines the structure and behavior of objects'",
+        },
+        {
+          question: "What does a class serve as for objects?",
+          options: [
+            "A runtime environment for execution",
+            "A template from which objects are created (instantiated)",
+            "A storage for global variables",
+            "A container for static methods only",
+          ],
+          answer: 1,
+          citation:
+            "Page 4: 'Serves as a template from which objects are created (instantiated)'",
+        },
+        {
+          question: "How should one think of a class and an object?",
+          options: [
+            "Class as a real instance, object as a template",
+            "Class as a template, and an object as a real instance based on that template",
+            "Both as the same entity",
+            "Class as behavior, object as data",
+          ],
+          answer: 1,
+          citation:
+            "Page 4: 'Think of a class as a template, and an object as a real instance based on that template.'",
+        },
+        {
+          question:
+            "What is a class defined as in the context of creating one in Java?",
+          options: [
+            "An instance created with new",
             "A blueprint for creating objects",
-            "A special type of object",
-            "A file that contains Java code",
+            "A method inside an object",
+            "A variable declaration",
+          ],
+          answer: 1,
+          citation: "Page 5: 'A class is a blueprint for creating objects'",
+        },
+        {
+          question: "What does a class group into a single unit?",
+          options: [
+            "Only methods",
+            "Variables (attributes) and methods (behaviors)",
+            "Only variables",
+            "Constructors and destructors",
           ],
           answer: 1,
           citation:
-            "Page 4: A class is a blueprint for creating objects. It defines the structure and behavior of objects. Objects are created (instantiated) from classes.",
+            "Page 5: 'It groups variables (attributes) and methods (behaviors) into a single unit'",
         },
         {
-          question: "How do you create an object in Java?",
-          options: [
-            "ClassName objectName = new ClassName();",
-            "objectName = ClassName();",
-            "ClassName objectName = ClassName.new();",
-            "new objectName = ClassName();",
-          ],
-          answer: 0,
-          citation:
-            "Page 7: In Java, an object is created from a class using the new keyword. Syntax: ClassName objectName = new ClassName();",
-        },
-        {
-          question:
-            "What happens when you create multiple objects from the same class?",
-          options: [
-            "They all share the same memory location",
-            "Each object has its own copy of the class's variables and methods",
-            "Only the first object gets its own variables, others share them",
-            "You can't create multiple objects from the same class",
-          ],
-          answer: 1,
-          citation:
-            "Page 8: You can create multiple independent objects from the same class. Each object has its own copy of fields and methods.",
-        },
-        {
-          question:
-            "How can you modify an attribute value after creating an object?",
-          options: [
-            "Using the dot operator: objectName.attributeName = newValue",
-            "You can't modify attributes after object creation",
-            "Using the set keyword: set objectName.attributeName = newValue",
-            "By calling a special modify() method",
-          ],
-          answer: 0,
-          citation:
-            "Page 12: You can modify the value of an attribute after an object is created. Use the dot operator to access and update the attribute.",
-        },
-        {
-          question:
-            "How do you prevent an attribute from being modified after initialization?",
-          options: [
-            "Use the const keyword",
-            "Use the final keyword",
-            "Use the static keyword",
-            "Use the private keyword",
-          ],
-          answer: 1,
-          citation:
-            "Page 14: To make an attribute constant and unchangeable, declare it with the final keyword. A final variable must be assigned once, and cannot be modified later.",
-        },
-        {
-          question: "What is a static field in Java?",
-          options: [
-            "A field that can't be changed",
-            "A field that belongs to the class rather than any object",
-            "A field that is only accessible within its own class",
-            "A field that automatically increments its value",
-          ],
-          answer: 1,
-          citation:
-            "Page 25: A static field belongs to the class, not to instances (objects). All objects share the same copy of the static field.",
-        },
-        {
-          question: "What is a constructor in Java?",
-          options: [
-            "A special method that returns a new object",
-            "A method that destroys objects",
-            "A special method used to initialize objects",
-            "A method that converts objects to strings",
-          ],
+          question: "What keyword is used to define a class in Java?",
+          options: ["object", "instance", "class", "new"],
           answer: 2,
-          citation:
-            "Page 29: A constructor is a special method used to initialize objects. It is automatically called when an object is created. Used to set initial values for attributes.",
+          citation: "Page 5: 'Use the keyword class to define a class in Java'",
         },
         {
-          question: "What is constructor overloading?",
+          question:
+            "In the example 'public class Main { int x = 5; }', what is this demonstrating?",
           options: [
-            "Creating too many constructors in a class",
-            "Having multiple constructors with different parameters",
-            "Making constructors that do too much work",
-            "Using constructors to overload the system memory",
+            "Creating an object",
+            "Defining a class with an attribute",
+            "Calling a method",
+            "Initializing a constructor",
+          ],
+          answer: 1,
+          citation: "Page 6: Example showing class definition",
+        },
+        {
+          question:
+            "In the example 'public class Main { int x = 5; }', what is Main?",
+          options: [
+            "The value of the attribute",
+            "The name of the class",
+            "The keyword for the attribute",
+            "The object instance",
+          ],
+          answer: 1,
+          citation: "Page 6: 'Main is the name of the class'",
+        },
+        {
+          question:
+            "In the example 'public class Main { int x = 5; }', what is x?",
+          options: [
+            "The class name",
+            "An integer variable (attribute) with the value 5",
+            "A method",
+            "A constructor parameter",
           ],
           answer: 1,
           citation:
-            "Page 31: Java allows a class to have multiple constructors with different parameters. This is called constructor overloading. It provides flexibility when creating objects.",
+            "Page 6: 'x is an integer variable (attribute) with the value 5'",
         },
         {
-          question: "What is method overloading in Java?",
+          question:
+            "In the explanation, what does each object created from Main have?",
           options: [
-            "Creating methods with the same name but different implementations",
-            "Having methods with the same name but different parameter lists",
-            "Making methods do more work than they should",
-            "Using methods to overload the system memory",
+            "Shared copy of x",
+            "Its own copy of x",
+            "No copy of x",
+            "Static reference to x",
           ],
           answer: 1,
           citation:
-            "Page 38: Method overloading means multiple methods in the same class with the same name but different parameter lists. Allows you to reuse the same method name for similar actions.",
+            "Page 6: 'Each object created from Main will have its own copy of x'",
+        },
+        {
+          question: "What is an object in Java?",
+          options: [
+            "A blueprint for classes",
+            "Created from a class using the new keyword",
+            "A static method",
+            "A global function",
+          ],
+          answer: 1,
+          citation:
+            "Page 7: 'In Java, an object is created from a class using the new keyword'",
+        },
+        {
+          question: "What is an object described as?",
+          options: [
+            "A class definition",
+            "An instance of a class — it has its own copy of the class's variables and methods",
+            "A shared resource",
+            "A parameter list",
+          ],
+          answer: 1,
+          citation:
+            "Page 7: 'An object is an instance of a class — it has its own copy of the class's variables and methods'",
+        },
+        {
+          question: "What is the syntax to create an object?",
+          options: [
+            "ClassName objectName();",
+            "ClassName objectName = new ClassName();",
+            "new ClassName objectName;",
+            "objectName = ClassName.new();",
+          ],
+          answer: 1,
+          citation: "Page 7: 'Syntax: ClassName objectName = new ClassName();'",
+        },
+        {
+          question:
+            "In the example code with Main class and myObj, what is this demonstrating?",
+          options: [
+            "Defining a class only",
+            "Creating an object and accessing its attribute",
+            "Multiple classes",
+            "Static methods",
+          ],
+          answer: 1,
+          citation:
+            "Page 7: Example showing object creation and attribute access",
+        },
+        {
+          question: "In the example, what does 'Main myObj = new Main();' do?",
+          options: [
+            "Defines a method",
+            "Creates a new object named myObj",
+            "Prints the value",
+            "Modifies the class",
+          ],
+          answer: 1,
+          citation:
+            "Page 7: 'Main myObj = new Main(); creates a new object named myObj'",
+        },
+        {
+          question: "In the example, what does 'myObj.x' do?",
+          options: [
+            "Creates the object",
+            "Accesses the x attribute of the object",
+            "Calls a method",
+            "Changes the value",
+          ],
+          answer: 1,
+          citation: "Page 7: 'myObj.x accesses the x attribute of the object'",
+        },
+        {
+          question:
+            "What is the output of the example code for creating an object?",
+          options: ["null", "0", "5", "Error"],
+          answer: 2,
+          citation: "Page 7: 'Output: 5'",
+        },
+        {
+          question: "What can you do with the same class in Java?",
+          options: [
+            "Create only one object",
+            "Create multiple independent objects from the same class",
+            "Share all attributes",
+            "Define global functions",
+          ],
+          answer: 1,
+          citation:
+            "Page 8: 'You can create multiple independent objects from the same class'",
+        },
+        {
+          question:
+            "What does each object have in multiple objects from the same class?",
+          options: [
+            "Shared fields and methods",
+            "Its own copy of fields and methods",
+            "No fields",
+            "Static copies only",
+          ],
+          answer: 1,
+          citation:
+            "Page 8: 'Each object has its own copy of fields and methods'",
+        },
+        {
+          question: "In the multiple objects example, what is the output?",
+          options: ["5 and 0", "5 and 5", "Error", "null and null"],
+          answer: 1,
+          citation:
+            "Page 8: 'System.out.println(myObj1.x); // Output: 5; System.out.println(myObj2.x); // Output: 5'",
+        },
+        {
+          question: "In the example, what are myObj1 and myObj2?",
+          options: [
+            "The same object",
+            "Separate objects",
+            "Methods",
+            "Classes",
+          ],
+          answer: 1,
+          citation: "Page 8: 'myObj1 and myObj2 are separate objects'",
+        },
+        {
+          question: "In the example, what does each object contain?",
+          options: [
+            "Shared variable x",
+            "Its own copy of variable x",
+            "No variable x",
+            "Static variable x",
+          ],
+          answer: 1,
+          citation: "Page 8: 'Each object contains its own copy of variable x'",
+        },
+        {
+          question:
+            "What happens when changing one object's state in multiple objects?",
+          options: [
+            "It affects all objects",
+            "Does not affect the other",
+            "Causes an error",
+            "Shares the change",
+          ],
+          answer: 1,
+          citation:
+            "Page 8: 'Changing one object's state does not affect the other'",
+        },
+        {
+          question: "What does Java allow in terms of classes and objects?",
+          options: [
+            "Creating an object in one class and accessing it from another class",
+            "Only single class usage",
+            "No object access across classes",
+            "Global objects only",
+          ],
+          answer: 0,
+          citation:
+            "Page 9: 'Java allows creating an object in one class and accessing it from another class'",
+        },
+        {
+          question: "What does using multiple classes help with?",
+          options: [
+            "Disorganize code",
+            "Organize code: One class holds attributes and methods, the other contains the main() method for execution",
+            "Prevent compilation",
+            "Share global functions",
+          ],
+          answer: 1,
+          citation:
+            "Page 9: 'This approach helps organize code: One class holds attributes and methods; The other class contains the main() method for execution'",
+        },
+        {
+          question: "What is the file structure example for multiple classes?",
+          options: [
+            "All in one file",
+            "Main.java — defines the class and its data; Second.java — contains the main() method and uses the Main class",
+            "No separate files",
+            "Only public files",
+          ],
+          answer: 1,
+          citation:
+            "Page 10: 'Main.java — defines the class and its data; Second.java — contains the main() method and uses the Main class'",
+        },
+        {
+          question:
+            "In Main.java: 'public class Main { int x = 5; }', what is this?",
+          options: [
+            "The execution file",
+            "Defines the class and its data",
+            "Contains main()",
+            "Accesses the object",
+          ],
+          answer: 1,
+          citation: "Page 10: Main.java example showing class definition",
+        },
+        {
+          question: "In Second.java, what is this?",
+          options: [
+            "Defines attributes",
+            "Contains the main() method and uses the Main class",
+            "Creates a class only",
+            "Modifies x",
+          ],
+          answer: 1,
+          citation: "Page 10: Second.java example showing main() method usage",
+        },
+        {
+          question:
+            "What are the commands for compilation and execution in multiple classes example?",
+          options: [
+            "javac Second.java; java Main",
+            "javac Main.java; javac Second.java; java Second",
+            "java Main; java Second",
+            "javac all.java; java all",
+          ],
+          answer: 1,
+          citation:
+            "Page 10: 'javac Main.java; javac Second.java; java Second'",
+        },
+        {
+          question: "What is the output of the multiple classes example?",
+          options: ["0", "5", "Error", "null"],
+          answer: 1,
+          citation: "Page 10: 'Output: 5'",
+        },
+        {
+          question:
+            "What must be true for the .java files in multiple classes?",
+          options: [
+            "In different directories",
+            "Both .java files must be in the same directory",
+            "No directory required",
+            "In separate projects",
+          ],
+          answer: 1,
+          citation: "Page 10: 'Both .java files must be in the same directory'",
+        },
+        {
+          question:
+            "What must the file name match if the class is declared public?",
+          options: [
+            "The method name",
+            "The class name",
+            "The object name",
+            "The attribute name",
+          ],
+          answer: 1,
+          citation:
+            "Page 10: 'The file name must match the class name if the class is declared public'",
+        },
+        {
+          question: "What are class attributes in Java?",
+          options: [
+            "Methods defined inside methods",
+            "Variables defined inside a class but outside any method",
+            "Constructors",
+            "Static functions",
+          ],
+          answer: 1,
+          citation:
+            "Page 11: 'In Java, class attributes are variables defined inside a class but outside any method.'",
+        },
+        {
+          question: "What do attributes represent?",
+          options: [
+            "The behavior of an object",
+            "The state (data) of an object",
+            "The initialization",
+            "The execution",
+          ],
+          answer: 1,
+          citation: "Page 11: 'They represent the state (data) of an object.'",
+        },
+        {
+          question: "What are class attributes also known as?",
+          options: [
+            "Methods or behaviors",
+            "Fields or instance variables",
+            "Parameters or arguments",
+            "Classes or objects",
+          ],
+          answer: 1,
+          citation: "Page 11: 'Also known as fields or instance variables.'",
+        },
+        {
+          question: "In the explanation, what are x and y?",
+          options: [
+            "Methods of the class Main",
+            "Attributes of the class Main",
+            "Objects",
+            "Constructors",
+          ],
+          answer: 1,
+          citation: "Page 11: 'x and y are attributes of the class Main.'",
+        },
+        {
+          question: "What will each object of Main have?",
+          options: [
+            "Shared attributes",
+            "Its own copy of these attributes",
+            "No attributes",
+            "Static attributes",
+          ],
+          answer: 1,
+          citation:
+            "Page 11: 'Each object of Main will have its own copy of these attributes.'",
+        },
+        {
+          question: "How are attributes accessed?",
+          options: [
+            "Using className.attributeName",
+            "Using objectName.attributeName (e.g., myObj.x)",
+            "Using method calls only",
+            "Using new keyword",
+          ],
+          answer: 1,
+          citation:
+            "Page 11: 'Attributes are accessed using objectName.attributeName (e.g., myObj.x).'",
+        },
+        {
+          question:
+            "In the example: 'public class Main { int x = 5; int y = 3; }', what does this show?",
+          options: [
+            "Methods declaration",
+            "Attributes x and y",
+            "Object creation",
+            "Constructor",
+          ],
+          answer: 1,
+          citation: "Page 11: Example showing class attributes",
+        },
+        {
+          question: "What can attributes have?",
+          options: [
+            "Only public modifiers",
+            "Access modifiers: public, private, or protected",
+            "No modifiers",
+            "Static only",
+          ],
+          answer: 1,
+          citation:
+            "Page 11: 'Attributes can have access modifiers: public, private, or protected.'",
+        },
+        {
+          question: "What can be given to attributes when declared?",
+          options: ["No values", "Default values", "Only null", "Methods"],
+          answer: 1,
+          citation:
+            "Page 11: 'They can be given default values when declared.'",
+        },
+        {
+          question:
+            "What can you do with an attribute's value after an object is created?",
+          options: [
+            "Cannot modify it",
+            "Modify the value of an attribute",
+            "Delete it",
+            "Make it static",
+          ],
+          answer: 1,
+          citation:
+            "Page 12: 'You can modify the value of an attribute after an object is created.'",
+        },
+        {
+          question: "What operator is used to access and update the attribute?",
+          options: [
+            "Colon operator",
+            "Dot operator",
+            "Arrow operator",
+            "Comma operator",
+          ],
+          answer: 1,
+          citation:
+            "Page 12: 'Use the dot operator to access and update the attribute.'",
+        },
+        {
+          question:
+            "In the example code with myObj.x = 40, what is the output?",
+          options: ["0", "5", "40", "null"],
+          answer: 2,
+          citation: "Page 12: 'System.out.println(myObj.x); // Output: 40'",
+        },
+        {
+          question: "In the example, what does 'myObj.x = 40;' do?",
+          options: [
+            "Creates the object",
+            "Assigns a new value to the attribute x",
+            "Prints the value",
+            "Defines the class",
+          ],
+          answer: 1,
+          citation:
+            "Page 12: 'myObj.x = 40; assigns a new value to the attribute x.'",
+        },
+        {
+          question: "What is the value updated for in modifying attributes?",
+          options: [
+            "All objects",
+            "Specifically for the object myObj",
+            "The class",
+            "Static fields",
+          ],
+          answer: 1,
+          citation:
+            "Page 12: 'The value is updated specifically for the object myObj.'",
+        },
+        {
+          question: "What does modifying an attribute affect?",
+          options: [
+            "All objects",
+            "Only that particular object",
+            "The class definition",
+            "No effect",
+          ],
+          answer: 1,
+          citation:
+            "Page 12: 'Modifying an attribute only affects that particular object.'",
+        },
+        {
+          question: "What does each object have regarding attributes?",
+          options: [
+            "Shared copies",
+            "Its own independent copy of the attributes",
+            "No copies",
+            "Global copies",
+          ],
+          answer: 1,
+          citation:
+            "Page 12: 'Each object has its own independent copy of the attributes.'",
+        },
+        {
+          question:
+            "What can you do with default attribute values after object creation?",
+          options: [
+            "Cannot override",
+            "Override default attribute values",
+            "Delete them",
+            "Make them final",
+          ],
+          answer: 1,
+          citation:
+            "Page 13: 'You can override default attribute values after object creation.'",
+        },
+        {
+          question:
+            "What operator is used to assign a new value in overriding?",
+          options: [
+            "Equals operator",
+            "Dot operator (.)",
+            "Plus operator",
+            "Arrow operator",
+          ],
+          answer: 1,
+          citation:
+            "Page 13: 'Use the dot operator (.) to assign a new value.'",
+        },
+        {
+          question:
+            "In the example code with myObj.x = 25, what is the output?",
+          options: ["10", "25", "0", "Error"],
+          answer: 1,
+          citation: "Page 13: 'System.out.println(myObj.x); // Output: 25'",
+        },
+        {
+          question:
+            "In the example, what was the attribute x initially set to?",
+          options: ["25", "10", "0", "null"],
+          answer: 1,
+          citation: "Page 13: 'The attribute x was initially set to 10.'",
+        },
+        {
+          question: "In the example, what happens with 'myObj.x = 25;'?",
+          options: [
+            "It is initialized",
+            "It is overridden",
+            "It causes error",
+            "It remains 10",
+          ],
+          answer: 1,
+          citation: "Page 13: 'It is overridden with myObj.x = 25;'",
+        },
+        {
+          question: "What does overriding affect?",
+          options: [
+            "The class definition",
+            "Only the specific object (myObj) and not the class definition",
+            "All objects",
+            "Static variables",
+          ],
+          answer: 1,
+          citation:
+            "Page 13: 'Overriding affects only the specific object (myObj) and not the class definition.'",
+        },
+        {
+          question:
+            "What is a common way to customize object state at runtime?",
+          options: [
+            "Using constructors only",
+            "Overriding",
+            "Final keyword",
+            "Static methods",
+          ],
+          answer: 1,
+          citation:
+            "Page 13: 'This is a common way to customize object state at runtime.'",
+        },
+        {
+          question: "How do you make an attribute constant and unchangeable?",
+          options: [
+            "Declare it with public",
+            "Declare it with the final keyword",
+            "Use static",
+            "Use private",
+          ],
+          answer: 1,
+          citation:
+            "Page 14: 'To make an attribute constant and unchangeable, declare it with the final keyword.'",
+        },
+        {
+          question: "What must happen with a final variable?",
+          options: [
+            "Assigned multiple times",
+            "Assigned once, and cannot be modified later",
+            "Not assigned",
+            "Assigned in methods only",
+          ],
+          answer: 1,
+          citation:
+            "Page 14: 'A final variable must be assigned once, and cannot be modified later.'",
+        },
+        {
+          question:
+            "In the example with final int x = 10, what happens when trying to assign myObj.x = 25?",
+          options: [
+            "It succeeds",
+            "Error: cannot assign a value to a final variable",
+            "Prints 25",
+            "Prints 10 and changes",
+          ],
+          answer: 1,
+          citation:
+            "Page 14: 'myObj.x = 25; // Error: cannot assign a value to a final variable'",
+        },
+        {
+          question: "In the example, what does 'final int x = 10;' create?",
+          options: ["A variable", "A constant", "A method", "An object"],
+          answer: 1,
+          citation: "Page 14: 'final int x = 10; creates a constant.'",
+        },
+        {
+          question: "What happens when attempting to assign a new value to x?",
+          options: [
+            "It updates",
+            "Causes a compile-time error",
+            "Runtime error",
+            "No effect",
+          ],
+          answer: 1,
+          citation:
+            "Page 14: 'Attempting to assign a new value to x causes a compile-time error.'",
+        },
+        {
+          question: "What is final useful for?",
+          options: [
+            "Changing values",
+            "Values that should never change (e.g., PI = 3.14159)",
+            "Temporary variables",
+            "Method parameters",
+          ],
+          answer: 1,
+          citation:
+            "Page 14: 'final is useful for values that should never change (e.g., PI = 3.14159).'",
+        },
+        {
+          question: "What is final in Java?",
+          options: [
+            "A keyword for methods only",
+            "A modifier",
+            "A data type",
+            "An access level",
+          ],
+          answer: 1,
+          citation: "Page 14: 'final is a modifier in Java.'",
+        },
+        {
+          question:
+            "When will you learn more about modifiers like public, static, and final?",
+          options: [
+            "In this chapter",
+            "In later chapters",
+            "Not mentioned",
+            "In previous chapters",
+          ],
+          answer: 1,
+          citation:
+            "Page 14: 'You will learn more about modifiers like public, static, and final in later chapters.'",
+        },
+        {
+          question:
+            "When creating multiple objects from the same class, what does each object have?",
+          options: [
+            "Shared copies of the class attributes",
+            "Its own copy of the class attributes",
+            "No attributes",
+            "Global attributes",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'When you create multiple objects from the same class, each object has its own copy of the class attributes.'",
+        },
+        {
+          question: "What happens when modifying the attribute in one object?",
+          options: [
+            "Affects all objects",
+            "Does not affect the other",
+            "Causes shared change",
+            "Errors out",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Modifying the attribute in one object does not affect the other.'",
+        },
+        {
+          question:
+            "In the independent attributes example, what are the outputs?",
+          options: ["25 and 25", "5 and 25", "5 and 5", "25 and 5"],
+          answer: 1,
+          citation:
+            "Page 15: 'System.out.println(myObj1.x); // Outputs 5; System.out.println(myObj2.x); // Outputs 25'",
+        },
+        {
+          question: "In the example, what are myObj1 and myObj2?",
+          options: ["The same", "Two separate objects", "Methods", "Classes"],
+          answer: 1,
+          citation: "Page 15: 'myObj1 and myObj2 are two separate objects.'",
+        },
+        {
+          question: "In the example, where is x changed?",
+          options: ["In myObj1", "Only in myObj2", "In both", "In none"],
+          answer: 1,
+          citation: "Page 15: 'x is changed only in myObj2.'",
+        },
+        {
+          question: "What does each object do with its state?",
+          options: [
+            "Shares it",
+            "Maintains its own independent state",
+            "Loses it",
+            "Copies from others",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Each object maintains its own independent state.'",
+        },
+        {
+          question: "What is this behavior essential in?",
+          options: [
+            "Procedural programming",
+            "Object-oriented programming",
+            "Functional programming",
+            "Scripting",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'This behavior is essential in object-oriented programming'",
+        },
+        {
+          question: "What does it allow different objects to do?",
+          options: [
+            "Behave the same",
+            "Behave differently, even if created from the same class",
+            "Share behavior",
+            "Not behave",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'It allows different objects to behave differently, even if created from the same class.'",
+        },
+        {
+          question: "What can a Java class have?",
+          options: [
+            "Only one attribute",
+            "Multiple attributes of different data types",
+            "No attributes",
+            "Only string attributes",
+          ],
+          answer: 1,
+          citation:
+            "Page 16: 'A Java class can have multiple attributes of different data types.'",
+        },
+        {
+          question: "What do these attributes define?",
+          options: [
+            "The behavior only",
+            "The state and identity of each object",
+            "The methods",
+            "The constructors",
+          ],
+          answer: 1,
+          citation:
+            "Page 16: 'These attributes define the state and identity of each object.'",
+        },
+        {
+          question:
+            "In the multiple attributes example, what attributes are defined?",
+          options: [
+            "fname, lname, age",
+            "name, age, id",
+            "first, last, years",
+            "str1, str2, num",
+          ],
+          answer: 0,
+          citation:
+            "Page 16: 'The class Main defines three attributes: fname, lname, and age.'",
+        },
+        {
+          question: "In the example, what does the object myObj access?",
+          options: [
+            "Methods only",
+            "All attributes",
+            "No attributes",
+            "Static fields",
+          ],
+          answer: 1,
+          citation:
+            "Page 16: 'An object myObj is created and accesses all attributes.'",
+        },
+        {
+          question: "What is the output of the multiple attributes example?",
+          options: [
+            "Name: John Doe Age: 24",
+            "Name: Doe John Age: 24",
+            "Age: 24 Name: John Doe",
+            "Error",
+          ],
+          answer: 0,
+          citation: "Page 16: 'Output: Name: John Doe Age: 24'",
+        },
+        {
+          question: "What can attributes be of?",
+          options: [
+            "Only int",
+            "Any valid Java data type: int, double, String, boolean, etc.",
+            "Only String",
+            "No data types",
+          ],
+          answer: 1,
+          citation:
+            "Page 16: 'Attributes can be of any valid Java data type: int, double, String, boolean, etc.'",
+        },
+        {
+          question:
+            "What should you use for attributes to improve code readability?",
+          options: [
+            "Short names",
+            "Meaningful names",
+            "Random names",
+            "No names",
+          ],
+          answer: 1,
+          citation:
+            "Page 16: 'Use meaningful names to improve code readability.'",
+        },
+        {
+          question: "Where are methods declared in Java?",
+          options: [
+            "Outside classes",
+            "Inside a class",
+            "In objects only",
+            "In main only",
+          ],
+          answer: 1,
+          citation: "Page 17: 'In Java, methods are declared inside a class.'",
+        },
+        {
+          question: "What does a method define?",
+          options: [
+            "Data only",
+            "An action or behavior that objects or the class can perform",
+            "Classes",
+            "Attributes",
+          ],
+          answer: 1,
+          citation:
+            "Page 17: 'A method defines an action or behavior that objects or the class can perform.'",
+        },
+        {
+          question: "What do methods improve?",
+          options: [
+            "Code disorganization",
+            "Code organization and reusability",
+            "Errors",
+            "Compilation time",
+          ],
+          answer: 1,
+          citation:
+            "Page 17: 'Methods improve code organization and reusability.'",
+        },
+        {
+          question:
+            "In the example 'public class Main { static void myMethod() { ... } }', what is myMethod()?",
+          options: [
+            "A public method",
+            "A static method",
+            "A constructor",
+            "An attribute",
+          ],
+          answer: 1,
+          citation:
+            "Page 17: 'myMethod() is a static method, meaning it belongs to the class, not to any instance.'",
+        },
+        {
+          question: "What does the method do when called?",
+          options: [
+            "Nothing",
+            "Prints 'Hello World!'",
+            "Creates object",
+            "Modifies attribute",
+          ],
+          answer: 1,
+          citation: "Page 17: 'It prints 'Hello World!' when called.'",
+        },
+        {
+          question: "What do you need to do to execute the method?",
+          options: [
+            "Define it only",
+            "Call this method (e.g., from main() method)",
+            "Use new",
+            "Use final",
+          ],
+          answer: 1,
+          citation:
+            "Page 17: 'You'll need to call this method (e.g., from main() method) to execute it.'",
+        },
+        {
+          question: "What must a method have?",
+          options: [
+            "No return type",
+            "A return type, e.g., void, int, String",
+            "Only void",
+            "Only int",
+          ],
+          answer: 1,
+          citation:
+            "Page 17: 'A method must have a return type, e.g., void, int, String.'",
+        },
+        {
+          question: "What can methods also do?",
+          options: [
+            "Only execute",
+            "Receive parameters and return values (to be learned in later slides)",
+            "Create classes",
+            "Define attributes",
+          ],
+          answer: 1,
+          citation:
+            "Page 17: 'Methods can also receive parameters and return values (to be learned in later slides).'",
+        },
+        {
+          question: "How do you execute a method?",
+          options: [
+            "Define it",
+            "Call it by its name, followed by parentheses () and a semicolon ;",
+            "Use new",
+            "Use dot operator only",
+          ],
+          answer: 1,
+          citation:
+            "Page 18: 'To execute a method, call it by its name, followed by parentheses () and a semicolon ;.'",
+        },
+        {
+          question: "If the method is static, how can you call it?",
+          options: [
+            "Only with object",
+            "Directly from the main() method",
+            "No call needed",
+            "With final",
+          ],
+          answer: 1,
+          citation:
+            "Page 18: 'If the method is static, you can call it directly from the main() method.'",
+        },
+        {
+          question: "In the example 'myMethod();', what is this?",
+          options: [
+            "Definition",
+            "Method call",
+            "Object creation",
+            "Attribute access",
+          ],
+          answer: 1,
+          citation: "Page 18: 'myMethod(); // Method call'",
+        },
+        {
+          question: "In the example, how is myMethod() called?",
+          options: [
+            "With object",
+            "Directly from main() without creating an object",
+            "In constructor",
+            "Statically with class name",
+          ],
+          answer: 1,
+          citation:
+            "Page 18: 'It is called directly from main() without creating an object.'",
+        },
+        {
+          question: "What is the output of the method call example?",
+          options: ["Nothing", "Hello World!", "Error", "5"],
+          answer: 1,
+          citation: "Page 18: 'Output: Hello World!'",
+        },
+        {
+          question: "When must a method be defined?",
+          options: [
+            "After call",
+            "Before or within scope of where you call it",
+            "No order",
+            "In separate file",
+          ],
+          answer: 1,
+          citation:
+            "Page 18: 'You must define a method before or within scope of where you call it.'",
+        },
+        {
+          question: "What are required even if no parameters?",
+          options: ["Brackets []", "Parentheses ()", "Braces {}", "No symbols"],
+          answer: 1,
+          citation:
+            "Page 18: 'Parentheses () are required even if the method takes no parameters.'",
+        },
+        {
+          question: "What does a static method belong to?",
+          options: [
+            "The object",
+            "The class, can be called without creating an object",
+            "The attribute",
+            "The constructor",
+          ],
+          answer: 1,
+          citation:
+            "Page 19: 'static method: belongs to the class, can be called without creating an object.'",
+        },
+        {
+          question: "What does a public method belong to?",
+          options: [
+            "The class",
+            "An object, must be called through an instance of the class",
+            "Static fields",
+            "Global",
+          ],
+          answer: 1,
+          citation:
+            "Page 19: 'public method: belongs to an object, must be called through an instance of the class.'",
+        },
+        {
+          question:
+            "In the static and public methods example, how is myStaticMethod() called?",
+          options: ["With object", "Without object", "Error", "In constructor"],
+          answer: 1,
+          citation: "Page 20: 'myStaticMethod(); // ✓ Works without object'",
+        },
+        {
+          question: "How is myPublicMethod() called?",
+          options: [
+            "Directly.",
+            "By creating objects.",
+            "Static call.",
+            "No call.",
+          ],
+          answer: 1,
+          citation:
+            "Page 20 - 'myObj.myPublicMethod(); // ✓ Call public method via object'",
+        },
+        {
+          question: "What do static methods belong to and how are they called?",
+          options: [
+            "Objects, through instance.",
+            "The class and can be called without creating objects.",
+            "Attributes.",
+            "Constructors.",
+          ],
+          answer: 1,
+          citation:
+            "Page 20 - 'Static methods belong to the class and can be called without creating objects.'",
+        },
+        {
+          question: "What do public methods belong to and how are they called?",
+          options: [
+            "Class, directly.",
+            "Objects and must be called through an instance of the class.",
+            "No call needed.",
+            "Globally.",
+          ],
+          answer: 1,
+          citation:
+            "Page 20 - 'Public methods belong to objects and must be called through an instance of the class.'",
+        },
+        {
+          question: "How are static methods called?",
+          options: ["Through object.", "Directly.", "With new.", "With this."],
+          answer: 1,
+          citation: "Page 20 - 'Static methods are called directly,'",
+        },
+        {
+          question: "What do public methods require first?",
+          options: [
+            "No object.",
+            "Object creation.",
+            "Static declaration.",
+            "Final.",
+          ],
+          answer: 1,
+          citation:
+            "Page 20 - 'while public methods require object creation first.'",
+        },
+        {
+          question: "For static, how is access and requires object?",
+          options: [
+            "objectName.methodName(), Yes.",
+            "ClassName.methodName(), No.",
+            "No access.",
+            "Parameter only.",
+          ],
+          answer: 1,
+          citation: "Page 21 - 'static ClassName.methodName() ❌ No'",
+        },
+        {
+          question: "For public, how is access and requires object?",
+          options: [
+            "ClassName.methodName(), No.",
+            "objectName.methodName(), Yes.",
+            "Direct call, No.",
+            "No object.",
+          ],
+          answer: 1,
+          citation: "Page 21 - 'public objectName.methodName() ✅ Yes'",
+        },
+        {
+          question: "What does public control?",
+          options: [
+            "How accessed.",
+            "Visibility, while static controls how a method is accessed.",
+            "Data types.",
+            "Return types.",
+          ],
+          answer: 1,
+          citation:
+            "Page 21 - 'public controls visibility, while static controls how a method is accessed.'",
+        },
+        {
+          question: "What can you do with public and static?",
+          options: [
+            "Cannot combine.",
+            "Combine both: public static void.",
+            "Only public.",
+            "Only static.",
+          ],
+          answer: 1,
+          citation: "Page 21 - 'You can combine both: public static void.'",
+        },
+        {
+          question: "What is Java?",
+          options: [
+            "A language with global functions.",
+            "A pure object-oriented language.",
+            "Functional.",
+            "Procedural.",
+          ],
+          answer: 1,
+          citation: "Page 22 - 'Java is a pure object-oriented language.'",
+        },
+        {
+          question: "Where must all methods be defined?",
+          options: [
+            "Outside classes.",
+            "Inside a class.",
+            "Globally.",
+            "In main.",
+          ],
+          answer: 1,
+          citation:
+            "Page 22 - 'Therefore, all methods must be defined inside a class.'",
+        },
+        {
+          question: "Are global functions allowed in Java?",
+          options: ["Yes.", "Not allowed.", "Only in C++.", "Optional."],
+          answer: 1,
+          citation:
+            "Page 22 - 'Global functions (functions outside of any class) are not allowed in Java.'",
+        },
+        {
+          question: "In C++, are global functions allowed?",
+          options: [
+            "No.",
+            "Allowed (e.g. int add()).",
+            "Only in classes.",
+            "Not mentioned.",
+          ],
+          answer: 1,
+          citation: "Page 22 - 'Global Function ✅ Allowed (e.g. int add())'",
+        },
+        {
+          question: "In Java, are global functions allowed?",
+          options: [
+            "Allowed.",
+            "Not Allowed.",
+            "Optional.",
+            "In classes only.",
+          ],
+          answer: 1,
+          citation: "Page 22 - '❌ Not Allowed'",
+        },
+        {
+          question: "Are class methods allowed in both?",
+          options: [
+            "Only in Java.",
+            "Allowed in both.",
+            "Only in C++.",
+            "Not allowed.",
+          ],
+          answer: 1,
+          citation: "Page 22 - 'Class Method ✅ Allowed ✅ Required'",
+        },
+        {
+          question: "What is code structure in C++?",
+          options: [
+            "Class-based only.",
+            "Function-based or class-based.",
+            "Object-based.",
+            "No structure.",
+          ],
+          answer: 1,
+          citation: "Page 22 - 'Code Structure Function-based or class-based'",
+        },
+        {
+          question: "What is code structure in Java?",
+          options: [
+            "Function-based.",
+            "Class-based only.",
+            "Global.",
+            "Mixed.",
+          ],
+          answer: 1,
+          citation: "Page 22 - 'Class-based only'",
+        },
+        {
+          question: "Why is the code below invalid in Java?",
+          options: [
+            "Inside class.",
+            "This will cause a compilation error (global function).",
+            "Valid.",
+            "No return.",
+          ],
+          answer: 1,
+          citation:
+            "Page 23 - '// ❌ This will cause a compilation error int add(int a, int b) { return a + b; }'",
+        },
+        {
+          question: "In the valid Java code below, how is it called?",
+          options: [
+            "add(2, 3);",
+            "MathUtils.add(2, 3);",
+            "new add();",
+            "Global add.",
+          ],
+          answer: 1,
+          citation: "Page 23 - 'Call with: MathUtils.add(2, 3);'",
+        },
+        {
+          question: "What is true in Java?",
+          options: [
+            "Standalone functions.",
+            "Everything lives inside a class — there are no standalone functions.",
+            "Global allowed.",
+            "Functions outside.",
+          ],
+          answer: 1,
+          citation:
+            "Page 23 - '✅ In Java, everything lives inside a class — there are no standalone functions.'",
+        },
+        {
+          question: "To call non-static methods, what must you do?",
+          options: [
+            "Call directly.",
+            "Create an object of the class.",
+            "Use static.",
+            "Use global.",
+          ],
+          answer: 1,
+          citation:
+            "Page 24 - 'To call non-static methods, you must create an object of the class.'",
+        },
+        {
+          question: "What operator is used to access methods on the object?",
+          options: ["Colon.", "Dot (.).", "Arrow.", "Comma."],
+          answer: 1,
+          citation:
+            "Page 24 - 'Use the dot (.) operator to access methods on the object.'",
+        },
+        {
+          question:
+            "In the example code below, what are myCar.fullThrottle() and myCar.speed(200)?",
+          options: [
+            "Static calls.",
+            "Calls to instance methods.",
+            "Constructors.",
+            "Attributes.",
+          ],
+          answer: 1,
+          citation:
+            "Page 24 - 'myCar.fullThrottle() and myCar.speed(200) call instance methods.'",
+        },
+        {
+          question: "What does each method do?",
+          options: [
+            "Nothing.",
+            "Runs actions defined in the class.",
+            "Creates objects.",
+            "Modifies class.",
+          ],
+          answer: 1,
+          citation:
+            "Page 24 - 'Each method runs actions defined in the class.'",
+        },
+        {
+          question: "What are these methods?",
+          options: ["Static.", "Public and non-static.", "Final.", "Private."],
+          answer: 1,
+          citation:
+            "Page 24 - 'These methods are public and non-static, so they require an object to be called.'",
+        },
+        {
+          question: "What does a static field belong to?",
+          options: [
+            "Instances (objects).",
+            "The class, not to instances (objects).",
+            "Methods.",
+            "Constructors.",
+          ],
+          answer: 1,
+          citation:
+            "Page 25 - 'A static field belongs to the class, not to instances (objects).'",
+        },
+        {
+          question: "Who shares the same copy of the static field?",
+          options: [
+            "No one.",
+            "All objects.",
+            "Only one object.",
+            "Classes only.",
+          ],
+          answer: 1,
+          citation:
+            "Page 25 - 'All objects share the same copy of the static field.'",
+        },
+        {
+          question: "In the example code below, what is university?",
+          options: [
+            "Instance variable.",
+            "Static field.",
+            "Method.",
+            "Constructor.",
+          ],
+          answer: 1,
+          citation: "Page 25 - 'static String university = 'UIT';'",
+        },
+        {
+          question: "In the usage code below, what does it print?",
+          options: ["Different values.", "UIT for both.", "null.", "Error."],
+          answer: 1,
+          citation:
+            "Page 25 - 'System.out.println(s1.university); // UIT System.out.println(s2.university); // UIT'",
+        },
+        {
+          question:
+            "If s2.university = 'HCMUT';, what happens to s1.university?",
+          options: ["Remains UIT.", "Changes to HCMUT.", "Error.", "null."],
+          answer: 1,
+          citation:
+            "Page 25 - 's2.university = 'HCMUT'; System.out.println(s1.university); // HCMUT'",
+        },
+        {
+          question: "What does changing static fields through one object do?",
+          options: [
+            "Affects only that object.",
+            "Affects all objects.",
+            "No effect.",
+            "Affects class only.",
+          ],
+          answer: 1,
+          citation:
+            "Page 25 - '✅ Changing static fields through one object affects all objects.'",
+        },
+        {
+          question: "What are static fields for?",
+          options: [
+            "Unique per object.",
+            "Values shared by all instances: e.g., university name, tax rate, version number.",
+            "Temporary data.",
+            "Methods.",
+          ],
+          answer: 1,
+          citation:
+            "Page 25 - 'For values shared by all instances: e.g., university name, tax rate, version number.'",
+        },
+        {
+          question: "What else are static fields for?",
+          options: [
+            "Individual IDs.",
+            "Counters (e.g., auto-increment IDs).",
+            "Behaviors.",
+            "Parameters.",
+          ],
+          answer: 1,
+          citation: "Page 25 - 'For counters (e.g., auto-increment IDs).'",
+        },
+        {
+          question: "What is the purpose of static field?",
+          options: [
+            "Perform behavior.",
+            "Store shared data.",
+            "Call methods.",
+            "Initialize objects.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'Purpose Store shared data'",
+        },
+        {
+          question: "How can static field be accessed?",
+          options: [
+            "objectName.field.",
+            "ClassName.field.",
+            "Method call.",
+            "Constructor.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'Access ClassName.field'",
+        },
+        {
+          question: "Does static field require object?",
+          options: ["Yes.", "No.", "Sometimes.", "Always."],
+          answer: 1,
+          citation: "Page 26 - 'Object Needed? ❌ No'",
+        },
+        {
+          question: "What is usage example for static field?",
+          options: [
+            "Utility logic.",
+            "Global constants, counters.",
+            "Instance data.",
+            "Behaviors.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'Usage Example Global constants, counters'",
+        },
+        {
+          question: "What is the purpose of static method?",
+          options: [
+            "Store data.",
+            "Perform shared behavior.",
+            "Attributes.",
+            "Objects.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'Purpose Perform shared behavior'",
+        },
+        {
+          question: "How is static method accessed?",
+          options: [
+            "objectName.method()",
+            "ClassName.method()",
+            "No access.",
+            "With new.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'Access ClassName.method()'",
+        },
+        {
+          question: "Does static method require object?",
+          options: ["Yes.", "No.", "Optional.", "For public."],
+          answer: 1,
+          citation: "Page 26 - 'Object Needed? ❌ No'",
+        },
+        {
+          question: "What is usage example for static method?",
+          options: [
+            "Shared data.",
+            "Utility logic, tools.",
+            "Instance variables.",
+            "Constructors.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'Usage Example Utility logic, tools'",
+        },
+        {
+          question: "What does static field belong to?",
+          options: [
+            "Instance.",
+            "The class, not instance.",
+            "Object.",
+            "Method.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'Belongs to the class, not instance.'",
+        },
+        {
+          question: "In the example code below, how is it accessed?",
+          options: [
+            "With object.",
+            "Using ClassName.field.",
+            "Method.",
+            "Constructor.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'System.out.println(Example.count);'",
+        },
+        {
+          question: "What does static method belong to?",
+          options: ["Object.", "The class.", "Attribute.", "Parameter."],
+          answer: 1,
+          citation: "Page 26 - 'Belongs to the class.'",
+        },
+        {
+          question: "How can static method be called?",
+          options: [
+            "With object only.",
+            "Without creating objects.",
+            "New required.",
+            "Final.",
+          ],
+          answer: 1,
+          citation: "Page 26 - 'Can be called without creating objects.'",
+        },
+        {
+          question: "In the example code below, what is the result?",
+          options: ["0", "25", "Error", "5"],
+          answer: 1,
+          citation: "Page 26 - 'MathUtils.square(5); // 25'",
+        },
+        {
+          question: "What does Java encourage for better organization?",
+          options: [
+            "All in one class.",
+            "Separating code into multiple classes.",
+            "Global functions.",
+            "Single file.",
+          ],
+          answer: 1,
+          citation:
+            "Page 27 - 'Java encourages separating code into multiple classes for better organization.'",
+        },
+        {
+          question: "What does one class define?",
+          options: [
+            "main only.",
+            "Methods and attributes.",
+            "Objects only.",
+            "Static only.",
+          ],
+          answer: 1,
+          citation: "Page 27 - 'One class defines methods and attributes.'",
+        },
+        {
+          question: "What can another class contain?",
+          options: [
+            "Attributes only.",
+            "The main() method and create objects from the first class.",
+            "No main.",
+            "Constructors only.",
+          ],
+          answer: 1,
+          citation:
+            "Page 27 - 'Another class can contain the main() method and create objects from the first class.'",
+        },
+        {
+          question: "What is best practice for classes?",
+          options: [
+            "All in one file.",
+            "Each class is saved in a separate file.",
+            "No files.",
+            "Combined files.",
+          ],
+          answer: 1,
+          citation: "Page 27 - 'Each class is saved in a separate file.'",
+        },
+        {
+          question: "What must the file name match?",
+          options: [
+            "Method name.",
+            "The public class name.",
+            "Object name.",
+            "Attribute name.",
+          ],
+          answer: 1,
+          citation:
+            "Page 27 - 'The file name must match the public class name.'",
+        },
+        {
+          question: "What is the example structure?",
+          options: [
+            "Single file.",
+            "Main.java → defines methods; Second.java → contains main() and uses Main.",
+            "No structure.",
+            "Global.",
+          ],
+          answer: 1,
+          citation:
+            "Page 27 - 'Main.java → defines methods Second.java → contains main() and uses Main'",
+        },
+        {
+          question: "In Main.java code below, what does it define?",
+          options: [
+            "main().",
+            "The car's behaviors.",
+            "Objects.",
+            "Static fields.",
+          ],
+          answer: 1,
+          citation: "Page 28 - 'Main defines the car's behaviors.'",
+        },
+        {
+          question: "In Second.java code below, what does it do?",
+          options: [
+            "Defines behaviors.",
+            "Creates the Main object and calls its methods.",
+            "Static calls.",
+            "Attributes.",
+          ],
+          answer: 1,
+          citation:
+            "Page 28 - 'Second creates the Main object and calls its methods.'",
+        },
+        {
+          question: "What does this separation allow?",
+          options: [
+            "No reuse.",
+            "Better code reuse across multiple programs.",
+            "Errors.",
+            "Single use.",
+          ],
+          answer: 1,
+          citation:
+            "Page 28 - 'This separation allows better code reuse across multiple programs.'",
+        },
+        {
+          question: "What should only one class contain?",
+          options: [
+            "Methods.",
+            "main() — that class is the entry point of your program.",
+            "Attributes.",
+            "Objects.",
+          ],
+          answer: 1,
+          citation:
+            "Page 28 - 'Only one class should contain main() — that class is the entry point of your program.'",
+        },
+        {
+          question: "What is a constructor?",
+          options: [
+            "A regular method.",
+            "A special method used to initialize objects.",
+            "A destructor.",
+            "A static field.",
+          ],
+          answer: 1,
+          citation:
+            "Page 29 - 'A constructor is a special method used to initialize objects.'",
+        },
+        {
+          question: "When is a constructor called?",
+          options: [
+            "Manually",
+            "Automatically when an object is created",
+            "In main",
+            "With dot",
+          ],
+          answer: 1,
+          citation:
+            "Page 29 - 'It is automatically called when an object is created.'",
+        },
+        {
+          question: "What is it used for?",
+          options: [
+            "To destroy objects",
+            "To set initial values for attributes",
+            "To call methods",
+            "To access fields",
+          ],
+          answer: 1,
+          citation: "Page 29 - 'Used to set initial values for attributes.'",
+        },
+        {
+          question: "In the example code below, what is the output?",
+          options: ["0", "5", "null", "Error"],
+          answer: 1,
+          citation: "Page 29 - 'System.out.println(myObj.x); // Outputs 5'",
+        },
+        {
+          question: "In the example, when does the constructor Main() run?",
+          options: [
+            "In main",
+            "When new Main() is called",
+            "After print",
+            "Before creation",
+          ],
+          answer: 1,
+          citation:
+            "Page 29 - 'The constructor Main() runs when new Main() is called.'",
+        },
+        {
+          question: "What does it do to x?",
+          options: ["Prints", "Sets x = 5", "Modifies object", "Creates class"],
+          answer: 1,
+          citation: "Page 29 - 'It sets x = 5, so myObj.x will print 5.'",
+        },
+        {
+          question: "What must the constructor name match?",
+          options: [
+            "Method name",
+            "The class name",
+            "Object name",
+            "Attribute name",
+          ],
+          answer: 1,
+          citation: "Page 29 - 'Constructor name must match the class name.'",
+        },
+        {
+          question: "What return type does a constructor have?",
+          options: [
+            "void",
+            "Does not have a return type (not even void)",
+            "int",
+            "String",
+          ],
+          answer: 1,
+          citation:
+            "Page 29 - 'It does not have a return type (not even void).'",
+        },
+        {
+          question: "What happens if you don't define a constructor?",
+          options: [
+            "Error",
+            "Java provides a default constructor",
+            "No initialization",
+            "Static one",
+          ],
+          answer: 1,
+          citation:
+            "Page 29 - 'If you don't define one, Java provides a default constructor.'",
+        },
+        {
+          question: "What does the default constructor not do?",
+          options: [
+            "Set initial values",
+            "Set initial values",
+            "Create object",
+            "Call methods",
+          ],
+          answer: 0,
+          citation:
+            "Page 29 - 'The default constructor does not set initial values.'",
+        },
+        {
+          question: "What can constructors take?",
+          options: [
+            "No parameters",
+            "Parameters to initialize object attributes with custom values",
+            "Only int",
+            "Static",
+          ],
+          answer: 1,
+          citation:
+            "Page 30 - 'Constructors can take parameters to initialize object attributes with custom values.'",
+        },
+        {
+          question: "When is it useful?",
+          options: [
+            "For same initial states",
+            "When you want different objects to have different initial states",
+            "For no states",
+            "For static",
+          ],
+          answer: 1,
+          citation:
+            "Page 30 - 'Useful when you want different objects to have different initial states.'",
+        },
+        {
+          question: "In the example code below, what is the output?",
+          options: ["0", "5", "y", "Error"],
+          answer: 1,
+          citation: "Page 30 - 'System.out.println(myObj.x); // Outputs 5'",
+        },
+        {
+          question: "What does the constructor take?",
+          options: [
+            "String",
+            "An int y as a parameter",
+            "No parameter",
+            "Double",
+          ],
+          answer: 1,
+          citation:
+            "Page 30 - 'The constructor takes an int y as a parameter.'",
+        },
+        {
+          question: "What happens inside the constructor?",
+          options: ["y = x", "x = y", "Print x", "Create y"],
+          answer: 1,
+          citation: "Page 30 - 'Inside the constructor, x = y.'",
+        },
+        {
+          question: "When calling new Main(5), what happens?",
+          options: [
+            "5 is ignored",
+            "The value 5 is passed to the constructor → x = 5",
+            "Error",
+            "y = 5",
+          ],
+          answer: 1,
+          citation:
+            "Page 30 - 'When calling new Main(5), the value 5 is passed to the constructor → x = 5.'",
+        },
+        {
+          question: "What can you define?",
+          options: [
+            "Only one constructor",
+            "Multiple constructors (constructor overloading) with different parameter types or numbers",
+            "No constructors",
+            "Static only",
+          ],
+          answer: 1,
+          citation:
+            "Page 30 - 'You can define multiple constructors (constructor overloading) with different parameter types or numbers.'",
+        },
+        {
+          question: "What does it allow?",
+          options: [
+            "No flexibility",
+            "Flexibility in how objects are created",
+            "Errors",
+            "Single way",
+          ],
+          answer: 1,
+          citation:
+            "Page 30 - 'This allows flexibility in how objects are created.'",
+        },
+        {
+          question: "What does Java allow in a class?",
+          options: [
+            "Only one constructor",
+            "Multiple constructors with different parameters",
+            "No constructors",
+            "Global constructors",
+          ],
+          answer: 1,
+          citation:
+            "Page 31 - 'Java allows a class to have multiple constructors with different parameters.'",
+        },
+        {
+          question: "What is this called?",
+          options: [
+            "Method overloading",
+            "Constructor overloading",
+            "Field overloading",
+            "Object overloading",
+          ],
+          answer: 1,
+          citation: "Page 31 - 'This is called constructor overloading.'",
+        },
+        {
+          question: "What does it provide?",
+          options: [
+            "Rigidity",
+            "Flexibility when creating objects with different initialization options",
+            "Errors",
+            "No options",
+          ],
+          answer: 1,
+          citation:
+            "Page 31 - 'It provides flexibility when creating objects with different initialization options.'",
+        },
+        {
+          question: "In the example code below, what are the outputs?",
+          options: ["0 and 10", "10 and 0", "0 and 0", "10 and 10"],
+          answer: 0,
+          citation:
+            "Page 31 - 'System.out.println(a.x); // 0 System.out.println(b.x); // 10'",
+        },
+        {
+          question: "How many constructors are there?",
+          options: [
+            "One",
+            "Two: one with no arguments, one with int",
+            "Three",
+            "None",
+          ],
+          answer: 1,
+          citation:
+            "Page 31 - 'Two constructors: one with no arguments, one with int.'",
+        },
+        {
+          question: "What does Java do when creating the object?",
+          options: [
+            "Picks random",
+            "Picks the matching constructor",
+            "Error if multiple",
+            "Uses default only",
+          ],
+          answer: 1,
+          citation:
+            "Page 31 - 'Java picks the matching constructor when creating the object.'",
+        },
+        {
+          question: "What must overloaded constructors have?",
+          options: [
+            "Same signatures",
+            "Different signatures",
+            "No parameters",
+            "Return types",
+          ],
+          answer: 1,
+          citation:
+            "Page 31 - 'Overloaded constructors must have different signatures.'",
+        },
+        {
+          question: "What does it allow?",
+          options: [
+            "Fixed creation",
+            "Flexible object creation",
+            "No creation",
+            "Static creation",
+          ],
+          answer: 1,
+          citation: "Page 31 - 'Allows flexible object creation.'",
+        },
+        {
+          question: "What does the this keyword refer to?",
+          options: ["Class", "The current object", "Parameter", "Static"],
+          answer: 1,
+          citation:
+            "Page 32 - 'The this keyword refers to the current object.'",
+        },
+        {
+          question: "Where is this commonly used?",
+          options: [
+            "In methods only",
+            "In constructors to distinguish between instance variables and parameters when they have the same name",
+            "In static",
+            "In global",
+          ],
+          answer: 1,
+          citation:
+            "Page 32 - 'Commonly used in constructors to distinguish between instance variables and parameters when they have the same name.'",
+        },
+        {
+          question: "In the example code below, what is the output?",
+          options: ["0", "7", "x", "Error"],
+          answer: 1,
+          citation: "Page 32 - 'System.out.println(obj.x); // Outputs 7'",
+        },
+        {
+          question: "What does this.x refer to?",
+          options: ["Parameter", "The class attribute", "Method", "Object"],
+          answer: 1,
+          citation: "Page 32 - 'this.x refers to the class attribute.'",
+        },
+        {
+          question: "What is x (on the right side)?",
+          options: [
+            "Attribute",
+            "The constructor parameter",
+            "Static",
+            "Final",
+          ],
+          answer: 1,
+          citation:
+            "Page 32 - 'x (on the right side) is the constructor parameter.'",
+        },
+        {
+          question: "What would happen without this?",
+          options: [
+            "Assigns correctly",
+            "Java would assign the parameter to itself — and the attribute remains uninitialized",
+            "Error",
+            "Prints null",
+          ],
+          answer: 1,
+          citation:
+            "Page 32 - 'Without this, Java would assign the parameter to itself — and the attribute remains uninitialized.'",
+        },
+        {
+          question: "When is using this optional?",
+          options: [
+            "Always required",
+            "Optional unless names conflict, but it is a good habit to improve clarity",
+            "Never use",
+            "Only in conflicts",
+          ],
+          answer: 1,
+          citation:
+            "Page 32 - 'Using this is optional unless names conflict, but it is a good habit to improve clarity.'",
+        },
+        {
+          question: "What is constructor chaining?",
+          options: [
+            "Calling methods",
+            "One constructor calls another in the same class using this(...)",
+            "Super call",
+            "Static call",
+          ],
+          answer: 1,
+          citation:
+            "Page 33 - 'Constructor chaining means one constructor calls another in the same class using this(...).'",
+        },
+        {
+          question: "What does it help?",
+          options: [
+            "Duplicate code",
+            "Reuse initialization code and avoid duplication",
+            "Errors",
+            "No reuse",
+          ],
+          answer: 1,
+          citation:
+            "Page 33 - 'Helps reuse initialization code and avoid duplication.'",
+        },
+        {
+          question: "In the example code below, what is the output?",
+          options: ["0 0", "5 10", "10 5", "Error"],
+          answer: 1,
+          citation:
+            "Page 33 - 'System.out.println(obj.x + ' ' + obj.y); // 5 10'",
+        },
+        {
+          question: "What does Main() do?",
+          options: [
+            "Calls Main(int x) using this(5)",
+            "Sets x=5 directly",
+            "Error",
+            "Calls super",
+          ],
+          answer: 0,
+          citation: "Page 33 - 'Main() calls Main(int x) using this(5).'",
+        },
+        {
+          question: "After chaining, what happens?",
+          options: ["Sets x=10", "Then it sets y = 10", "Prints", "Creates"],
+          answer: 1,
+          citation: "Page 33 - 'Then it sets y = 10.'",
+        },
+        {
+          question: "Where must constructor chaining be?",
+          options: [
+            "Last line",
+            "The first line inside the constructor",
+            "Any line",
+            "Outside",
+          ],
+          answer: 1,
+          citation:
+            "Page 33 - 'Constructor chaining must be the first line inside the constructor.'",
+        },
+        {
+          question: "What is this(...) used for?",
+          options: [
+            "Refer to variables",
+            "Only for calling another constructor in the same class",
+            "Super call",
+            "Static",
+          ],
+          answer: 1,
+          citation:
+            "Page 33 - 'Use this(...) only for calling another constructor in the same class.'",
+        },
+        {
+          question: "What not to confuse with?",
+          options: [
+            "this(...) with this. used to refer to instance variables",
+            "this with super",
+            "this with static",
+            "this with final",
+          ],
+          answer: 0,
+          citation:
+            "Page 33 - 'Do not confuse with this. used to refer to instance variables.'",
+        },
+        {
+          question: "What happens if you don't define a constructor?",
+          options: [
+            "Error",
+            "Java provides a default constructor",
+            "No initialization",
+            "Static one",
+          ],
+          answer: 1,
+          citation:
+            "Page 34 - 'If no constructor is defined, Java automatically provides a no-argument constructor.'",
+        },
+        {
+          question: "What is it called?",
+          options: [
+            "Custom constructor",
+            "The default constructor",
+            "Overloaded",
+            "Parameterized",
+          ],
+          answer: 1,
+          citation: "Page 34 - 'This is called the default constructor.'",
+        },
+        {
+          question: "In the example code below, does it work?",
+          options: ["No", "Yes", "Error", "Only with parameters"],
+          answer: 1,
+          citation: "Page 34 - 'Main obj = new Main(); // ✅ works fine'",
+        },
+        {
+          question: "What does the compiler add?",
+          options: [
+            "public Main(int) {}",
+            "public Main() {}",
+            "void Main()",
+            "static Main()",
+          ],
+          answer: 1,
+          citation: 'Page 34 - "The compiler adds: public Main() {}"',
+        },
+        {
+          question: "What if you define any constructor?",
+          options: [
+            "Still adds default",
+            "But if you define any constructor, Java does not add a default one",
+            "Adds multiple",
+            "No effect",
+          ],
+          answer: 1,
+          citation:
+            'Page 34 - "But if you define any constructor, Java does not add a default one."',
+        },
+        {
+          question: "If you define any constructor, what happens?",
+          options: [
+            "Java still creates default",
+            "Java will NOT automatically create a default constructor",
+            "Error",
+            "Adds it anyway",
+          ],
+          answer: 1,
+          citation:
+            'Page 35 - "If you define any constructor (with or without parameters), → Java will NOT automatically create a default constructor."',
+        },
+        {
+          question:
+            "In the example code below, what happens with new Main();?\n\npublic class Main {\n    int x;\n    \n    // Custom constructor\n    public Main(int y) {\n        x = y;\n    }\n    \n    public static void main(String[] args) {\n        Main obj = new Main(); // ❌ Compile-time error\n    }\n}",
+          options: ["Works", "Compile-time error", "Runtime error", "Prints 0"],
+          answer: 1,
+          citation:
+            'Page 35 - "Main obj = new Main(); // ❌ Compile-time error"',
+        },
+        {
+          question: "Why no default?",
+          options: [
+            "No constructor exists",
+            "Since a constructor already exists (Main(int y)), Java assumes you control all initialization, → It does not generate the no-arg constructor",
+            "Default always added",
+            "Parameters required",
+          ],
+          answer: 1,
+          citation:
+            'Page 35 - "Since a constructor already exists (Main(int y)), Java assumes you control all initialization, → It does not generate the no-arg constructor."',
+        },
+        {
+          question: "How to use both ways?",
+          options: [
+            "Don't define any",
+            "Define both constructors: public Main() {} public Main(int y) { ... }",
+            "Use super",
+            "Use this",
+          ],
+          answer: 1,
+          citation:
+            'Page 35 - "To use both ways, define both constructors: public Main() {} public Main(int y) { ... }"',
+        },
+        {
+          question: "What does the default constructor not do?",
+          options: [
+            "Does not assign initial values to attributes",
+            "Sets initial values",
+            "Sets to 0",
+            "Sets to null",
+          ],
+          answer: 0,
+          citation:
+            'Page 36 - "But this constructor does not assign initial values to attributes."',
+        },
+        {
+          question:
+            "In the example code below, what are the outputs?\n\npublic class Main {\n    int x;        // default is 0\n    String name;  // default is null\n    \n    // No constructor defined\n    \n    public static void main(String[] args) {\n        Main obj = new Main();\n        System.out.println(obj.x);     // 0\n        System.out.println(obj.name);  // null\n    }\n}",
+          options: ["0 and null", '1 and "name"', "Error", "null and 0"],
+          answer: 0,
+          citation:
+            'Page 36 - "System.out.println(obj.x); // 0 System.out.println(obj.name); // null"',
+        },
+        {
+          question: "What is default for int?",
+          options: ["null", "0", "1", '""'],
+          answer: 1,
+          citation: 'Page 36 - "→ int → 0"',
+        },
+        {
+          question: "What is default for String?",
+          options: ["0", "null", '""', "false"],
+          answer: 1,
+          citation: 'Page 36 - "→ String → null"',
+        },
+        {
+          question: "What is default for boolean?",
+          options: ["true", "false", "null", "0"],
+          answer: 1,
+          citation: 'Page 36 - "→ boolean → false, etc."',
+        },
+        {
+          question: "What is there no in default constructor?",
+          options: [
+            "No logic to customize or initialize values",
+            "Full logic",
+            "Custom values",
+            "Complex initialization",
+          ],
+          answer: 0,
+          citation: 'Page 36 - "No logic to customize or initialize values."',
+        },
+        {
+          question: "When to use custom constructor?",
+          options: [
+            "For default values",
+            "If you need to initialize attributes explicitly",
+            "Never",
+            "For no initialization",
+          ],
+          answer: 1,
+          citation:
+            'Page 36 - "Use a custom constructor if you need to initialize attributes explicitly."',
+        },
+        {
+          question: "Why need no-arg constructor: Required by some frameworks?",
+          options: [
+            "For manual creation",
+            "Java libraries like Spring, Hibernate, or Jackson require a no-arg constructor to instantiate objects via reflection",
+            "For errors",
+            "No reason",
+          ],
+          answer: 1,
+          citation:
+            'Page 37 - "Java libraries like Spring, Hibernate, or Jackson require a no-arg constructor to instantiate objects via reflection."',
+        },
+        {
+          question: "What may fail without it?",
+          options: [
+            "Compilation",
+            "Deserialization or object mapping may fail",
+            "Running",
+            "No effect",
+          ],
+          answer: 1,
+          citation:
+            'Page 37 - "Without it, deserialization or object mapping may fail."',
+        },
+        {
+          question: "In inheritance, what do subclasses call?",
+          options: [
+            "No constructor",
+            "Superclass's no-arg constructor implicitly",
+            "Own constructor only",
+            "Static",
+          ],
+          answer: 1,
+          citation:
+            'Page 37 - "Subclasses implicitly call the superclass\'s no-arg constructor."',
+        },
+        {
+          question: "What must subclass do if superclass lacks no-arg?",
+          options: [
+            "Nothing",
+            "Explicitly call another constructor using super(...)",
+            "Error always",
+            "Use this",
+          ],
+          answer: 1,
+          citation:
+            'Page 37 - "If the superclass lacks a no-arg constructor, the subclass must explicitly call another constructor using super(...)."',
+        },
+        {
+          question: "For simplicity in testing, what can you do?",
+          options: [
+            "Pass arguments always",
+            "Easily create objects without passing arguments: User user = new User();",
+            "Complicate",
+            "Use setters first",
+          ],
+          answer: 1,
+          citation:
+            'Page 37 - "Easily create objects without passing arguments: User user = new User();"',
+        },
+        {
+          question: "What can you do with basic object?",
+          options: [
+            "Nothing",
+            'Create a basic object and set values later using setters: User u = new User(); u.setName("Alice");',
+            "Set in constructor only",
+            "No setters",
+          ],
+          answer: 1,
+          citation:
+            'Page 37 - "Create a basic object and set values later using setters: User u = new User(); u.setName("Alice");"',
+        },
+        {
+          question: "What is method overloading?",
+          options: [
+            "Single method",
+            "Multiple methods in the same class with same name, but different parameter list",
+            "Different names",
+            "Global methods",
+          ],
+          answer: 1,
+          citation:
+            'Page 38 - "Multiple methods in the same class Same name, but different parameter list"',
+        },
+        {
+          question: "What does it allow?",
+          options: [
+            "Different names",
+            "Reuse the same method name for similar actions",
+            "Errors",
+            "No reuse",
+          ],
+          answer: 1,
+          citation:
+            'Page 38 - "Allows you to reuse the same method name for similar actions"',
+        },
+        {
+          question:
+            "In the code below, what are the returns?\n\nclass Calculator {\n    int add(int a, int b) {\n        return a + b;\n    }\n    \n    double add(double a, double b) {\n        return a + b;\n    }\n}\n\nCalculator c = new Calculator();\nc.add(3, 4);        // Returns 7 (int)\nc.add(3.5, 2.1);    // Returns 5.6 (double)",
+          options: [
+            "7 (int) and 5.6 (double)",
+            "7.0 and 5",
+            "Error",
+            "Same type",
+          ],
+          answer: 0,
+          citation:
+            'Page 38 - "c.add(3, 4); // Returns 7 (int) c.add(3.5, 2.1); // Returns 5.6 (double)"',
+        },
+        {
+          question: "Methods must differ by what?",
+          options: [
+            "Return type only",
+            "Number of parameters, Type of parameters, Order of parameters",
+            "Name",
+            "Visibility",
+          ],
+          answer: 1,
+          citation:
+            'Page 38 - "✅ Methods must differ by: Number of parameters Type of parameters Order of parameters"',
+        },
+        {
+          question: "What is not enough alone?",
+          options: ["Parameters", "Return type", "Number", "Types"],
+          answer: 1,
+          citation: 'Page 38 - "❌ Return type alone is not enough!"',
+        },
+        {
+          question: "What does it improve?",
+          options: ["Confusion", "Readability", "Errors", "No benefits"],
+          answer: 1,
+          citation: 'Page 38 - "Improves readability"',
+        },
+        {
+          question: "What does it support?",
+          options: [
+            "Runtime polymorphism",
+            "Polymorphism (compile-time/static polymorphism)",
+            "No polymorphism",
+            "Inheritance",
+          ],
+          answer: 1,
+          citation:
+            'Page 38 - "Supports polymorphism (compile-time/static polymorphism)"',
+        },
+        {
+          question: "What does it organize?",
+          options: [
+            "Unrelated operations",
+            "Related operations under a single method name",
+            "Classes",
+            "Attributes",
+          ],
+          answer: 1,
+          citation:
+            'Page 38 - "Organizes related operations under a single method name"',
+        },
+        {
+          question: "Is overloading by return type only allowed?",
+          options: ["Yes", "NOT allowed", "Optional", "Always"],
+          answer: 1,
+          citation:
+            'Page 39 - "❌ Overloading by return type only is NOT allowed"',
+        },
+        {
+          question:
+            "Why does Java not allow overloading based only on return type?",
+          options: [
+            "Signature includes return",
+            "Java uses method signature to distinguish overloaded methods. Method signature = method name + parameter list. Return type is not part of the signature",
+            "Return is part",
+            "No signature",
+          ],
+          answer: 1,
+          citation:
+            'Page 39 - "Java uses method signature to distinguish overloaded methods. Method signature = method name + parameter list 👉 Return type is not part of the signature."',
+        },
+        {
+          question:
+            "In the invalid example code below, what happens?\n\nclass Test {\n    int show(int x) {\n        return x;\n    }\n    \n    double show(int x) { // ❌ Invalid: same name and parameters\n        return x * 1.0;\n    }\n}",
+          options: [
+            "Works",
+            "Compile-time error: method is already defined with the same signature",
+            "Runtime error",
+            "Prints double",
+          ],
+          answer: 1,
+          citation:
+            'Page 39 - "🔴 Compile-time error: method is already defined with the same signature."',
+        },
+        {
+          question:
+            "What are valid: int show(int x), double show(double x), int show(int x, int y)?",
+          options: [
+            "Same parameters",
+            "All have different parameter lists",
+            "Same lists",
+            "Return only different",
+          ],
+          answer: 1,
+          citation:
+            'Page 40 - "int show(int x) // 1 int double show(double x) // 1 double int show(int x, int y) // 2 int ✅ All have different parameter lists"',
+        },
+        {
+          question: "To overload a method, what to do?",
+          options: [
+            "Change return only",
+            "Change the number, type, or order of parameters",
+            "Keep same",
+            "Rely on return",
+          ],
+          answer: 1,
+          citation:
+            'Page 40 - "To overload a method: Change the number, type, or order of parameters. Do not rely on return type to make them different."',
+        },
+        {
+          question: "The course part 1 covers what topics?",
+          options: [
+            "Methods only",
+            "Java Classes and Objects, Create a Class in Java, Create an Object in Java, Multiple Objects, Java Class Attributes, Modify Attributes in Java, Override Default Attribute Values in Java, Prevent Overriding with final, Multiple Objects and Independent Attributes, Multiple Attributes in a Class",
+            "Constructors only",
+            "Overloading",
+          ],
+          answer: 1,
+          citation:
+            'Page 41 - "Part 1: Classes, Objects, and Attributes Java Classes and Objects Create a Class in Java Create an Object in Java Multiple Objects Java Class Attributes Modify Attributes in Java Override Default Attribute Values in Java Prevent Overriding with final Multiple Objects and Independent Attributes Multiple Attributes in a Class"',
         },
       ];
 

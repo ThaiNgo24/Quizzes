@@ -396,226 +396,1241 @@
       // Quiz questions covering all content from the PDF
       const questions = [
         {
-          question: "What is the primary purpose of access modifiers in Java?",
+          question: "In Java, what are modifiers?",
           options: [
-            "To control the visibility of classes and members",
-            "To improve performance of the application",
-            "To make code more colorful",
-            "To automatically document the code",
+            "Keywords used to define the accessibility of classes, methods, fields, and constructors, and the behavior or constraints of these elements.",
+            "Variables that control program flow.",
+            "Methods that initialize objects.",
+            "Classes that extend other classes.",
           ],
           answer: 0,
           citation:
-            "Page 2: Access modifiers control visibility of classes, methods, fields, and constructors.",
-        },
-        {
-          question: "Which of these is NOT an access modifier in Java?",
-          options: ["public", "private", "protected", "static"],
-          answer: 3,
-          citation:
-            "Page 3: static is a non-access modifier, not an access modifier.",
+            "Page 2 - 'In Java, modifiers are keywords used to define: The accessibility of classes, methods, fields, and constructors; The behavior or constraints of these elements'",
         },
         {
           question:
-            "What access level does a class member have when no modifier is specified?",
+            "How many categories of modifiers are there in Java, and what are they?",
           options: [
-            "public",
-            "private",
-            "protected",
-            "default (package-private)",
+            "Two categories: Access Modifiers – Control visibility, and Non-Access Modifiers – Define additional behavior, not related to access.",
+            "Three categories: Public, Private, and Protected.",
+            "One category: Visibility controls.",
+            "Four categories: Static, Final, Abstract, and Synchronized.",
           ],
-          answer: 3,
+          answer: 0,
           citation:
-            "Page 5: When no access modifier is specified, it's called default or package-private access.",
+            "Page 2 - 'There are two categories of modifiers: Access Modifiers – Control visibility; Non-Access Modifiers – Define additional behavior, not related to access'",
+        },
+        {
+          question: "What is the purpose of Access Modifiers in Java?",
+          options: [
+            "Control visibility of classes and members.",
+            "Define characteristics or constraints.",
+            "Handle exceptions.",
+            "Manage memory allocation.",
+          ],
+          answer: 0,
+          citation:
+            "Page 3 - 'Access Modifiers: Control visibility of classes and members'",
+        },
+        {
+          question: "What is the purpose of Non-Access Modifiers in Java?",
+          options: [
+            "Define characteristics or constraints.",
+            "Control visibility of classes and members.",
+            "Initialize variables.",
+            "Create loops.",
+          ],
+          answer: 0,
+          citation:
+            "Page 3 - 'Non-Access Modifiers: Define characteristics or constraints'",
+        },
+        {
+          question: "What are examples of Access Modifiers in Java?",
+          options: [
+            "public, private, protected, default.",
+            "static, final, abstract, synchronized, etc.",
+            "class, method, field, constructor.",
+            "int, double, String, boolean.",
+          ],
+          answer: 0,
+          citation: "Page 3 - 'Access: public, private, protected, default'",
+        },
+        {
+          question: "What are examples of Non-Access Modifiers in Java?",
+          options: [
+            "static, final, abstract, synchronized, etc.",
+            "public, private, protected, default.",
+            "void, return, if, else.",
+            "new, this, super, extends.",
+          ],
+          answer: 0,
+          citation:
+            "Page 3 - 'Non-access: static, final, abstract, synchronized, etc.'",
         },
         {
           question:
-            "Which access modifier allows the widest accessibility for a class member?",
-          options: ["private", "protected", "default", "public"],
-          answer: 3,
-          citation: "Page 10: public members are accessible from any class.",
+            "In the following code, what does the public modifier do for the class Main?",
+          code: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello World");\n    }\n}',
+          options: [
+            "It defines the visibility of the class Main, allowing any other class to access it.",
+            "It makes the class private.",
+            "It prevents subclassing.",
+            "It declares the class as abstract.",
+          ],
+          answer: 0,
+          citation:
+            "Page 4 - 'It defines the visibility of the class Main and the method main. Any other class can access Main because it is declared public.'",
         },
         {
-          question: "What is the purpose of encapsulation in OOP?",
+          question: "What is the keyword public in the example code?",
+          code: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello World");\n    }\n}',
           options: [
-            "To make code run faster",
-            "To wrap data and methods into a single unit and restrict direct access",
-            "To automatically generate documentation",
-            "To reduce the number of classes needed",
+            "A modifier that defines the visibility of the class and method.",
+            "A variable type.",
+            "A method name.",
+            "A package declaration.",
           ],
-          answer: 1,
+          answer: 0,
+          citation: "Page 4 - 'The keyword public is a modifier.'",
+        },
+        {
+          question: "What do access modifiers determine in Java?",
+          options: [
+            "Where a class member can be accessed from.",
+            "The size of variables.",
+            "The number of methods in a class.",
+            "The inheritance hierarchy.",
+          ],
+          answer: 0,
           citation:
-            "Page 15: Encapsulation means wrapping data and methods into a single unit and restricting direct access.",
+            "Page 5 - 'Access modifiers determine where a class member can be accessed from.'",
+        },
+        {
+          question: "How many access levels does Java provide?",
+          options: [
+            "Four: public, protected, default (no keyword), private.",
+            "Three: public, private, static.",
+            "Two: access and non-access.",
+            "Five: public, protected, default, private, final.",
+          ],
+          answer: 0,
+          citation:
+            "Page 5 - 'Java provides four access levels: public, protected, default (no keyword), private'",
+        },
+        // Questions 11-20
+        {
+          question:
+            "How many modifiers are allowed for top-level classes in Java?",
+          options: [
+            "Only two: public and default (no modifier).",
+            "All four: public, protected, default, private.",
+            "Three: public, private, protected.",
+            "One: public only.",
+          ],
+          answer: 0,
+          citation:
+            "Page 6 - 'Only two modifiers are allowed for top-level classes'",
+        },
+        {
+          question: "What does the public modifier do for a top-level class?",
+          options: [
+            "The class is accessible from any other class.",
+            "The class is accessible only within the same package.",
+            "The class cannot be instantiated.",
+            "The class must be subclassed.",
+          ],
+          answer: 0,
+          citation:
+            "Page 6 - 'public: The class is accessible from any other class'",
         },
         {
           question:
-            "Why should fields typically be declared private in a class?",
+            "What does the default (no modifier) do for a top-level class?",
           options: [
-            "To make them accessible only within the same package",
-            "To hide them from direct access outside the class",
-            "To allow only subclasses to access them",
-            "To make them automatically serializable",
+            "The class is accessible only within the same package.",
+            "The class is accessible from any other class.",
+            "The class is hidden from all packages.",
+            "The class can only be used in subclasses.",
           ],
-          answer: 1,
+          answer: 0,
           citation:
-            "Page 20: Private fields are hidden from outside access, which is the first step of encapsulation.",
-        },
-        {
-          question: "What is the purpose of getter and setter methods?",
-          options: [
-            "To make code longer and more complicated",
-            "To provide controlled access to private fields",
-            "To automatically generate documentation",
-            "To improve performance of field access",
-          ],
-          answer: 1,
-          citation:
-            "Page 21-22: Getters and setters provide controlled access to private fields.",
-        },
-        {
-          question: "Which of these is a benefit of encapsulation?",
-          options: [
-            "It makes all fields public by default",
-            "It protects data integrity by preventing unauthorized access",
-            "It automatically generates documentation",
-            "It makes all methods static",
-          ],
-          answer: 1,
-          citation:
-            "Page 17: Encapsulation protects data integrity by preventing unauthorized or invalid access.",
+            "Page 6 - 'default (no modifier): The class is accessible only within the same package'",
         },
         {
           question:
-            "What happens if you try to access a private field directly from another class?",
+            "What will be learned later in the course regarding access modifiers for classes?",
           options: [
-            "It works fine",
-            "You get a compile-time error",
-            "The program crashes at runtime",
-            "The field becomes public automatically",
+            "More about packages.",
+            "More about methods.",
+            "More about variables.",
+            "More about loops.",
           ],
-          answer: 1,
+          answer: 0,
           citation:
-            "Page 20: Attempting to access a private field directly from another class results in a compile error.",
+            "Page 6 - 'You will learn more about packages later in this course.'",
         },
         {
-          question: "What is an immutable class?",
+          question: "Where is a top-level class defined?",
           options: [
-            "A class that can't be instantiated",
-            "A class whose instances can't be modified after creation",
-            "A class with only static methods",
-            "A class that inherits from multiple superclasses",
+            "Directly in a .java file.",
+            "Inside another class or method.",
+            "In a package declaration.",
+            "In a method body.",
           ],
-          answer: 1,
-          citation:
-            "Page 31: An immutable class has fields that are private and final, with no setters.",
+          answer: 0,
+          citation: "Page 7 - 'Top-level: Directly in a .java file'",
         },
         {
-          question: "Which modifier prevents a class from being subclassed?",
-          options: ["private", "final", "static", "abstract"],
-          answer: 1,
-          citation:
-            "Page 12: The final modifier prevents a class from being extended.",
-        },
-        {
-          question: "What is the purpose of the protected access modifier?",
+          question: "Where is a nested class defined?",
           options: [
-            "To make members accessible only within the same class",
-            "To make members accessible within the same package and by subclasses",
-            "To make members accessible from any class",
-            "To automatically serialize members",
+            "Inside another class or method.",
+            "Directly in a .java file.",
+            "In an external library.",
+            "In the main method.",
           ],
-          answer: 1,
-          citation:
-            "Page 10: protected members are accessible within the same package and by subclasses.",
+          answer: 0,
+          citation: "Page 7 - 'Nested: Inside another class or method'",
         },
         {
-          question: "Which of these is a non-access modifier?",
-          options: ["public", "private", "protected", "final"],
-          answer: 3,
-          citation:
-            "Page 13: final is a non-access modifier that prevents modification or overriding.",
-        },
-        {
-          question: "What is the purpose of packages in Java?",
+          question: "What is the common use of top-level classes?",
           options: [
-            "To make code run faster",
-            "To organize related classes and prevent naming conflicts",
-            "To automatically generate documentation",
-            "To make all classes public",
+            "Main classes of programs.",
+            "Utility or helper classes.",
+            "Data structures.",
+            "Input/output operations.",
           ],
-          answer: 1,
+          answer: 0,
+          citation: "Page 7 - 'Top-level ... Main classes of programs'",
+        },
+        {
+          question: "What is the common use of nested classes?",
+          options: [
+            "Utility or helper classes.",
+            "Main classes of programs.",
+            "Mathematical operations.",
+            "Networking features.",
+          ],
+          answer: 0,
+          citation: "Page 7 - 'Nested ... Utility or helper classes'",
+        },
+        {
+          question: "In the code example, what is the class Outer?",
+          code: "// Top-Level class\npublic class Outer {\n    // Nested class\n    class Inner {\n        // ...\n    }\n}",
+          options: [
+            "A top-level class.",
+            "A nested class.",
+            "An abstract class.",
+            "A final class.",
+          ],
+          answer: 0,
+          citation: "Page 7 - '// Top-Level class public class Outer {'",
+        },
+        {
+          question: "In the code example, what is the class Inner?",
+          code: "// Top-Level class\npublic class Outer {\n    // Nested class\n    class Inner {\n        // ...\n    }\n}",
+          options: [
+            "A nested class.",
+            "A top-level class.",
+            "A static class.",
+            "A private class.",
+          ],
+          answer: 0,
+          citation: "Page 7 - '// Nested class class Inner {'",
+        },
+        // Questions 21-30
+        {
+          question: "What access modifiers can top-level classes use?",
+          options: [
+            "public and default (no modifier).",
+            "private and protected.",
+            "final and abstract.",
+            "static and synchronized.",
+          ],
+          answer: 0,
           citation:
-            "Page 33: Packages organize related classes and prevent naming conflicts.",
+            "Page 8 - 'Top-level classes can only use: public, default (no modifier)'",
+        },
+        {
+          question: "Why can't top-level classes use private and protected?",
+          options: [
+            "Because private and protected imply visibility inside or relative to another class, and a top-level class is not inside another class.",
+            "Because they are reserved for methods.",
+            "Because they conflict with packages.",
+            "Because they make classes immutable.",
+          ],
+          answer: 0,
+          citation:
+            "Page 8 - 'Because: private and protected imply visibility inside or relative to another class; A top-level class is not inside another class, so private and protected are not meaningful'",
         },
         {
           question:
-            "Which access modifier would you use for a method that should be accessible only within its own class?",
-          options: ["public", "private", "protected", "default"],
-          answer: 1,
-          citation:
-            "Page 10: private members are accessible only within the declaring class.",
+            "Which of the following is a valid top-level class declaration?",
+          options: [
+            "public class MyClass { }",
+            "private class HiddenClass { }",
+            "protected class SubClass { }",
+            "final class FinalClass { }",
+          ],
+          answer: 0,
+          citation: "Page 9 - '✅ Valid: public class MyClass { }'",
         },
         {
           question:
-            "What is the main advantage of using getter methods instead of making fields public?",
+            "Which of the following is a valid top-level class declaration with default access?",
           options: [
-            "It makes the code shorter",
-            "It allows you to add validation or computation when accessing the field",
-            "It automatically generates documentation",
-            "It improves performance",
+            "class PackageClass { }",
+            "public class MyClass { }",
+            "private class HiddenClass { }",
+            "protected class SubClass { }",
           ],
-          answer: 1,
-          citation:
-            "Page 18: Getters allow controlled access and can include validation or computation.",
-        },
-        {
-          question: "Which of these classes demonstrates proper encapsulation?",
-          options: [
-            "class A { public int x; }",
-            "class B { private int x; public int getX() { return x; } }",
-            "class C { protected int x; }",
-            "class D { int x; }",
-          ],
-          answer: 1,
-          citation:
-            "Page 26: Proper encapsulation uses private fields with public getter methods.",
+          answer: 0,
+          citation: "Page 9 - 'class PackageClass { } // default access'",
         },
         {
           question:
-            "What happens if you declare a class with no access modifier?",
+            "Why is private class HiddenClass { } invalid for a top-level class?",
           options: [
-            "It becomes public by default",
-            "It becomes private by default",
-            "It has package-private (default) access",
-            "It becomes protected by default",
+            "It results in an ERROR because private is not allowed for top-level classes.",
+            "It is valid but hidden.",
+            "It requires a package.",
+            "It needs to be nested.",
           ],
-          answer: 2,
+          answer: 0,
           citation:
-            "Page 6: A class with no modifier has package-private (default) access.",
+            "Page 9 - '❌ Invalid: private class HiddenClass { } // ERROR'",
         },
         {
           question:
-            "Which of these modifiers can be applied to a top-level class?",
+            "Why is protected class SubClass { } invalid for a top-level class?",
           options: [
-            "public and private",
-            "public and default",
-            "protected and private",
-            "public, protected, and private",
+            "It results in an ERROR because protected is not allowed for top-level classes.",
+            "It is valid for subclasses only.",
+            "It conflicts with public.",
+            "It must be abstract.",
           ],
-          answer: 1,
-          citation:
-            "Page 8: Top-level classes can only use public or default (no modifier) access.",
+          answer: 0,
+          citation: "Page 9 - 'protected class SubClass { } // ERROR'",
         },
         {
-          question: "What is the purpose of making a class final?",
+          question:
+            "What does the public modifier do for fields, methods, and constructors?",
           options: [
-            "To make it immutable",
-            "To prevent it from being subclassed",
-            "To make all its methods final",
-            "To automatically serialize its instances",
+            "Accessible from any class.",
+            "Accessible only within the declaring class.",
+            "Accessible only within the same package.",
+            "Accessible within the same package and by subclasses.",
           ],
-          answer: 1,
+          answer: 0,
+          citation: "Page 10 - 'public: Accessible from any class'",
+        },
+        {
+          question:
+            "What does the private modifier do for fields, methods, and constructors?",
+          options: [
+            "Accessible only within the declaring class.",
+            "Accessible from any class.",
+            "Accessible only within the same package.",
+            "Accessible within the same package and by subclasses.",
+          ],
+          answer: 0,
           citation:
-            "Page 12: A final class cannot be extended (no subclassing allowed).",
+            "Page 10 - 'private: Accessible only within the declaring class'",
+        },
+        {
+          question:
+            "What does the default (no modifier) do for fields, methods, and constructors?",
+          options: [
+            "Accessible only within the same package.",
+            "Accessible from any class.",
+            "Accessible only within the declaring class.",
+            "Accessible within the same package and by subclasses.",
+          ],
+          answer: 0,
+          citation:
+            "Page 10 - 'default (no modifier): Accessible only within the same package'",
+        },
+        {
+          question:
+            "What does the protected modifier do for fields, methods, and constructors?",
+          options: [
+            "Accessible within the same package and by subclasses.",
+            "Accessible from any class.",
+            "Accessible only within the declaring class.",
+            "Accessible only within the same package.",
+          ],
+          answer: 0,
+          citation:
+            "Page 10 - 'protected: Accessible within the same package and by subclasses'",
+        },
+        // Questions 31-40
+        {
+          question: "When will the use of protected become clearer?",
+          options: [
+            "When studying inheritance.",
+            "When studying packages.",
+            "When studying methods.",
+            "When studying constructors.",
+          ],
+          answer: 0,
+          citation:
+            "Page 10 - 'The use of protected will become clearer when we study inheritance.'",
+        },
+        {
+          question:
+            "In the code example, what is the access level of the field 'name'?",
+          code: "public class Student {\n    private String name;\n    \n    public void setName(String n) {\n        name = n;\n    }\n    \n    public String getName() {\n        return name;\n    }\n}",
+          options: [
+            "private – not accessible outside the class.",
+            "public – accessible from any class.",
+            "protected – accessible in subclasses.",
+            "default – accessible in the package.",
+          ],
+          answer: 0,
+          citation:
+            "Page 11 - 'name is private – not accessible outside the class'",
+        },
+        {
+          question:
+            "In the code example, what do setName() and getName() provide?",
+          code: "public class Student {\n    private String name;\n    \n    public void setName(String n) {\n        name = n;\n    }\n    \n    public String getName() {\n        return name;\n    }\n}",
+          options: [
+            "Controlled access to the private field.",
+            "Direct access to the field.",
+            "Static behavior.",
+            "Abstract methods.",
+          ],
+          answer: 0,
+          citation:
+            "Page 11 - 'setName() and getName() provide controlled access'",
+        },
+        {
+          question: "What does the final modifier do for classes?",
+          options: [
+            "The class cannot be extended (no subclassing allowed).",
+            "The class cannot be instantiated; must be subclassed.",
+            "The class is accessible publicly.",
+            "The class belongs to instances.",
+          ],
+          answer: 0,
+          citation:
+            "Page 12 - 'final: The class cannot be extended (no subclassing allowed)'",
+        },
+        {
+          question: "What does the abstract modifier do for classes?",
+          options: [
+            "The class cannot be instantiated; must be subclassed.",
+            "The class cannot be extended (no subclassing allowed).",
+            "The class is private.",
+            "The class is static.",
+          ],
+          answer: 0,
+          citation:
+            "Page 12 - 'abstract: The class cannot be instantiated; must be subclassed'",
+        },
+        {
+          question: "What does the final modifier do for fields and methods?",
+          options: [
+            "Cannot be modified (fields) or overridden (methods).",
+            "Belongs to the class, not to any instance.",
+            "Declares a method without a body; must be overridden in subclass.",
+            "Skipped during serialization.",
+          ],
+          answer: 0,
+          citation:
+            "Page 13 - 'final: Cannot be modified (fields) or overridden (methods)'",
+        },
+        {
+          question: "What does the static modifier do for fields and methods?",
+          options: [
+            "Belongs to the class, not to any instance.",
+            "Cannot be modified (fields) or overridden (methods).",
+            "Declares a method without a body; must be overridden in subclass.",
+            "Allows only one thread to access the method at a time.",
+          ],
+          answer: 0,
+          citation:
+            "Page 13 - 'static: Belongs to the class, not to any instance'",
+        },
+        {
+          question: "What does the abstract modifier do for methods?",
+          options: [
+            "Declares a method without a body; must be overridden in subclass.",
+            "Belongs to the class, not to any instance.",
+            "Cannot be modified (fields) or overridden (methods).",
+            "Always read from main memory, not thread-local cache.",
+          ],
+          answer: 0,
+          citation:
+            "Page 13 - 'abstract: Declares a method without a body; must be overridden in subclass'",
+        },
+        {
+          question: "What does the transient modifier do for fields?",
+          options: [
+            "Skipped during serialization.",
+            "Allows only one thread to access the method at a time.",
+            "Always read from main memory, not thread-local cache.",
+            "Declares a method without a body.",
+          ],
+          answer: 0,
+          citation: "Page 13 - 'transient: Skipped during serialization'",
+        },
+        {
+          question: "What does the synchronized modifier do for methods?",
+          options: [
+            "Allows only one thread to access the method at a time.",
+            "Skipped during serialization.",
+            "Belongs to the class, not to any instance.",
+            "Cannot be overridden.",
+          ],
+          answer: 0,
+          citation:
+            "Page 13 - 'synchronized: Allows only one thread to access the method at a time'",
+        },
+        // Questions 41-50
+        {
+          question: "What does the volatile modifier do for fields?",
+          options: [
+            "Always read from main memory, not thread-local cache.",
+            "Skipped during serialization.",
+            "Declares without a body.",
+            "Belongs to the class.",
+          ],
+          answer: 0,
+          citation:
+            "Page 13 - 'volatile: Always read from main memory, not thread-local cache'",
+        },
+        {
+          question: "What is the role of access modifiers in Java?",
+          options: [
+            "To manage visibility and support encapsulation.",
+            "To control inheritance only.",
+            "To handle concurrency.",
+            "To define method structure.",
+          ],
+          answer: 0,
+          citation:
+            "Page 14 - 'Use access modifiers to manage visibility and support encapsulation'",
+        },
+        {
+          question: "What is the role of non-access modifiers in Java?",
+          options: [
+            "To control inheritance, concurrency, memory behavior, and method structure.",
+            "To manage visibility only.",
+            "To support encapsulation only.",
+            "To define classes only.",
+          ],
+          answer: 0,
+          citation:
+            "Page 14 - 'Use non-access modifiers to control inheritance, concurrency, memory behavior, and method structure'",
+        },
+        {
+          question: "What does mastering Java modifiers help with?",
+          options: [
+            "Writing robust, maintainable, and secure code.",
+            "Creating loops and conditions.",
+            "Managing file input/output.",
+            "Handling exceptions.",
+          ],
+          answer: 0,
+          citation:
+            "Page 14 - 'Mastering Java modifiers helps you write robust, maintainable, and secure code'",
+        },
+        {
+          question: "What is encapsulation in Object-Oriented Programming?",
+          options: [
+            "Wrapping data (fields) and methods into a single unit – the class – and restricting direct access to some components.",
+            "Extending one class from another.",
+            "Creating multiple instances.",
+            "Defining static methods.",
+          ],
+          answer: 0,
+          citation:
+            "Page 15 - 'It means: Wrapping data (fields) and methods into a single unit – the class – and restricting direct access to some components.'",
+        },
+        {
+          question:
+            "Encapsulation is one of the fundamental principles of what?",
+          options: [
+            "Object-Oriented Programming.",
+            "Procedural Programming.",
+            "Functional Programming.",
+            "Logical Programming.",
+          ],
+          answer: 0,
+          citation:
+            "Page 15 - 'Encapsulation is one of the fundamental principles of Object-Oriented Programming.'",
+        },
+        {
+          question:
+            "According to the core idea of encapsulation, how should data inside an object be accessed?",
+          options: [
+            "It should be accessed via methods, not directly.",
+            "It should be directly accessible.",
+            "It should be static.",
+            "It should be final.",
+          ],
+          answer: 0,
+          citation:
+            "Page 16 - 'Data inside an object should not be directly accessible; Instead, it should be accessed via methods'",
+        },
+        {
+          question: "How is encapsulation achieved for data access?",
+          options: [
+            "Using access modifiers and getter/setter methods.",
+            "Using public fields.",
+            "Using static variables.",
+            "Using abstract classes.",
+          ],
+          answer: 0,
+          citation:
+            "Page 16 - 'This is done using access modifiers and getter/setter methods'",
+        },
+        {
+          question:
+            "In the code example, what is the access level of the field 'balance'?",
+          code: "class Account {\n    private double balance; // hidden\n    \n    public double getBalance() {\n        return balance;\n    }\n    \n    public void deposit(double amount) {\n        if (amount > 0) balance += amount;\n    }\n}",
+          options: [
+            "private – hidden.",
+            "public – accessible.",
+            "protected – for subclasses.",
+            "default – package level.",
+          ],
+          answer: 0,
+          citation: "Page 16 - 'private double balance; // hidden'",
+        },
+        {
+          question:
+            "In the code example, how does the deposit method handle the amount?",
+          code: "class Account {\n    private double balance; // hidden\n    \n    public double getBalance() {\n        return balance;\n    }\n    \n    public void deposit(double amount) {\n        if (amount > 0) balance += amount;\n    }\n}",
+          options: [
+            "If amount > 0, add to balance.",
+            "Always add amount regardless.",
+            "Subtract if amount < 0.",
+            "Set balance to amount.",
+          ],
+          answer: 0,
+          citation:
+            "Page 16 - 'public void deposit(double amount) { if (amount > 0) balance += amount; }'",
+        },
+        // Questions 51-60
+        {
+          question: "What is the first benefit of encapsulation?",
+          options: [
+            "Protects data integrity by preventing unauthorized or invalid access.",
+            "Improves maintainability.",
+            "Provides controlled access.",
+            "Encourages modular design.",
+          ],
+          answer: 0,
+          citation:
+            "Page 17 - '1. Protects data integrity: Prevents unauthorized or invalid access'",
+        },
+        {
+          question: "What is the second benefit of encapsulation?",
+          options: [
+            "Improves maintainability by changes to internal implementation not affecting external code.",
+            "Protects data integrity.",
+            "Provides controlled access.",
+            "Encourages modular design.",
+          ],
+          answer: 0,
+          citation:
+            "Page 17 - '2. Improves maintainability: Changes to internal implementation do not affect external code'",
+        },
+        {
+          question: "What is the third benefit of encapsulation?",
+          options: [
+            "Provides controlled access by only allowing safe interactions through well-defined methods.",
+            "Protects data integrity.",
+            "Improves maintainability.",
+            "Encourages modular design.",
+          ],
+          answer: 0,
+          citation:
+            "Page 17 - '3. Provides controlled access: Only allows safe interactions through well-defined methods'",
+        },
+        {
+          question: "What is the fourth benefit of encapsulation?",
+          options: [
+            "Encourages modular design by objects being self-contained, with clear interfaces.",
+            "Protects data integrity.",
+            "Improves maintainability.",
+            "Provides controlled access.",
+          ],
+          answer: 0,
+          citation:
+            "Page 17 - '4. Encourages modular design: Objects are self-contained, with clear interfaces'",
+        },
+        {
+          question:
+            "In the code without encapsulation, what is the issue with the field 'age'?",
+          code: "class Student {\n    public int age; // directly modifiable\n}",
+          options: [
+            "It is directly modifiable.",
+            "It is private.",
+            "It has validation.",
+            "It is read-only.",
+          ],
+          answer: 0,
+          citation:
+            "Page 18 - 'class Student { public int age; // directly modifiable }'",
+        },
+        {
+          question:
+            "In the code with encapsulation, how is access to 'age' controlled?",
+          code: "class Student {\n    private int age;\n    \n    public void setAge(int a) {\n        if (a >= 0) age = a;\n    }\n    \n    public int getAge() {\n        return age;\n    }\n}",
+          options: [
+            "Through setAge with validation and getAge.",
+            "Directly modifiable.",
+            "No access at all.",
+            "Static access.",
+          ],
+          answer: 0,
+          citation:
+            "Page 18 - 'class Student { private int age; public void setAge(int a) { if (a >= 0) age = a; } public int getAge() { return age; } }'",
+        },
+        {
+          question:
+            "What is a key difference in the first version without encapsulation?",
+          options: [
+            "It exposes the internal data directly.",
+            "It allows only safe, validated access.",
+            "It uses private fields.",
+            "It has getter and setter.",
+          ],
+          answer: 0,
+          citation:
+            "Page 18 - 'The first version exposes the internal data directly.'",
+        },
+        {
+          question:
+            "What is a key difference in the second version with encapsulation?",
+          options: [
+            "It allows only safe, validated access.",
+            "It exposes the internal data directly.",
+            "It uses public fields.",
+            "It has no methods.",
+          ],
+          answer: 0,
+          citation:
+            "Page 18 - 'The second version allows only safe, validated access.'",
+        },
+        {
+          question: "In the code example, what is the field 'age' declared as?",
+          code: "class Student {\n    public int age;\n}",
+          options: [
+            "public int age;",
+            "private int age;",
+            "protected int age;",
+            "static int age;",
+          ],
+          answer: 0,
+          citation: "Page 19 - 'class Student { public int age; }'",
+        },
+        {
+          question: "In the usage example, what happens with s.age = -5;?",
+          code: "Student s = new Student();\ns.age = -5; // This is allowed, but it's wrong!",
+          options: [
+            "It is allowed, but it's wrong!",
+            "It is not allowed.",
+            "It sets age to 0.",
+            "It throws an error.",
+          ],
+          answer: 0,
+          citation:
+            "Page 19 - 's.age = -5; // This is allowed, but it's wrong!'",
+        },
+        // Questions 61-70
+        {
+          question:
+            "What is the problem with assigning a negative age in the example?",
+          options: [
+            "No rule stops us from assigning a negative age, which is dangerous and leads to bad data.",
+            "It is automatically validated.",
+            "It requires a setter.",
+            "It is read-only.",
+          ],
+          answer: 0,
+          citation:
+            "Page 19 - 'Problem: No rule stops us from assigning a negative age. ⚠️ This is dangerous and leads to bad data.'",
+        },
+        {
+          question:
+            "What is the first step of encapsulation to protect the field?",
+          code: "class Student {\n    private int age; // hidden from outside\n}",
+          options: [
+            "Make it private: private int age; // hidden from outside",
+            "Make it public.",
+            "Add a getter.",
+            "Add a setter.",
+          ],
+          answer: 0,
+          citation:
+            "Page 20 - 'To protect the age field, we make it private: class Student { private int age; // hidden from outside }'",
+        },
+        {
+          question:
+            "What happens when trying to access a private field directly?",
+          code: "Student s = new Student();\ns.age = 20; // ❌ ERROR: age has private access",
+          options: [
+            "ERROR: age has private access.",
+            "It assigns successfully.",
+            "It sets to default.",
+            "It calls a method.",
+          ],
+          answer: 0,
+          citation:
+            "Page 20 - 's.age = 20; // ❌ ERROR: age has private access'",
+        },
+        {
+          question: "What is this step called in encapsulation?",
+          options: [
+            "Data hiding.",
+            "Method overriding.",
+            "Inheritance.",
+            "Polymorphism.",
+          ],
+          answer: 0,
+          citation:
+            "Page 20 - 'ℹ️ This is the first step of Encapsulation: data hiding'",
+        },
+        {
+          question: "What does the setter method do in the example?",
+          code: "public void setAge(int a) {\n    if (a >= 0) {\n        age = a;\n    }\n}",
+          options: [
+            "Sets the value safely if a >= 0.",
+            "Always sets the value.",
+            "Returns the value.",
+            "Deposits amount.",
+          ],
+          answer: 0,
+          citation:
+            "Page 21 - 'public void setAge(int a) { if (a >= 0) { age = a; } }'",
+        },
+        {
+          question:
+            "In the full class after adding the setter, what is included?",
+          code: "class Student {\n    private int age;\n    \n    public void setAge(int a) {\n        if (a >= 0) {\n            age = a;\n        }\n    }\n}",
+          options: [
+            "private int age; and public void setAge(int a) with validation.",
+            "public int age;",
+            "getAge method.",
+            "deposit method.",
+          ],
+          answer: 0,
+          citation:
+            "Page 21 - 'class Student { private int age; public void setAge(int a) { if (a >= 0) { age = a; } } }'",
+        },
+        {
+          question: "What happens with s.setAge(20); and s.setAge(-5);?",
+          options: [
+            "s.setAge(20); is safe assignment, s.setAge(-5); nothing happens (data stays valid).",
+            "Both assign directly.",
+            "Both throw errors.",
+            "Only negative assigns.",
+          ],
+          answer: 0,
+          citation:
+            "Page 21 - 's.setAge(20); // ✅ Safe assignment s.setAge(-5); // ✅ Nothing happens (data stays valid)'",
+        },
+        {
+          question: "What does the getter method do?",
+          code: "public int getAge() {\n    return age;\n}",
+          options: [
+            "Returns the value of age.",
+            "Sets the value.",
+            "Validates input.",
+            "Deposits amount.",
+          ],
+          answer: 0,
+          citation: "Page 22 - 'public int getAge() { return age; }'",
+        },
+        {
+          question: "What is the full class after adding the getter?",
+          code: "class Student {\n    private int age;\n    \n    public void setAge(int a) {\n        if (a >= 0) {\n            age = a;\n        }\n    }\n    \n    public int getAge() {\n        return age;\n    }\n}",
+          options: [
+            "private age, setAge with validation, getAge to return age.",
+            "public age only.",
+            "No methods.",
+            "Abstract class.",
+          ],
+          answer: 0,
+          citation:
+            "Page 22 - 'class Student { private int age; public void setAge(int a) { if (a >= 0) { age = a; } } public int getAge() { return age; } }'",
+        },
+        {
+          question: "In the usage example, what does the code do?",
+          code: "Student s = new Student();\ns.setAge(21);                    // set value\nSystem.out.println(s.getAge());  // print value → 21",
+          options: [
+            "Sets age to 21 and prints 21.",
+            "Sets to -21.",
+            "Prints nothing.",
+            "Throws error.",
+          ],
+          answer: 0,
+          citation:
+            "Page 23 - 's.setAge(21); // set value System.out.println(s.getAge()); // print value → 21'",
+        },
+        // Questions 71-80
+        {
+          question: "What is achieved now with getter and setter?",
+          options: [
+            "Full control over how the field is accessed.",
+            "Direct access.",
+            "No access.",
+            "Static control.",
+          ],
+          answer: 0,
+          citation:
+            "Page 23 - '✅ Now we have full control over how the field is accessed.'",
+        },
+        {
+          question: "What is a best practice for fields in encapsulation?",
+          options: [
+            "Use private for all fields.",
+            "Use public for all fields.",
+            "Use protected for fields.",
+            "Use default for fields.",
+          ],
+          answer: 0,
+          citation: "Page 24 - 'Use private for all fields'",
+        },
+        {
+          question: "What is a best practice for accessing fields safely?",
+          options: [
+            "Use public methods (getters/setters).",
+            "Use direct access.",
+            "Use static methods.",
+            "Use abstract methods.",
+          ],
+          answer: 0,
+          citation:
+            "Page 24 - 'Use public methods (getters/setters) to access fields safely'",
+        },
+        {
+          question: "When should validation be added in encapsulation?",
+          options: [
+            "In setters when needed.",
+            "In getters only.",
+            "In constructors only.",
+            "Never.",
+          ],
+          answer: 0,
+          citation: "Page 24 - 'Add validation in setters when needed'",
+        },
+        {
+          question:
+            "What should not be created for fields that should not change?",
+          options: [
+            "Do not create setters.",
+            "Create multiple setters.",
+            "Create getters only if changing.",
+            "Make them public.",
+          ],
+          answer: 0,
+          citation:
+            "Page 24 - 'Do not create setters for fields that should not change'",
+        },
+        {
+          question: "What is the purpose of the private keyword?",
+          options: [
+            "Hides data from outside.",
+            "Allows access through methods.",
+            "Returns the value of a field.",
+            "Sets the value with optional checks.",
+          ],
+          answer: 0,
+          citation: "Page 25 - 'private: Hides data from outside'",
+        },
+        {
+          question:
+            "What is the purpose of the public keyword in encapsulation?",
+          options: [
+            "Allows access through methods.",
+            "Hides data from outside.",
+            "Returns the value.",
+            "Sets the value.",
+          ],
+          answer: 0,
+          citation: "Page 25 - 'public: Allows access through methods'",
+        },
+        {
+          question: "What is the purpose of getX() methods?",
+          options: [
+            "Returns the value of a field.",
+            "Sets the value with optional checks.",
+            "Hides data.",
+            "Allows access.",
+          ],
+          answer: 0,
+          citation: "Page 25 - 'getX(): Returns the value of a field'",
+        },
+        {
+          question: "What is the purpose of setX() methods?",
+          options: [
+            "Sets the value with optional checks.",
+            "Returns the value of a field.",
+            "Hides data.",
+            "Allows direct access.",
+          ],
+          answer: 0,
+          citation: "Page 25 - 'setX(): Sets the value with optional checks'",
+        },
+        {
+          question: "In the Student class example, what are the fields?",
+          code: "public class Student {\n    private String name;\n    private int age;\n    \n    public void setName(String n) { name = n; }\n    public String getName() { return name; }\n    public void setAge(int a) { if (a >= 0) age = a; }\n    public int getAge() { return age; }\n}",
+          options: [
+            "private String name; private int age;",
+            "public String name; public int age;",
+            "protected String name;",
+            "static int age;",
+          ],
+          answer: 0,
+          citation: "Page 26 - 'private String name; private int age;'",
+        },
+        // Questions 81-90
+        {
+          question: "In the Student class example, what does setAge do?",
+          code: "public class Student {\n    private String name;\n    private int age;\n    \n    public void setName(String n) { name = n; }\n    public String getName() { return name; }\n    public void setAge(int a) { if (a >= 0) age = a; }\n    public int getAge() { return age; }\n}",
+          options: [
+            "if (a >= 0) age = a;",
+            "age = a; without check.",
+            "return age;",
+            "name = n;",
+          ],
+          answer: 0,
+          citation:
+            "Page 26 - 'public void setAge(int a) { if (a >= 0) age = a; }'",
+        },
+        {
+          question: "In the example, how are fields handled?",
+          options: [
+            "Fields are private.",
+            "Fields are public.",
+            "Fields are protected.",
+            "Fields are static.",
+          ],
+          answer: 0,
+          citation: "Page 26 - 'Fields are private'",
+        },
+        {
+          question: "In the example, what do methods control?",
+          options: [
+            "How values are assigned and retrieved.",
+            "Direct field access.",
+            "Class extension.",
+            "Thread access.",
+          ],
+          answer: 0,
+          citation:
+            "Page 26 - 'Methods control how values are assigned and retrieved'",
+        },
+        {
+          question: "In the usage example, what cannot external code do?",
+          code: 'Student s = new Student();\ns.setName("Alice");\ns.setAge(20);\nSystem.out.println(s.getName());\nSystem.out.println(s.getAge());',
+          options: [
+            "Directly access fields.",
+            "Use setters.",
+            "Use getters.",
+            "Print values.",
+          ],
+          answer: 0,
+          citation: "Page 27 - 'External code cannot directly access fields'",
+        },
+        {
+          question: "How is all access handled in the example?",
+          options: [
+            "Through controlled methods.",
+            "Directly to fields.",
+            "Via static calls.",
+            "Via constructors.",
+          ],
+          answer: 0,
+          citation: "Page 27 - 'All access is through controlled methods'",
+        },
+        {
+          question: "In the BankAccount class, what is the field?",
+          code: "public class BankAccount {\n    private double balance;\n    \n    public void deposit(double amount) { \n        if (amount > 0) balance += amount; \n    }\n    \n    public void withdraw(double amount) { \n        if (amount > 0 && amount <= balance) balance -= amount; \n    }\n    \n    public double getBalance() { \n        return balance; \n    }\n}",
+          options: [
+            "private double balance;",
+            "public double balance;",
+            "protected double balance;",
+            "static double balance;",
+          ],
+          answer: 0,
+          citation: "Page 28 - 'private double balance;'",
+        },
+        {
+          question: "In the BankAccount class, how does deposit work?",
+          code: "public class BankAccount {\n    private double balance;\n    \n    public void deposit(double amount) { \n        if (amount > 0) balance += amount; \n    }\n    \n    public void withdraw(double amount) { \n        if (amount > 0 && amount <= balance) balance -= amount; \n    }\n    \n    public double getBalance() { \n        return balance; \n    }\n}",
+          options: [
+            "if (amount > 0) balance += amount;",
+            "balance += amount; always.",
+            "balance -= amount;",
+            "return balance;",
+          ],
+          answer: 0,
+          citation:
+            "Page 28 - 'public void deposit(double amount) { if (amount > 0) balance += amount; }'",
+        },
+        {
+          question: "In the BankAccount class, how does withdraw work?",
+          code: "public class BankAccount {\n    private double balance;\n    \n    public void deposit(double amount) { \n        if (amount > 0) balance += amount; \n    }\n    \n    public void withdraw(double amount) { \n        if (amount > 0 && amount <= balance) balance -= amount; \n    }\n    \n    public double getBalance() { \n        return balance; \n    }\n}",
+          options: [
+            "if (amount > 0 && amount <= balance) balance -= amount;",
+            "balance -= amount; always.",
+            "balance += amount;",
+            "if (amount < 0) balance -= amount;",
+          ],
+          answer: 0,
+          citation:
+            "Page 28 - 'public void withdraw(double amount) { if (amount > 0 && amount <= balance) balance -= amount; }'",
+        },
+        {
+          question: "How can balance be changed in the BankAccount class?",
+          options: [
+            "Only through business rules.",
+            "Directly.",
+            "Via public field.",
+            "Via static methods.",
+          ],
+          answer: 0,
+          citation:
+            "Page 28 - 'Balance can only be changed through business rules'",
+        },
+        {
+          question: "What happens to invalid operations like negative deposit?",
+          options: [
+            "They are rejected.",
+            "They are allowed.",
+            "They set to zero.",
+            "They throw exceptions.",
+          ],
+          answer: 0,
+          citation:
+            "Page 28 - 'Invalid operations (e.g., negative deposit) are rejected'",
+        },
+        // Questions 91-100
+        {
+          question: "In the usage example, what is protected?",
+          code: "BankAccount b = new BankAccount();\nb.deposit(1000);\nb.withdraw(200);\nSystem.out.println(b.getBalance());",
+          options: [
+            "The internal state is protected.",
+            "External code.",
+            "Methods are protected.",
+            "Balance is public.",
+          ],
+          answer: 0,
+          citation: "Page 29 - 'The internal state is protected'",
+        },
+        {
+          question: "What operations are allowed in the BankAccount usage?",
+          options: [
+            "Only valid operations.",
+            "All operations.",
+            "No operations.",
+            "Static operations.",
+          ],
+          answer: 0,
+          citation: "Page 29 - 'Only valid operations are allowed'",
+        },
+        {
+          question:
+            "In the Country class, how is the field 'name' initialized?",
+          code: "public class Country {\n    private String name;\n    \n    public Country(String name) { \n        this.name = name; \n    }\n    \n    public String getName() { \n        return name; \n    }\n}",
+          options: [
+            "Once in the constructor: this.name = name;",
+            "Via setter.",
+            "Directly public.",
+            "In getter.",
+          ],
+          answer: 0,
+          citation:
+            "Page 30 - 'public Country(String name) { this.name = name; }'",
+        },
+        {
+          question:
+            "Why can't the value be changed later in the Country class?",
+          options: [
+            "No setter means the value cannot be changed later.",
+            "Setter is provided.",
+            "Field is public.",
+            "Constructor changes it.",
+          ],
+          answer: 0,
+          citation:
+            "Page 30 - 'No setter means the value cannot be changed later'",
+        },
+        {
+          question:
+            "In the immutable Student class, what are the fields declared as?",
+          code: "public class Student {\n    private final String name;\n    private final int age;\n    \n    public Student(String name, int age) { \n        this.name = name; \n        this.age = age; \n    }\n    \n    public String getName() { \n        return name; \n    }\n    \n    public int getAge() { \n        return age; \n    }\n}",
+          options: [
+            "private final String name; private final int age;",
+            "public String name; public int age;",
+            "protected final name;",
+            "static name;",
+          ],
+          answer: 0,
+          citation:
+            "Page 31 - 'private final String name; private final int age;'",
+        },
+        {
+          question: "How are values set in the immutable Student class?",
+          code: "public class Student {\n    private final String name;\n    private final int age;\n    \n    public Student(String name, int age) { \n        this.name = name; \n        this.age = age; \n    }\n    \n    public String getName() { \n        return name; \n    }\n    \n    public int getAge() { \n        return age; \n    }\n}",
+          options: [
+            "Once via the constructor: this.name = name; this.age = age;",
+            "Via setters.",
+            "Directly.",
+            "In getters.",
+          ],
+          answer: 0,
+          citation:
+            "Page 31 - 'public Student(String name, int age) { this.name = name; this.age = age; }'",
+        },
+        {
+          question: "What is a key characteristic of the immutable class?",
+          options: [
+            "Fields are private and final.",
+            "Fields are public.",
+            "Setters are provided.",
+            "No constructor.",
+          ],
+          answer: 0,
+          citation: "Page 31 - 'Fields are private and final'",
+        },
+        {
+          question: "In the immutable class, are setters provided?",
+          options: [
+            "No setters are provided.",
+            "Setters are provided.",
+            "Multiple setters.",
+            "Protected setters.",
+          ],
+          answer: 0,
+          citation: "Page 31 - 'No setters are provided'",
+        },
+        {
+          question: "How are values set in the immutable class?",
+          options: [
+            "Values are set once via the constructor.",
+            "Values change via setters.",
+            "Values are direct.",
+            "Values are static.",
+          ],
+          answer: 0,
+          citation: "Page 31 - 'Values are set once via the constructor'",
+        },
+        {
+          question: "What best practice uses private in encapsulation?",
+          options: [
+            "Use private to hide internal fields.",
+            "Use public to hide fields.",
+            "Use protected.",
+            "Use default.",
+          ],
+          answer: 0,
+          citation: "Page 32 - 'Use private to hide internal fields'",
         },
       ];
 
