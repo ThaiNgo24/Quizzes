@@ -1,797 +1,2755 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Java Interfaces & UML Quiz</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --primary: #3498db;
-            --secondary: #9b59b6;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --gray: #95a5a6;
-            --white: #ffffff;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      :root {
+        --primary: #3498db;
+        --secondary: #9b59b6;
+        --success: #2ecc71;
+        --danger: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --gray: #95a5a6;
+        --white: #ffffff;
+        --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        line-height: 1.7;
+        background-color: #f8f9fa;
+        color: var(--dark);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+
+      .quiz-container {
+        background-color: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        padding: 40px;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px;
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0);
+        transition: var(--transition);
+      }
+
+      .quiz-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .quiz-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2.2rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 3px;
+      }
+
+      .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .progress {
+        color: var(--gray);
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .progress-bar {
+        flex-grow: 1;
+        height: 8px;
+        background-color: var(--light);
+        border-radius: 4px;
+        margin-left: 15px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 4px;
+        transition: width 0.6s ease;
+      }
+
+      .question {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: var(--dark);
+        line-height: 1.5;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .options {
+        margin-bottom: 30px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .option {
+        padding: 15px 20px;
+        border: 2px solid var(--light);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .option::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(52, 152, 219, 0.1),
+          transparent
+        );
+        transition: 0.6s;
+      }
+
+      .option:hover {
+        border-color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .option:hover::before {
+        left: 100%;
+      }
+
+      .selected {
+        background-color: rgba(52, 152, 219, 0.1);
+        border-color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .correct {
+        background-color: rgba(46, 204, 113, 0.1);
+        border-color: var(--success);
+        color: var(--success);
+      }
+
+      .incorrect {
+        background-color: rgba(231, 76, 60, 0.1);
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+
+      .feedback {
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .correct-feedback {
+        background-color: rgba(46, 204, 113, 0.1);
+        color: #155724;
+        border-left: 4px solid var(--success);
+      }
+
+      .incorrect-feedback {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: #721c24;
+        border-left: 4px solid var(--danger);
+      }
+
+      .citation {
+        font-style: italic;
+        color: var(--gray);
+        margin-top: 10px;
+        font-size: 0.9rem;
+        display: block;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      button {
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.6s;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+      }
+
+      button:disabled {
+        background: var(--gray);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      button:disabled:hover::after {
+        left: -100%;
+      }
+
+      .score-container {
+        text-align: center;
+        display: none;
+        animation: fadeIn 0.8s ease;
+      }
+
+      .score {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: var(--dark);
+      }
+
+      .score-percentage {
+        font-size: 4rem;
+        font-weight: 700;
+        margin: 20px 0;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .score-message {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: var(--gray);
+      }
+
+      .restart-btn {
+        background: linear-gradient(90deg, var(--success), #27ae60);
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+      }
+
+      .restart-btn:hover {
+        box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+      }
+
+      .uml-diagram {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+        font-family: "Courier New", monospace;
+        white-space: pre;
+        overflow-x: auto;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #333;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.7;
-            background-color: #f8f9fa;
-            color: var(--dark);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-        
+      }
+
+      @media (max-width: 768px) {
         .quiz-container {
-            background-color: var(--white);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            padding: 40px;
-            width: 100%;
-            max-width: 800px;
-            margin: 20px;
-            position: relative;
-            overflow: hidden;
-            transform: translateY(0);
-            transition: var(--transition);
+          padding: 25px;
         }
-        
-        .quiz-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .quiz-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-        
+
         h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.2rem;
-            font-weight: 700;
-            position: relative;
-            padding-bottom: 15px;
+          font-size: 1.8rem;
         }
-        
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 3px;
-        }
-        
-        .progress-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .progress {
-            color: var(--gray);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-        
-        .progress-bar {
-            flex-grow: 1;
-            height: 8px;
-            background-color: var(--light);
-            border-radius: 4px;
-            margin-left: 15px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 4px;
-            transition: width 0.6s ease;
-        }
-        
+
         .question {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            color: var(--dark);
-            line-height: 1.5;
-            animation: fadeIn 0.5s ease;
+          font-size: 1.1rem;
         }
-        
-        .options {
-            margin-bottom: 30px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-        
-        .option {
-            padding: 15px 20px;
-            border: 2px solid var(--light);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
-            transition: 0.6s;
-        }
-        
-        .option:hover {
-            border-color: var(--primary);
-            transform: translateX(5px);
-        }
-        
-        .option:hover::before {
-            left: 100%;
-        }
-        
-        .selected {
-            background-color: rgba(52, 152, 219, 0.1);
-            border-color: var(--primary);
-            transform: translateX(5px);
-        }
-        
-        .correct {
-            background-color: rgba(46, 204, 113, 0.1);
-            border-color: var(--success);
-            color: var(--success);
-        }
-        
-        .incorrect {
-            background-color: rgba(231, 76, 60, 0.1);
-            border-color: var(--danger);
-            color: var(--danger);
-        }
-        
-        .feedback {
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .correct-feedback {
-            background-color: rgba(46, 204, 113, 0.1);
-            color: #155724;
-            border-left: 4px solid var(--success);
-        }
-        
-        .incorrect-feedback {
-            background-color: rgba(231, 76, 60, 0.1);
-            color: #721c24;
-            border-left: 4px solid var(--danger);
-        }
-        
-        .citation {
-            font-style: italic;
-            color: var(--gray);
-            margin-top: 10px;
-            font-size: 0.9rem;
-            display: block;
-        }
-        
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
+
         button {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+          padding: 12px 25px;
+          font-size: 0.9rem;
         }
-        
-        button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.6s;
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
-        }
-        
-        button:disabled {
-            background: var(--gray);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        button:disabled:hover::after {
-            left: -100%;
-        }
-        
-        .score-container {
-            text-align: center;
-            display: none;
-            animation: fadeIn 0.8s ease;
-        }
-        
-        .score {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        
+
         .score-percentage {
-            font-size: 4rem;
-            font-weight: 700;
-            margin: 20px 0;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+          font-size: 3rem;
         }
-        
-        .score-message {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: var(--gray);
-        }
-        
-        .restart-btn {
-            background: linear-gradient(90deg, var(--success), #27ae60);
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
-        }
-        
-        .restart-btn:hover {
-            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
-        }
-        
+
         .uml-diagram {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            white-space: pre;
-            overflow-x: auto;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #333;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+          font-size: 0.8rem;
+          padding: 10px;
         }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .quiz-container {
-                padding: 25px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .question {
-                font-size: 1.1rem;
-            }
-            
-            button {
-                padding: 12px 25px;
-                font-size: 0.9rem;
-            }
-            
-            .score-percentage {
-                font-size: 3rem;
-            }
-            
-            .uml-diagram {
-                font-size: 0.8rem;
-                padding: 10px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="quiz-container">
-        <h1>Java Interfaces & UML Quiz</h1>
+      <h1>Java Interfaces & UML Quiz</h1>
 
-        <div class="progress-container">
-            <div class="progress">
-                Question <span id="current-question">1</span> of
-                <span id="total-questions">0</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
+      <div class="progress-container">
+        <div class="progress">
+          Question <span id="current-question">1</span> of
+          <span id="total-questions">0</span>
         </div>
-
-        <div class="question" id="question"></div>
-
-        <div class="options" id="options"></div>
-
-        <div class="feedback" id="feedback"></div>
-
-        <div class="button-container">
-            <button id="next-btn" disabled>Next Question</button>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
         </div>
+      </div>
+
+      <div class="question" id="question"></div>
+
+      <div class="options" id="options"></div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <div class="button-container">
+        <button id="next-btn" disabled>Next Question</button>
+      </div>
     </div>
 
     <div class="score-container" id="score-container">
-        <div class="score">Your Score:</div>
-        <div class="score-percentage" id="score-percentage"></div>
-        <div class="score-message" id="score-message"></div>
-        <div class="button-container">
-            <button class="restart-btn" id="restart-btn">Restart Quiz</button>
-        </div>
+      <div class="score">Your Score:</div>
+      <div class="score-percentage" id="score-percentage"></div>
+      <div class="score-message" id="score-message"></div>
+      <div class="button-container">
+        <button class="restart-btn" id="restart-btn">Restart Quiz</button>
+      </div>
     </div>
 
     <script>
-        // Quiz questions covering all content from the PDF
-        const questions = [
-            {
-                question: "What is the primary purpose of an interface in Java?",
-                options: [
-                    "To provide method implementations",
-                    "To specify a contract that classes must implement",
-                    "To create objects directly",
-                    "To replace abstract classes completely"
-                ],
-                answer: 1,
-                citation: "Page 2: An interface is a contract that specifies a set of methods that a class must implement."
-            },
-            {
-                question: "Which keyword is used to implement an interface in Java?",
-                options: [
-                    "extends",
-                    "implements",
-                    "inherits",
-                    "interface"
-                ],
-                answer: 1,
-                citation: "Page 5: Classes use the 'implements' keyword to implement an interface."
-            },
-            {
-                question: "How many interfaces can a Java class implement?",
-                options: [
-                    "Only one",
-                    "Up to two",
-                    "As many as needed",
-                    "None - Java doesn't support interfaces"
-                ],
-                answer: 2,
-                citation: "Page 6: A class can implement more than one interface."
-            },
-            {
-                question: "What is the main difference between an interface and an abstract class?",
-                options: [
-                    "Interfaces can have constructors while abstract classes cannot",
-                    "A class can implement multiple interfaces but extend only one abstract class",
-                    "Interfaces can have instance fields while abstract classes cannot",
-                    "There is no difference between them"
-                ],
-                answer: 1,
-                citation: "Page 3: A class can implement multiple interfaces but can extend only one abstract class."
-            },
-            {
-                question: "Which of these is NOT allowed in a Java interface?",
-                options: [
-                    "Abstract methods",
-                    "Default methods",
-                    "Instance fields",
-                    "Static methods"
-                ],
-                answer: 2,
-                citation: "Page 9: Interfaces cannot have instance fields (only constants - public static final fields)."
-            },
-            {
-                question: "What happens if two interfaces have default methods with the same signature?",
-                options: [
-                    "The compiler randomly chooses one",
-                    "The implementing class must override the method",
-                    "Both methods are automatically combined",
-                    "It causes a runtime error"
-                ],
-                answer: 1,
-                citation: "Page 21: When two unrelated interfaces define the same default method, the implementing class must override it."
-            },
-            {
-                question: "Which UML notation represents an interface?",
-                options: [
-                    "A box with the class name in italics",
-                    "A box with the stereotype «interface»",
-                    "A box with a dashed border",
-                    "A box with rounded corners"
-                ],
-                answer: 1,
-                citation: "Page 35: Interfaces are represented with the stereotype «interface» in UML."
-            },
-            {
-                question: "What does a dashed line with a hollow triangle represent in UML?",
-                options: [
-                    "Class inheritance",
-                    "Interface implementation",
-                    "Association between classes",
-                    "Dependency between packages"
-                ],
-                answer: 1,
-                citation: "Page 55: A dashed line with a hollow triangle pointing to the interface represents realization (implementation)."
-            },
-            {
-                question: "In UML, what does the '+' symbol before a method name indicate?",
-                options: [
-                    "The method is private",
-                    "The method is protected",
-                    "The method is public",
-                    "The method is static"
-                ],
-                answer: 2,
-                citation: "Page 36: In UML, '+' indicates public visibility, '-' private, '#' protected, and '~' package-private."
-            },
-            {
-                question: "What is the correct UML representation for the following Java interface?<br><br>" + 
-                          "<div class='uml-diagram'>public interface Logger {\n  void log(String msg);\n  default void info(String msg) { log(\"[INFO] \" + msg); }\n}</div>",
-                options: [
-                    "<div class='uml-diagram'>Logger\n+ log(msg: String): void\n+ info(msg: String): void</div>",
-                    "<div class='uml-diagram'>«interface» Logger\n+ log(msg: String): void\n+ info(msg: String): void</div>",
-                    "<div class='uml-diagram'>Logger\n- log(msg: String): void\n# info(msg: String): void</div>",
-                    "<div class='uml-diagram'>«abstract» Logger\n+ log(msg: String): void\n- info(msg: String): void</div>"
-                ],
-                answer: 1,
-                citation: "Page 38: Interfaces use «interface» stereotype, methods are public by default, and UML shows method signatures with parameters and return types."
-            },
-            {
-                question: "Which of these is a valid interface declaration in Java?",
-                options: [
-                    "public interface Runnable { void run(); }",
-                    "public abstract interface Runnable { abstract void run(); }",
-                    "public final interface Runnable { void run(); }",
-                    "public static interface Runnable { void run(); }"
-                ],
-                answer: 0,
-                citation: "Page 8: Interfaces are implicitly abstract; the abstract modifier is redundant but allowed. They cannot be final or static."
-            },
-            {
-                question: "What is the purpose of default methods in interfaces?",
-                options: [
-                    "To make all implementing classes use the same implementation",
-                    "To provide optional behavior that can be overridden",
-                    "To replace abstract methods completely",
-                    "To allow interface instantiation"
-                ],
-                answer: 1,
-                citation: "Page 10: Default methods provide optional behavior that implementing classes can use as-is or override."
-            },
-            {
-                question: "Which UML relationship would you use to show that CreditCard implements PaymentMethod?",
-                options: [
-                    "Solid line with hollow triangle (generalization)",
-                    "Dashed line with hollow triangle (realization)",
-                    "Solid line with arrowhead (association)",
-                    "Dashed line with arrowhead (dependency)"
-                ],
-                answer: 1,
-                citation: "Page 55: Realization (interface implementation) is shown with a dashed line and hollow triangle pointing to the interface."
-            },
-            {
-                question: "What does the following UML diagram indicate about the relationship between Order and PaymentMethod?<br><br>" + 
-                          "<div class='uml-diagram'>Order —— PaymentMethod\n1 —— 1</div>",
-                options: [
-                    "Order inherits from PaymentMethod",
-                    "Order implements PaymentMethod",
-                    "Order uses exactly one PaymentMethod",
-                    "Order is composed of PaymentMethod"
-                ],
-                answer: 2,
-                citation: "Page 44: A solid line with multiplicity indicates an association. Here it shows an Order uses exactly one PaymentMethod."
-            },
-            {
-                question: "Which statement about interface static methods is correct?",
-                options: [
-                    "They can be overridden by implementing classes",
-                    "They are called on instances of implementing classes",
-                    "They belong to the interface itself and are called using the interface name",
-                    "They can access instance fields of implementing classes"
-                ],
-                answer: 2,
-                citation: "Page 13: Interface static methods are called on the interface itself (InterfaceName.method()) and are not inherited."
-            },
-            {
-                question: "What is the correct way to resolve a default method conflict between two interfaces?",
-                options: [
-                    "The compiler automatically chooses the most specific interface",
-                    "The implementing class must override the method",
-                    "The first interface listed in the implements clause wins",
-                    "The method is ignored and not available to the class"
-                ],
-                answer: 1,
-                citation: "Page 21: When two interfaces have conflicting default methods, the implementing class must override the method."
-            },
-            {
-                question: "In UML, what does a hollow diamond on an association line indicate?",
-                options: [
-                    "Composition (strong ownership)",
-                    "Aggregation (shared ownership)",
-                    "Interface implementation",
-                    "Dependency"
-                ],
-                answer: 1,
-                citation: "Page 61: A hollow diamond indicates aggregation (shared ownership), while a filled diamond indicates composition (strong ownership)."
-            },
-            {
-                question: "Which of these is a key benefit of programming to interfaces?",
-                options: [
-                    "It allows changing implementations without modifying client code",
-                    "It makes programs run faster",
-                    "It reduces the number of classes needed",
-                    "It allows multiple inheritance of implementation"
-                ],
-                answer: 0,
-                citation: "Page 30: Interface-driven polymorphism allows swapping implementations without changing client code."
-            },
-            {
-                question: "What does the following UML indicate about the relationship between Order and LineItem?<br><br>" + 
-                          "<div class='uml-diagram'>Order ◆— LineItem\n1 —— 1..*</div>",
-                options: [
-                    "Order implements LineItem",
-                    "Order is composed of LineItems (strong ownership)",
-                    "Order aggregates LineItems (shared ownership)",
-                    "Order depends temporarily on LineItem"
-                ],
-                answer: 1,
-                citation: "Page 61: A filled diamond indicates composition (strong ownership), meaning LineItems are owned by and die with their Order."
-            },
-            {
-                question: "Which visibility modifier in UML corresponds to Java's package-private (default) access?",
-                options: [
-                    "+",
-                    "-",
-                    "#",
-                    "~"
-                ],
-                answer: 3,
-                citation: "Page 36: In UML, '~' represents package-private (default) access, '+' public, '-' private, and '#' protected."
-            }
-        ];
+      // Quiz questions covering all content from the PDF
+      const questions = [
+        {
+          question: "What is an interface in object-oriented programming?",
+          options: [
+            "A complete class with full method implementations",
+            "A contract that specifies a set of methods (and optionally constants) that a class must implement",
+            "A way to define object state with instance variables",
+            "A mechanism to restrict access to class members",
+          ],
+          answer: 1,
+          citation:
+            "An interface is a contract that specifies a set of methods (and optionally constants) that a class must implement.",
+        },
+        {
+          question: "What does an interface define for an object?",
+          options: [
+            "How the object performs its actions in detail",
+            "What an object can do, without specifying how it does it",
+            "The memory allocation for the object's fields",
+            "The constructors required to create the object",
+          ],
+          answer: 1,
+          citation:
+            "It defines what an object can do, without specifying how it does it.",
+        },
+        {
+          question:
+            "What do interfaces promote in object-oriented programming?",
+          options: [
+            "Tight coupling and direct inheritance",
+            "Abstraction and polymorphism",
+            "Static memory management",
+            "Single-threaded execution",
+          ],
+          answer: 1,
+          citation: "Promotes abstraction and polymorphism.",
+        },
+        {
+          question:
+            "What do interfaces allow in languages like Java regarding inheritance?",
+          options: [
+            "Multiple inheritance of implementation",
+            "Multiple inheritance of type",
+            "Single inheritance of constants only",
+            "No inheritance at all",
+          ],
+          answer: 1,
+          citation:
+            "Allows multiple inheritance of type in languages like Java.",
+        },
+        {
+          question:
+            "What is the syntax for declaring a PaymentMethod interface?",
+          options: [
+            "public class PaymentMethod { void pay(double amount); }",
+            "public interface PaymentMethod { void pay(double amount); }",
+            "abstract class PaymentMethod { void pay(double amount); }",
+            "public PaymentMethod { void pay(double amount); }",
+          ],
+          answer: 1,
+          citation:
+            "Example Interface Syntax: public interface PaymentMethod { void pay(double amount); }",
+        },
+        {
+          question:
+            "In terms of method implementation, what is allowed in interfaces compared to abstract classes?",
+          options: [
+            "Interfaces can have concrete methods; abstract classes cannot",
+            "No method body (Java < 8); default/static methods allowed (Java ≥ 8) in interfaces, while abstract classes can have both abstract and concrete methods",
+            "Interfaces always have full method bodies; abstract classes do not",
+            "Both only allow abstract methods without bodies",
+          ],
+          answer: 1,
+          citation:
+            "Feature: Method implementation Interface: No method body (Java < 8); default/static methods allowed (Java ≥ 8) Abstract Class: Can have both abstract and concrete methods",
+        },
+        {
+          question:
+            "What types of fields are allowed in interfaces compared to abstract classes?",
+          options: [
+            "Interfaces allow instance variables; abstract classes only constants",
+            "Public static final constants only in interfaces, while abstract classes allow instance variables and constants",
+            "Both allow only instance variables",
+            "Neither allows any fields",
+          ],
+          answer: 1,
+          citation:
+            "Feature: Fields Interface: Public static final constants only Abstract Class: Instance variables and constants",
+        },
+        {
+          question:
+            "How does inheritance differ between interfaces and abstract classes?",
+          options: [
+            "A class can extend multiple abstract classes but implement only one interface",
+            "A class can implement multiple interfaces, but extend only one abstract class",
+            "Both allow multiple extension",
+            "Neither allows any inheritance",
+          ],
+          answer: 1,
+          citation:
+            "Feature: Inheritance Interface: A class can implement multiple interfaces Abstract Class: A class can extend only one abstract class",
+        },
+        {
+          question:
+            "What is the primary purpose of an interface compared to an abstract class?",
+          options: [
+            "Provide a partial implementation in interfaces; define a capability in abstract classes",
+            "Define a capability or role in interfaces; provide a partial implementation in abstract classes",
+            "Both are used only for full implementations",
+            "Interfaces for shared code; abstract classes for contracts",
+          ],
+          answer: 1,
+          citation:
+            "Feature: Purpose Interface: Define a capability or role Abstract Class: Provide a partial implementation",
+        },
+        {
+          question:
+            "According to the tip, when should you use an interface over an abstract class?",
+          options: [
+            "When you need shared code",
+            "When you only need a contract",
+            "When you require multiple inheritance of implementation",
+            "When defining instance variables",
+          ],
+          answer: 1,
+          citation:
+            "Tip: Use an interface when you only need a contract; use an abstract class when you need shared code.",
+        },
+        {
+          question:
+            "When should you use an interface according to the design tip?",
+          options: [
+            "When you need shared code like common fields or method implementations",
+            "When you only need a contract (what the class must do, without implementation details)",
+            "When you want to restrict multiple inheritance",
+            "When defining concrete classes directly",
+          ],
+          answer: 1,
+          citation:
+            "Use an interface when you only need a contract (what the class must do, without implementation details).",
+        },
+        {
+          question:
+            "When should you use an abstract class according to the design tip?",
+          options: [
+            "When you only need a contract without any shared elements",
+            "When you need shared code (common fields or method implementations)",
+            "For defining capabilities without any state",
+            "To allow multiple extension by classes",
+          ],
+          answer: 1,
+          citation:
+            "Use an abstract class when you need shared code (common fields or method implementations).",
+        },
+        {
+          question:
+            "According to the example, what does the Drawable interface represent?",
+          options: [
+            "A specific shape with color and position",
+            "Any object that can be drawn",
+            "A class with shared methods like move()",
+            "An abstract class for storing attributes",
+          ],
+          answer: 1,
+          citation: "interface Drawable → Any object that can be drawn.",
+        },
+        {
+          question:
+            "According to the example, what does the abstract class Shape provide?",
+          options: [
+            "Only a contract for drawing without any attributes",
+            "Stores common attributes like color, position and provides shared methods such as move()",
+            "Multiple inheritance capabilities",
+            "Static constants only",
+          ],
+          answer: 1,
+          citation:
+            "abstract class Shape → Stores common attributes like color, position and provides shared methods such as move().",
+        },
+        {
+          question: "What keyword do classes use to implement an interface?",
+          options: ["extends", "implements", "abstract", "interface"],
+          answer: 1,
+          citation: "Classes use implements keyword to implement an interface.",
+        },
+        {
+          question: "What must a class provide when implementing an interface?",
+          options: [
+            "Only the constants defined in the interface",
+            "Concrete definitions for all abstract methods",
+            "Constructors for the interface",
+            "Private fields matching the interface",
+          ],
+          answer: 1,
+          citation:
+            "Must provide concrete definitions for all abstract methods.",
+        },
+        {
+          question: "Can a class implement multiple interfaces?",
+          options: [
+            "No, only one interface per class",
+            "Yes, a class can implement multiple interfaces",
+            "Only if the interfaces extend each other",
+            "Only in abstract classes",
+          ],
+          answer: 1,
+          citation: "Can implement multiple interfaces.",
+        },
+        {
+          question:
+            "According to the code example, how is the pay method implemented in CreditCard class?",
+          options: [
+            'System.out.println("Paid $" + amount + " using e-wallet.");',
+            'System.out.println("Paid $" + amount + " using credit card.");',
+            'System.out.println("Paid $" + amount + " using cash.");',
+            'System.out.println("Paid $" + amount + " using debit card.");',
+          ],
+          answer: 1,
+          citation:
+            'Example implementation: public class CreditCard implements PaymentMethod { @Override public void pay(double amount) { System.out.println("Paid $" + amount + " using credit card."); } }',
+        },
+        {
+          question: "What can a class do regarding multiple interfaces?",
+          options: [
+            "Extend multiple interfaces but not implement them",
+            "Implement more than one interface",
+            "Only implement one if they have conflicting methods",
+            "Ignore abstract methods from additional interfaces",
+          ],
+          answer: 1,
+          citation: "A class can implement more than one interface.",
+        },
+        {
+          question: "Why is implementing multiple interfaces useful?",
+          options: [
+            "To restrict class capabilities to a single role",
+            "For combining multiple capabilities in a single class",
+            "To enforce single inheritance limitations",
+            "To avoid method implementations",
+          ],
+          answer: 1,
+          citation:
+            "Useful for combining multiple capabilities in a single class.",
+        },
+        {
+          question:
+            "What must a class do when implementing multiple interfaces?",
+          options: [
+            "Implement only the methods from the first interface",
+            "Implement all abstract methods from all interfaces",
+            "Declare itself abstract if methods conflict",
+            "Use extends for additional interfaces",
+          ],
+          answer: 1,
+          citation: "Must implement all abstract methods from all interfaces.",
+        },
+        {
+          question:
+            "According to the example, what methods are defined in Playable and Recordable interfaces?",
+          options: [
+            "Playable: void record(); Recordable: void play();",
+            "Playable: void play(); Recordable: void record();",
+            "Playable: void stop(); Recordable: void pause();",
+            "Playable: void load(); Recordable: void save();",
+          ],
+          answer: 1,
+          citation:
+            "public interface Playable { void play(); } public interface Recordable { void record(); }",
+        },
+        {
+          question:
+            "In the MediaDevice class example, what does the play method print?",
+          options: [
+            "Recording media...",
+            "Playing media...",
+            "Stopping media...",
+            "Pausing media...",
+          ],
+          answer: 1,
+          citation:
+            'public class MediaDevice implements Playable, Recordable { @Override public void play() { System.out.println("Playing media..."); } }',
+        },
+        {
+          question: "What do multiple interfaces promote?",
+          options: [
+            "Rigidity and code duplication",
+            "Flexibility and code reusability",
+            "Tight coupling between classes",
+            "Limitation to single inheritance",
+          ],
+          answer: 1,
+          citation: "Promotes flexibility and code reusability.",
+        },
+        {
+          question: "How do multiple interfaces support inheritance in Java?",
+          options: [
+            "They allow multiple inheritance of implementation",
+            "They support multiple inheritance of type (overcomes single inheritance limitation)",
+            "They restrict to single type inheritance",
+            "They prevent any type of inheritance",
+          ],
+          answer: 1,
+          citation:
+            "Supports multiple inheritance of type (overcomes single inheritance limitation).",
+        },
+        {
+          question:
+            "What should be done with method name conflicts in multiple interfaces?",
+          options: [
+            "Ignore them as they resolve automatically",
+            "Resolve explicitly in implementation",
+            "Declare the class abstract to avoid",
+            "Remove one of the interfaces",
+          ],
+          answer: 1,
+          citation:
+            "Beware of method name conflicts — must resolve explicitly in implementation.",
+        },
+        {
+          question: "Where are multiple interfaces commonly used in Java?",
+          options: [
+            "In primitive type definitions",
+            "In Java event handling and framework design",
+            "For static field management",
+            "In constructor overloading",
+          ],
+          answer: 1,
+          citation: "Common in Java event handling and framework design.",
+        },
+        {
+          question:
+            "What is the basic syntax for declaring an interface in Java?",
+          options: [
+            "public class PaymentMethod { void pay(double amount); }",
+            "[public] interface InterfaceName [extends OtherInterface1, OtherInterface2] { }",
+            "abstract class PaymentMethod { void pay(double amount); }",
+            "public PaymentMethod { void pay(double amount); }",
+          ],
+          answer: 1,
+          citation:
+            "[public] interface InterfaceName [extends OtherInterface1, OtherInterface2] { // constants // abstract methods // (Java ≥ 8) default & static methods // (Java ≥ 9) private methods }",
+        },
+        {
+          question: "What access levels can top-level interfaces have?",
+          options: [
+            "Private or protected",
+            "Public or package-private (no keyword)",
+            "Only public",
+            "Only package-private",
+          ],
+          answer: 1,
+          citation:
+            "Top-level interfaces can be public or package-private (no keyword).",
+        },
+        {
+          question: "Can an interface extend multiple other interfaces?",
+          options: [
+            "No, only one",
+            "Yes, an interface can extend multiple interfaces (type inheritance between interfaces)",
+            "Only if they are abstract classes",
+            "Interfaces cannot extend anything",
+          ],
+          answer: 1,
+          citation:
+            "An interface can extend multiple interfaces (type inheritance between interfaces).",
+        },
+        {
+          question: "Are interfaces implicitly abstract?",
+          options: [
+            "No, they are concrete",
+            "Yes, interfaces are implicitly abstract; they define contracts, not construction",
+            "Only if marked with abstract keyword",
+            "They are instantiable",
+          ],
+          answer: 1,
+          citation:
+            "Interfaces are implicitly abstract; they define contracts, not construction.",
+        },
+        {
+          question: "What are the characteristics of fields in an interface?",
+          options: [
+            "They can be instance variables without initialization",
+            "All fields are implicitly public static final and must be initialized",
+            "They are private by default",
+            "No fields are allowed",
+          ],
+          answer: 1,
+          citation:
+            "Constants: all fields are implicitly public static final and must be initialized.",
+        },
+        {
+          question:
+            "What is the implicit modifier for abstract methods in an interface?",
+          options: [
+            "Private abstract",
+            "Public abstract; no body",
+            "Protected",
+            "Static",
+          ],
+          answer: 1,
+          citation: "Abstract methods: implicitly public abstract; no body.",
+        },
+        {
+          question:
+            "When were default methods introduced and what do they provide?",
+          options: [
+            "Java < 8; mandatory behavior",
+            "Java ≥ 8; have a body; provide optional behavior",
+            "Java ≥ 9; hidden from implementers",
+            "Always; for static utilities",
+          ],
+          answer: 1,
+          citation:
+            "Default methods (Java ≥ 8): have a body; provide optional behavior.",
+        },
+        {
+          question: "What are static methods in interfaces used for?",
+          options: [
+            "Instance-specific behavior",
+            "Utility methods on the interface type itself",
+            "Overridable in classes",
+            "Private helpers",
+          ],
+          answer: 1,
+          citation:
+            "Static methods (Java ≥ 8): utility methods on the interface type itself.",
+        },
+        {
+          question:
+            "What are private methods in interfaces and when introduced?",
+          options: [
+            "Public helpers; Java ≥ 8",
+            "Helpers used by default methods; not visible to implementers; Java ≥ 9",
+            "Overridable; Java < 8",
+            "For constants; always",
+          ],
+          answer: 1,
+          citation:
+            "Private methods (Java ≥ 9): helpers used by default methods; not visible to implementers.",
+        },
+        {
+          question:
+            "What is not allowed in interfaces regarding constructors and fields?",
+          options: [
+            "Abstract methods",
+            "No constructors, no instance fields (interfaces don't model object state)",
+            "Default methods",
+            "Static methods",
+          ],
+          answer: 1,
+          citation:
+            "No constructors, no instance fields (interfaces don't model object state).",
+        },
+        {
+          question:
+            "In the Logger interface example, what is the declaration of DEFAULT_LEVEL?",
+          options: [
+            "private int DEFAULT_LEVEL = 1;",
+            "int DEFAULT_LEVEL = 1; // public static final",
+            "static int DEFAULT_LEVEL;",
+            "final int DEFAULT_LEVEL;",
+          ],
+          answer: 1,
+          citation:
+            "public interface Logger { int DEFAULT_LEVEL = 1; // public static final }",
+        },
+        {
+          question:
+            "In the Logger interface example, what is the declaration of log method?",
+          options: [
+            "default void log(String msg);",
+            "void log(String msg); // public abstract",
+            "static void log(String msg);",
+            "private void log(String msg);",
+          ],
+          answer: 1,
+          citation:
+            "public interface Logger { void log(String msg); // public abstract }",
+        },
+        {
+          question:
+            "According to the Logger example, what does the info method do?",
+          options: [
+            'log("[ERROR] " + msg);',
+            'log("[INFO] " + msg);',
+            'log(msg + "[INFO]");',
+            "log(msg);",
+          ],
+          answer: 1,
+          citation: 'default void info(String msg) { log("[INFO] " + msg); }',
+        },
+        {
+          question:
+            "In the Logger example, what does the static join method return?",
+          options: ["a - b", "a + b", "b + a", "a * b"],
+          answer: 1,
+          citation: "static String join(String a, String b) { return a + b; }",
+        },
+        {
+          question:
+            "In the Logger example, what does the private tag method return?",
+          options: [
+            'level + "[] "',
+            '"[" + level + "] "',
+            ' [" + level + "]"',
+            "level",
+          ],
+          answer: 1,
+          citation:
+            'private String tag(String level) { return "[" + level + "] "; }',
+        },
+        {
+          question:
+            "Must a class implement abstract methods from an interface?",
+          options: [
+            "No, they can be ignored",
+            "Yes – must be overridden in every implementing class",
+            "Only if not default",
+            "No, if static",
+          ],
+          answer: 1,
+          citation:
+            "Method Type: Abstract Must a Class Implement It? Yes – must be overridden in every implementing class",
+        },
+        {
+          question:
+            "Are abstract methods allowed to have full code in the interface?",
+          options: [
+            "Yes – method body is required",
+            "No – only method signature, no body",
+            "Yes, but optional",
+            "Only in Java ≥ 8",
+          ],
+          answer: 1,
+          citation:
+            "Method Type: Abstract Allowed to Have Full Code in Interface? No – only method signature, no body",
+        },
+        {
+          question: "Why not use only abstract methods in interfaces?",
+          options: [
+            "Classes may skip overriding",
+            "All classes must write all code, even shared logic → duplication, harder maintenance",
+            "Utility methods must be separate",
+            "Shared code must be copy-pasted",
+          ],
+          answer: 1,
+          citation:
+            "Method Type: Abstract Why Not Use Only This Type? If only abstract: all classes must write all code, even shared logic → duplication, harder maintenance.",
+        },
+        {
+          question: "Why do abstract methods exist in interfaces?",
+          options: [
+            "To add new functionality without breaking code",
+            "Forces classes to define the essential behavior required by the contract",
+            "To group utility methods",
+            "To share internal logic hidden",
+          ],
+          answer: 1,
+          citation:
+            "Method Type: Abstract Why It Exists (Real Need) Forces classes to define the essential behavior required by the contract.",
+        },
+        {
+          question: "Must a class implement default methods from an interface?",
+          options: [
+            "Yes, must override",
+            "No – can use default implementation or override",
+            "Yes, if abstract",
+            "No, belongs to interface",
+          ],
+          answer: 1,
+          citation:
+            "Method Type: Default Must a Class Implement It? No – can use default implementation or override",
+        },
+        {
+          question:
+            "Are default methods allowed to have full code in the interface?",
+          options: [
+            "No, only signature",
+            "Yes – method body is required",
+            "No, hidden",
+            "Yes, but only utilities",
+          ],
+          answer: 1,
+          citation:
+            "Method Type: Default Allowed to Have Full Code in Interface? Yes – method body is required",
+        },
+        {
+          question: "Why not use only default methods in interfaces?",
+          options: [
+            "Duplication of code",
+            'The "contract" is weaker — classes may skip overriding → inconsistent behavior',
+            "Unnecessary separation of utilities",
+            "Copy-pasted shared code",
+          ],
+          answer: 1,
+          citation:
+            'Method Type: Default Why Not Use Only This Type? If only default: the "contract" is weaker — classes may skip overriding → inconsistent behavior.',
+        },
+        {
+          question: "Why do default methods exist in interfaces?",
+          options: [
+            "Forces essential behavior",
+            "Adds new functionality without breaking old implementations; gives optional default behavior",
+            "Groups utility methods",
+            "Shares internal logic",
+          ],
+          answer: 1,
+          citation:
+            "Method Type: Default Why It Exists (Real Need) Adds new functionality without breaking old implementations; gives optional default behavior.",
+        },
+        {
+          question: "Must a class implement static methods from an interface?",
+          options: [
+            "Yes, override required",
+            "No–belongs to the interface itself",
+            "Yes, if default",
+            "No, but hidden",
+          ],
+          answer: 1,
+          citation:
+            "Page 10: 'Method Type: Static Must a Class Implement It? No– belongs to the interface itself'",
+        },
+        {
+          question:
+            "Are static methods allowed to have full code in the interface?",
+          options: [
+            "No, signature only",
+            "Yes– method body is required",
+            "Yes, optional behavior",
+            "No, for helpers",
+          ],
+          answer: 1,
+          citation:
+            "Page 10: 'Method Type: Static Allowed to Have Full Code in Interface? Yes– method body is required'",
+        },
+        {
+          question: "Why not use only static methods in interfaces?",
+          options: [
+            "Weaker contract",
+            "Without static: utility methods must be in separate helper classes → unnecessary separation",
+            "Duplication of logic",
+            "Copy-pasted code",
+          ],
+          answer: 1,
+          citation:
+            "Page 10: 'Method Type: Static Why Not Use Only This Type? Without static: utility methods must be in separate helper classes → unnecessary separation.'",
+        },
 
-        // Shuffle the questions array
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
+        // Java Interface Questions (54-91)
+        {
+          question: "What access is allowed for top-level interfaces?",
+          options: [
+            "Private or protected",
+            "Public or package-private (no keyword)",
+            "Protected only",
+            "Private only",
+          ],
+          answer: 1,
+          citation:
+            "Page 24: 'Top-level interface: public or package-private (no keyword)'",
+        },
+        {
+          question: "What are fields always in interfaces?",
+          options: [
+            "Private instance",
+            "Public static final and must be initialized",
+            "Protected",
+            "Optional initialization",
+          ],
+          answer: 1,
+          citation:
+            "Page 24: 'Fields: always public static final and must be initialized'",
+        },
+        {
+          question: "What methods are allowed in interfaces?",
+          options: [
+            "Private abstract only",
+            "Public abstract | default | static | private (Java ≥ 9)",
+            "Protected concrete",
+            "No methods",
+          ],
+          answer: 1,
+          citation:
+            "Page 24: 'Methods: public abstract | default | static | private (Java ≥ 9)'",
+        },
+        {
+          question: "What are nested types inside interfaces?",
+          options: [
+            "Private instance",
+            "Implicitly public static",
+            "Protected",
+            "No nested allowed",
+          ],
+          answer: 1,
+          citation:
+            "Page 24: 'Nested types inside interface: implicitly public static'",
+        },
+        {
+          question: "Are constructors allowed in interfaces?",
+          options: [
+            "Yes, public",
+            "Not allowed (interfaces can't be instantiated)",
+            "Private only",
+            "Static constructors",
+          ],
+          answer: 1,
+          citation:
+            "Page 24: 'Constructor: Not allowed (interfaces can't be instantiated)'",
+        },
+        {
+          question: "Are instance fields allowed in interfaces?",
+          options: [
+            "Yes, public",
+            "Not allowed",
+            "Protected",
+            "With initialization",
+          ],
+          answer: 1,
+          citation: "Page 24: 'Instance fields: Not allowed'",
+        },
+        {
+          question: "What is the example declaration of TIMEOUT?",
+          options: [
+            "private int TIMEOUT = 1000;",
+            "int TIMEOUT = 1000; // public static final",
+            "static int TIMEOUT;",
+            "final int TIMEOUT;",
+          ],
+          answer: 1,
+          citation:
+            "Page 24: 'Field example: int TIMEOUT= 1000; // public static final'",
+        },
+        {
+          question: "What is the nested interface Entry declaration?",
+          options: [
+            "private interface Entry { String key(); }",
+            "interface Entry { String key(); } // implicitly public static",
+            "class Entry { String key(); }",
+            "abstract class Entry { String key(); }",
+          ],
+          answer: 1,
+          citation:
+            "Page 24: 'Nested example: interface Entry {String key(); }// implicitly public static'",
+        },
+        {
+          question:
+            "What happens if implementation reduces visibility of interface method?",
+          options: [
+            "Compiles, but warning",
+            "Interface methods are public; implementation cannot use weaker access",
+            "Allowed if protected",
+            "No error",
+          ],
+          answer: 1,
+          citation:
+            "Page 25: 'Interface methods are public; implementation cannot use weaker access.'",
+        },
+        {
+          question:
+            "What is the compile error for missing public in implementation?",
+          options: [
+            "'duplicate method'",
+            "'weaker access privileges'",
+            "'abstract method'",
+            "'no override'",
+          ],
+          answer: 1,
+          citation:
+            "Page 25: 'Missing public → compile error (\"weaker access privileges\").'",
+        },
+        {
+          question: "What is in interface P?",
+          options: [
+            "public void p();",
+            "void p();",
+            "private void p();",
+            "static void p();",
+          ],
+          answer: 1,
+          citation: "Page 25: 'interface P {void p(); }'",
+        },
+        {
+          question: "Which declaration causes compile error in Q implements P?",
+          options: [
+            '@Override public void p() { System.out.println("Q"); }',
+            'void p() { System.out.println("Q"); }',
+            'protected void p() { System.out.println("Q"); }',
+            'private void p() { System.out.println("Q"); }',
+          ],
+          answer: 1,
+          citation:
+            "Page 25: 'class Q implements P {void p() {System.out.println(\"Q\"); }// ❌ compile error: weaker access }'",
+        },
+        {
+          question: "What is the fix in Q2 implements P?",
+          options: [
+            'void p() { System.out.println("Q2"); }',
+            '@Override public void p() { System.out.println("Q2"); }',
+            'protected void p() { System.out.println("Q2"); }',
+            'static void p() { System.out.println("Q2"); }',
+          ],
+          answer: 1,
+          citation:
+            "Page 25: 'class Q2 implements P {@Override public void p() {System.out.println(\"Q2\"); }}'",
+        },
+        {
+          question:
+            "What happens if skipping an abstract method from multiple interfaces?",
+          options: [
+            "No error, optional",
+            "'class is not abstract and does not override ...'",
+            "Runtime error",
+            "Warning only",
+          ],
+          answer: 1,
+          citation:
+            "Page 26: 'Implementing multiple interfaces requires all abstract methods. Skipping one → \"class is not abstract and does not override ...\".'",
+        },
+        {
+          question: "What methods are in A and B?",
+          options: [
+            "A: void n(); B: void m();",
+            "A: void m(); B: void n();",
+            "A: void p(); B: void q();",
+            "A: static void m(); B: static void n();",
+          ],
+          answer: 1,
+          citation: "Page 26: 'interface A{void m(); }interface B{void n(); }'",
+        },
+        {
+          question: "In class C implements A, B, what causes error?",
+          options: [
+            "Has both m and n",
+            "@Override public void m() { ... } /* missing n() */",
+            "No methods",
+            "Static methods",
+          ],
+          answer: 1,
+          citation:
+            "Page 26: 'class C implements A, B{@Override public void m() {System.out.println(\"m\"); }/ ❌ compile error: missing n() / }'",
+        },
+        {
+          question: "What does class C2 need to add?",
+          options: [
+            "Only m()",
+            '@Override public void n() { System.out.println("n"); }',
+            "Make abstract",
+            "Remove B",
+          ],
+          answer: 1,
+          citation:
+            'Page 26: \'Fix: class C2 implements A, B{@Override public void m() {System.out.println("m"); }@Override public void n() {System.out.println("n"); }}\'',
+        },
+        {
+          question: "Can interface static methods be called via instances?",
+          options: [
+            "Yes, via implementing object",
+            "No, interface static methods are not callable via instances/implementers",
+            "Only if overridden",
+            "Yes, via super",
+          ],
+          answer: 1,
+          citation:
+            "Page 27: 'Interface static methods are not callable via instances/implementers.'",
+        },
+        {
+          question: "How to always call interface static methods?",
+          options: [
+            "new Implementer().method()",
+            "InterfaceName.method(...)",
+            "this.method()",
+            "super.method()",
+          ],
+          answer: 1,
+          citation: "Page 27: 'Always call with InterfaceName.method(...).'",
+        },
+        {
+          question: "What is in interface U?",
+          options: [
+            "default void f() { ... }",
+            'static void f() { System.out.println("U.f"); }',
+            "void f();",
+            "private void f() { ... }",
+          ],
+          answer: 1,
+          citation:
+            "Page 27: 'interface U {static void f() {System.out.println(\"U.f\"); }}'",
+        },
+        {
+          question: "class V implements U has what?",
+          options: ["Method f", "Nothing special", "Override f", "Error"],
+          answer: 1,
+          citation: "Page 27: 'class V implements U {}'",
+        },
+        {
+          question: "Which call is correct?",
+          options: ["new V().f();", "U.f();", "V.f();", "this.f();"],
+          answer: 1,
+          citation: "Page 27: 'U.f(); // ✅ correct'",
+        },
+        {
+          question: "Which call causes compile error?",
+          options: ["U.f();", "new V().f();", "V.f();", "U.super.f();"],
+          answer: 1,
+          citation: "Page 27: '// newV().f(); // ❌ compile error'",
+        },
+        {
+          question: "What must fields in interfaces be?",
+          options: [
+            "Uninitialized",
+            "Public static final → must be initialized",
+            "With constructors",
+            "Instance",
+          ],
+          answer: 1,
+          citation:
+            "Page 28: 'Fields are public static final → must be initialized. No constructors in interfaces; cannot instantiate an interface.'",
+        },
+        {
+          question: "What is valid in interface K?",
+          options: ["int Y;", "int X = 1;", "K() {}", "static int X;"],
+          answer: 1,
+          citation:
+            "Page 28: 'interface K{int X= 1; // ✅ initialized constant }'",
+        },
+        {
+          question: "What causes compile error for field Y in K?",
+          options: [
+            "int X = 1;",
+            "int Y;",
+            "final int Y = 1;",
+            "public int Y = 1;",
+          ],
+          answer: 1,
+          citation: "Page 28: '// int Y; // ❌ compile error: must initialize'",
+        },
+        {
+          question: "What causes compile error for constructor in K?",
+          options: ["int X = 1;", "K() {}", "void m();", "default void m() {}"],
+          answer: 1,
+          citation:
+            "Page 28: '// K() {}// ❌ compile error: constructors not allowed'",
+        },
+        {
+          question: "What causes compile error in Demo2?",
+          options: [
+            "new Class();",
+            "new K();",
+            "K k = new Implementer();",
+            "No error",
+          ],
+          answer: 1,
+          citation:
+            "Page 28: '// newK(); // ❌ compile error: cannot instantiate interface'",
+        },
+        {
+          question: "Can interface static methods be overridden?",
+          options: [
+            "Yes, with @Override",
+            "Interface static methods are not inherited and cannot be overridden",
+            "Yes, in subclasses",
+            "Only if default",
+          ],
+          answer: 1,
+          citation:
+            "Page 29: 'Interface static methods are not inherited and cannot be overridden.'",
+        },
+        {
+          question: "What happens if adding @Override on static in class?",
+          options: [
+            "Compiles fine",
+            "Compile error",
+            "Runtime override",
+            "No error, overrides",
+          ],
+          answer: 1,
+          citation:
+            "Page 29: 'Adding @Override on a static method in the class → compile error.'",
+        },
+        {
+          question:
+            "What is a class static with same signature as interface static?",
+          options: [
+            "Override",
+            "Unrelated; call with ClassName.method()",
+            "Error",
+            "Inherited",
+          ],
+          answer: 1,
+          citation:
+            "Page 29: 'Class static with same signature is unrelated; call with ClassName.method().'",
+        },
+        {
+          question: "What is in U?",
+          options: [
+            'default void f() { System.out.println("U.f"); }',
+            'static void f() { System.out.println("U.f"); }',
+            "void f();",
+            'private void f() { System.out.println("U.f"); }',
+          ],
+          answer: 1,
+          citation:
+            "Page 29: 'interface U {static void f() {System.out.println(\"U.f\"); }}'",
+        },
+        {
+          question: "What causes compile error in V implements U?",
+          options: [
+            'public static void f() { System.out.println("V.f"); }',
+            '@Override static void f() { System.out.println("V.f"); }',
+            'void f() { System.out.println("V.f"); }',
+            'default void f() { System.out.println("V.f"); }',
+          ],
+          answer: 1,
+          citation:
+            "Page 29: 'class V implements U {// @Override static void f() {System.out.println(\"V.f\"); }// ❌ compile error }'",
+        },
+        {
+          question: "What is valid in V?",
+          options: [
+            "@Override static void f() { ... }",
+            'public static void f() { System.out.println("V.f"); }',
+            "@Override void f() { ... }",
+            "static void f() { U.super.f(); }",
+          ],
+          answer: 1,
+          citation:
+            "Page 29: 'public static void f() {System.out.println(\"V.f\"); }// ✅ separate static'",
+        },
+        {
+          question: "What prints U.f()?",
+          options: ["V.f", "U.f", "Error", "Nothing"],
+          answer: 1,
+          citation: "Page 29: 'U.f(); // prints U.f'",
+        },
+        {
+          question: "What prints V.f()?",
+          options: ["U.f", "V.f", "Error", "Nothing"],
+          answer: 1,
+          citation: "Page 29: 'V.f(); // prints V.f'",
+        },
+        {
+          question:
+            "What is the general comparison between interface and abstract class?",
+          options: [
+            "Interface = partial implementation; Abstract class = contract",
+            "Interface = contract; Abstract class = partial implementation (shared code)",
+            "Both are contracts only",
+            "Both provide full implementations",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Interface = contract; Abstract class = partial implementation (shared code)'",
+        },
+        {
+          question: "When to use interface for cross-cutting capabilities?",
+          options: [
+            "When sharing state/logic",
+            "Use interface for cross-cutting capabilities; abstract when sharing state/logic",
+            "Only for single inheritance",
+            "For constants only",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Use interface for cross-cutting capabilities; abstract when sharing state/logic'",
+        },
+        {
+          question:
+            "How many interfaces can a class implement vs abstract classes extend?",
+          options: [
+            "One interface; many abstract classes",
+            "Many interfaces; one abstract class",
+            "One of each",
+            "Many of each",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'A class can implement many interfaces; can extend one abstract class'",
+        },
+        {
+          question: "What methods are allowed in interface vs abstract class?",
+          options: [
+            "Concrete only in interface; abstract only in abstract class",
+            "Abstract / default / static / private in interface; abstract + concrete in abstract class",
+            "No methods in interface",
+            "Same for both",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Aspect: Methods Interface: abstract / default / static / private Abstract Class: abstract + concrete'",
+        },
+        {
+          question: "What fields are allowed in interface vs abstract class?",
+          options: [
+            "Instance in interface; constants in abstract",
+            "Constants (public static final) in interface; instance + static in abstract class",
+            "No fields in either",
+            "Same fields for both",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Aspect: Fields Interface: constants (public static final) Abstract Class: instance + static'",
+        },
+        {
+          question:
+            "What is the inheritance aspect for interface vs abstract class?",
+          options: [
+            "Single for interface; multiple for abstract",
+            "Multiple (implements) for interface; single (extends) for abstract class",
+            "No inheritance for either",
+            "Multiple for both",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Aspect: Inheritance Interface: multiple (implements) Abstract Class: single (extends)'",
+        },
+        {
+          question: "When to use interface vs abstract class based on aspect?",
+          options: [
+            "Shared state/behavior for interface; capability/role for abstract",
+            "Capability/role for interface; shared state/behavior for abstract class",
+            "Same use for both",
+            "Only for roles in both",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Aspect: Use when Interface: capability/role Abstract Class: shared state/behavior'",
+        },
+        {
+          question:
+            "According to the design checklist, when to choose interface?",
+          options: [
+            "Need shared code/state",
+            "Need only a contract",
+            "Need instance fields",
+            "Need multiple extension",
+          ],
+          answer: 1,
+          citation:
+            "Page 15: 'Design checklist: Need only a contract → interface'",
+        },
+        {
+          question:
+            "According to the design checklist, when to choose abstract class?",
+          options: [
+            "Need only a contract",
+            "Need shared code/state",
+            "For capabilities only",
+            "For constants only",
+          ],
+          answer: 1,
+          citation: "Page 15: 'Need shared code/state → abstract class'",
+        },
+        {
+          question: "What keyword is used to implement an interface in Java?",
+          options: ["extends", "implements", "abstract", "interface"],
+          answer: 1,
+          citation: "Page 16: 'Quy tắc triển khai: Use implements;'",
+        },
+        {
+          question:
+            "What visibility must provided methods have when implementing an interface?",
+          options: [
+            "Private or protected",
+            "Public methods (cannot reduce visibility)",
+            "Package-private only",
+            "Static",
+          ],
+          answer: 1,
+          citation:
+            "Page 16: 'must provide public methods (cannot reduce visibility)'",
+        },
+        {
+          question:
+            "What can the implementation use regarding return and exceptions?",
+          options: [
+            "Broader throws only",
+            "Covariant return (subtype) and narrower throws",
+            "No returns allowed",
+            "Exact same throws",
+          ],
+          answer: 1,
+          citation:
+            "Implementations may use covariant return types (subtypes) and narrower throws clauses.",
+          source: "Page 16",
+        },
+        {
+          question:
+            "Where do constructors live when implementing an interface?",
+          options: [
+            "In the interface",
+            "In the implementing class, not in the interface",
+            "Shared from interface",
+            "Not allowed at all",
+          ],
+          answer: 1,
+          citation:
+            "Constructors exist in the implementing class, not in the interface, since interfaces cannot be instantiated.",
+          source: "Page 16",
+        },
+        {
+          question:
+            "In the Printer interface example, what method is declared?",
+          options: [
+            "void print(int i);",
+            "void print(String s);",
+            "String print();",
+            "void print();",
+          ],
+          answer: 1,
+          citation:
+            "The Printer interface declares a method that takes a String parameter.",
+          source: "Page 16",
+        },
+        {
+          question: "In the ConsolePrinter example, what is the print method?",
+          options: [
+            "void print(String s) { System.out.println(s); } // error",
+            "@Override public void print(String s) { System.out.println(s); }",
+            "protected void print(String s) { System.out.println(s); }",
+            "private void print(String s) { System.out.println(s); }",
+          ],
+          answer: 1,
+          citation:
+            "The implementation must be public to match interface method visibility.",
+          source: "Page 16",
+        },
+        {
+          question:
+            "What happens if implementation omits public for interface method?",
+          options: [
+            "It compiles fine",
+            "Compile error: weaker access",
+            "Runtime error",
+            "No error, defaults to public",
+          ],
+          answer: 1,
+          citation:
+            "Omitting public visibility modifier results in a compile error due to weaker access privileges.",
+          source: "Page 16",
+        },
+        {
+          question: "What is the tip for keeping interfaces?",
+          options: [
+            "Large and general",
+            "Small and focused (ISP)",
+            "With 'Utils' names",
+            "With many constants",
+          ],
+          answer: 1,
+          citation:
+            "Follow the Interface Segregation Principle (ISP) by keeping interfaces small and focused.",
+          source: "Page 16",
+        },
+        {
+          question: "Can a class implement several interfaces?",
+          options: [
+            "No, only one",
+            "Yes, a class can implement several interfaces",
+            "Only if no defaults",
+            "Only abstract classes",
+          ],
+          answer: 1,
+          citation: "A class can implement multiple interfaces simultaneously.",
+          source: "Page 17",
+        },
+        {
+          question: "What are the rules for default method conflicts?",
+          options: [
+            "Interface always wins over class",
+            "1. Class wins over interface 2. More specific subinterface wins over superinterface 3. If still ambiguous → must override and can delegate via InterfaceName.super.m()",
+            "Always override automatically",
+            "No rules, compile error always",
+          ],
+          answer: 1,
+          citation:
+            "There are three clear rules for resolving default method conflicts in order of precedence.",
+          source: "Page 17",
+        },
+        {
+          question: "In the example, what do A and B defaults print for m()?",
+          options: [
+            "A: 'B'; B: 'A'",
+            "A: 'A'; B: 'B'",
+            "Both 'C'",
+            "Both nothing",
+          ],
+          answer: 1,
+          citation: "Each interface's default method prints its own name.",
+          source: "Page 17",
+        },
+        {
+          question: "In class C implementing A and B, how is m() overridden?",
+          options: [
+            "@Override public void m() { B.super.m(); }",
+            "@Override public void m() { A.super.m(); }",
+            "No override needed",
+            "@Override public void m() { System.out.println('C'); }",
+          ],
+          answer: 1,
+          citation:
+            "The example shows delegating to A's implementation, though B or custom implementation would also be valid.",
+          source: "Page 17",
+        },
+        {
+          question:
+            "How to handle constant name clashes in multiple interfaces?",
+          options: [
+            "Ignore, first wins",
+            "Qualify: A.X, B.X",
+            "Override constants",
+            "Cannot have clashes",
+          ],
+          answer: 1,
+          citation:
+            "Use qualified names to distinguish between constants with the same name from different interfaces.",
+          source: "Page 17",
+        },
+        {
+          question:
+            "In default method conflicts, what wins if a superclass defines m()?",
+          options: [
+            "Interface default overrides class",
+            "If a superclass defines m(), it overrides any interface default m() automatically",
+            "Must override in subclass",
+            "Compile error always",
+          ],
+          answer: 1,
+          citation:
+            "Class methods always win over interface default methods automatically.",
+          source: "Page 18",
+        },
+        {
+          question:
+            "Is override needed in the subclass for class winning over interface default?",
+          options: [
+            "Yes, always",
+            "No need to override in the subclass",
+            "Only if ambiguous",
+            "Yes, to delegate",
+          ],
+          answer: 1,
+          citation:
+            "When a class method wins over interface default, no additional override is needed in the subclass.",
+          source: "Page 18",
+        },
+        {
+          question: "In the example, what does A default m() print?",
+          options: ["'Base'", "'A'", "'C'", "nothing"],
+          answer: 1,
+          citation: "Interface A's default method prints 'A'.",
+          source: "Page 18",
+        },
+        {
+          question: "In the example, what does Base m() print?",
+          options: ["'A'", "'Base'", "'C'", "'Subclass'"],
+          answer: 1,
+          citation: "The Base class method prints 'Base'.",
+          source: "Page 18",
+        },
+        {
+          question: "In class C extends Base implements A, is override needed?",
+          options: [
+            "Yes, @Override void m()",
+            "No override needed",
+            "Must delegate to A.super",
+            "Compile error without override",
+          ],
+          answer: 1,
+          citation:
+            "No override is needed because the class method wins automatically.",
+          source: "Page 18",
+        },
+        {
+          question: "What does new C().m() print in Demo1?",
+          options: ["A", "Base", "C", "Error"],
+          answer: 1,
+          citation:
+            "The output is 'Base' because the class method wins over the interface default.",
+          source: "Page 18",
+        },
+        {
+          question:
+            "In default method conflicts, what wins if B extends A with default m()?",
+          options: [
+            "Superinterface A wins",
+            "More specific subinterface wins over superinterface",
+            "Must override",
+            "Class wins",
+          ],
+          answer: 1,
+          citation:
+            "The more specific subinterface takes precedence over its superinterface.",
+          source: "Page 19",
+        },
+        {
+          question:
+            "Does the more specific win even if class implements both A and B?",
+          options: [
+            "No, A wins",
+            "Yes, even if the class implements A, B, the more specific B wins",
+            "No, ambiguous",
+            "Only if no class method",
+          ],
+          answer: 1,
+          citation:
+            "The more specific subinterface wins even when the class directly implements both interfaces.",
+          source: "Page 19",
+        },
+        {
+          question: "What does A default m() print?",
+          options: ["'B'", "'A'", "'C'", "nothing"],
+          answer: 1,
+          citation: "Interface A's default method prints 'A'.",
+          source: "Page 19",
+        },
+        {
+          question: "What does B default m() print, where B extends A?",
+          options: ["'A'", "'B'", "'C'", "'Super'"],
+          answer: 1,
+          citation: "Interface B's default method prints 'B'.",
+          source: "Page 19",
+        },
+        {
+          question: "In class C implements A, B, what happens to m()?",
+          options: [
+            "A is chosen",
+            "B is more specific → chosen automatically",
+            "Must override",
+            "Error",
+          ],
+          answer: 1,
+          citation:
+            "B is more specific than A, so B's method is chosen automatically.",
+          source: "Page 19",
+        },
+        {
+          question: "What does new C().m() print in Demo2?",
+          options: ["A", "B", "C", "Error"],
+          answer: 1,
+          citation:
+            "The output is 'B' because the more specific subinterface wins.",
+          source: "Page 19",
+        },
+        {
+          question:
+            "What happens if two unrelated interfaces have the same default m()?",
+          options: [
+            "Automatically chooses first",
+            "Cause ambiguity; the class must override and may delegate via InterfaceName.super.m()",
+            "Subinterface wins",
+            "Class wins",
+          ],
+          answer: 1,
+          citation:
+            "Two unrelated interfaces with the same default method create ambiguity that must be resolved by explicit override.",
+          source: "Page 20",
+        },
+        {
+          question:
+            "What do A and B defaults print for m() in ambiguous example?",
+          options: [
+            "A: 'B'; B: 'A'",
+            "A: 'A'; B: 'B'",
+            "Both 'Ambiguous'",
+            "Both 'C'",
+          ],
+          answer: 1,
+          citation: "Each interface's default method prints its own name.",
+          source: "Page 20",
+        },
+        {
+          question:
+            "In class C implements A, B, what is in the override for m()?",
+          options: [
+            "B.super.m();",
+            "A.super.m();",
+            "System.out.println('C');",
+            "No override",
+          ],
+          answer: 1,
+          citation:
+            "The example shows delegating to A's implementation, though other options are also valid.",
+          source: "Page 20",
+        },
+        {
+          question: "What does new C().m() print in Demo3?",
+          options: ["B", "A", "C", "Error"],
+          answer: 1,
+          citation:
+            "The output is 'A' because the implementation chose to delegate to A.super.m().",
+          source: "Page 20",
+        },
+        {
+          question:
+            "What causes a compilation error in default method conflicts?",
+          options: [
+            "Related interfaces with same default",
+            "Two unrelated interfaces define the same default method → ambiguous",
+            "Class method present",
+            "Subinterface override",
+          ],
+          answer: 1,
+          citation:
+            "Two unrelated interfaces with the same default method create ambiguity that results in compilation error.",
+          source: "Page 21",
+        },
+        {
+          question:
+            "What is the compile-time error if not overridden in ambiguous case?",
+          options: [
+            "'overrides unrelated defaults'",
+            "'inherits unrelated defaults for m() from types A and B'",
+            "'cannot find method m()'",
+            "'duplicate method'",
+          ],
+          answer: 1,
+          citation:
+            "The specific error message indicates inheritance of unrelated defaults.",
+          source: "Page 21",
+        },
+        {
+          question: "In the example, which class causes compile error?",
+          options: [
+            "class C implements A {}",
+            "class C implements A, B {}",
+            "class C extends A, B {}",
+            "interface C implements A, B {}",
+          ],
+          answer: 1,
+          citation:
+            "Implementing both unrelated interfaces A and B without resolving the conflict causes compilation error.",
+          source: "Page 21",
+        },
+        {
+          question: "How to fix the ambiguous default conflict?",
+          options: [
+            "Remove one interface",
+            "Override and choose/delegate",
+            "Make class abstract",
+            "Use static instead",
+          ],
+          answer: 1,
+          citation:
+            "Override the conflicting method and choose which implementation to delegate to or provide custom implementation.",
+          source: "Page 21",
+        },
+        {
+          question: "Can interface static methods be called via instances?",
+          options: [
+            "Yes, via implementing object",
+            "No, interface static methods are not callable via instances/implementers",
+            "Only if overridden",
+            "Yes, via super",
+          ],
+          answer: 1,
+          citation:
+            "Interface static methods cannot be called through instances or implementing objects.",
+          source: "Page 27",
+        },
+        {
+          question: "How to always call interface static methods?",
+          options: [
+            "new Implementer().method()",
+            "InterfaceName.method(...)",
+            "this.method()",
+            "super.method()",
+          ],
+          answer: 1,
+          citation:
+            "Interface static methods must always be called using the interface name.",
+          source: "Page 27",
+        },
+        {
+          question: "What is in interface U?",
+          options: [
+            "default void f() { ... }",
+            "static void f() { System.out.println('U.f'); }",
+            "void f();",
+            "private void f() { ... }",
+          ],
+          answer: 1,
+          citation: "Interface U contains a static method that prints 'U.f'.",
+          source: "Page 27",
+        },
+        {
+          question: "class V implements U has what?",
+          options: ["Method f", "Nothing special", "Override f", "Error"],
+          answer: 1,
+          citation:
+            "The implementing class doesn't inherit static methods, so it has nothing special regarding the static method.",
+          source: "Page 27",
+        },
+        {
+          question: "Which call is correct?",
+          options: ["new V().f();", "U.f();", "V.f();", "this.f();"],
+          answer: 1,
+          citation:
+            "Static interface methods must be called using the interface name.",
+          source: "Page 27",
+        },
+        {
+          question: "Which call causes compile error?",
+          options: ["U.f();", "new V().f();", "V.f();", "U.super.f();"],
+          answer: 1,
+          citation: "Cannot call interface static methods via instance.",
+          source: "Page 27",
+        },
+        {
+          question: "What is interface-driven polymorphism?",
+          options: [
+            "Variable of class type only",
+            "Program to an interface: a variable of interface type can reference any implementing class",
+            "Static dispatch",
+            "No swapping",
+          ],
+          answer: 1,
+          citation:
+            "Interface polymorphism allows variables of interface type to reference any implementing class.",
+          source: "Page 30",
+        },
+        {
+          question: "How are calls handled in interface polymorphism?",
+          options: [
+            "Statically at compile",
+            "Dynamically dispatched to the runtime implementation",
+            "No dispatch",
+            "Only to abstract class",
+          ],
+          answer: 1,
+          citation:
+            "Method calls are dynamically dispatched to the actual runtime implementation.",
+          source: "Page 30",
+        },
+        {
+          question: "What does interface polymorphism allow?",
+          options: [
+            "Tight coupling",
+            "Swap implementations without changing caller code (decoupling, easier testing)",
+            "Harder testing",
+            "No change",
+          ],
+          answer: 1,
+          citation:
+            "Interface polymorphism enables swapping implementations without changing caller code.",
+          source: "Page 30",
+        },
+        {
+          question: "What is in PaymentMethod?",
+          options: [
+            "void pay(int amount);",
+            "void pay(double amount);",
+            "double pay();",
+            "static void pay(double amount);",
+          ],
+          answer: 1,
+          citation:
+            "PaymentMethod interface declares a pay method that takes a double parameter.",
+          source: "Page 30",
+        },
+        {
+          question: "What does CreditCard pay print?",
+          options: [
+            "'EWallet pays ' + amount",
+            "'CC pays ' + amount",
+            "'Paid ' + amount",
+            "'Charge ' + amount",
+          ],
+          answer: 1,
+          citation: "CreditCard's implementation prints 'CC pays ' + amount.",
+          source: "Page 30",
+        },
+        {
+          question: "What does EWallet pay print?",
+          options: [
+            "'CC pays ' + amount",
+            "'EWallet pays ' + amount",
+            "'Wallet pays ' + amount",
+            "'E pays ' + amount",
+          ],
+          answer: 1,
+          citation: "EWallet's implementation prints 'EWallet pays ' + amount.",
+          source: "Page 30",
+        },
+        {
+          question: "What does pm = new CreditCard(); pm.pay(100); print?",
+          options: ["EWallet pays 100", "CC pays 100", "Error", "Nothing"],
+          answer: 1,
+          citation:
+            "The output is 'CC pays 100' when using CreditCard implementation.",
+          source: "Page 30",
+        },
+        {
+          question: "What does pm = new EWallet(); pm.pay(50); print?",
+          options: ["CC pays 50", "EWallet pays 50", "CC pays 100", "Error"],
+          answer: 1,
+          citation:
+            "The output is 'EWallet pays 50' when using EWallet implementation.",
+          source: "Page 30",
+        },
+        {
+          question:
+            "What is the loop for PaymentMethod m : List.of(new CreditCard(), new EWallet())?",
+          options: ["m.pay(50);", "m.pay(10);", "m.pay(100);", "m.pay(0);"],
+          answer: 1,
+          citation:
+            "The loop calls pay(10) on each payment method implementation.",
+          source: "Page 30",
+        },
+        {
+          question: "What is UML?",
+          options: [
+            "A programming language for Java",
+            "Unified Modeling Language, a standardized visual language to model software systems (structure & behavior)",
+            "A code generation tool",
+            "A testing framework",
+          ],
+          answer: 1,
+          citation:
+            "UML is the Unified Modeling Language, a standardized visual language used to model software systems.",
+          source: "Page 41",
+        },
+        {
+          question: "Why use UML?",
+          options: [
+            "To write code directly",
+            "It helps teams share a common picture of classes, relationships, and flows",
+            "For runtime execution",
+            "To compile programs",
+          ],
+          answer: 1,
+          citation:
+            "UML's primary purpose is to facilitate communication and shared understanding among team members.",
+          source: "Page 41",
+        },
+        {
+          question: "Why use UML in this course?",
+          options: [
+            "To skip design",
+            "Bridge from requirements → design → code (you'll map UML Class Diagrams to Java: class/interface, visibility, inheritance/realization, associations & multiplicity)",
+            "For advanced topics only",
+            "To replace Java",
+          ],
+          answer: 1,
+          citation:
+            "UML serves as a bridge in the development process, helping translate requirements into design.",
+          source: "Page 41",
+        },
+        {
+          question: "What does UML improve in the course?",
+          options: [
+            "Coding speed only",
+            "Communication, planning, and documentation across students and stakeholders",
+            "Memory management",
+            "Threading",
+          ],
+          answer: 1,
+          citation:
+            "UML enhances the collaborative aspects of software development.",
+          source: "Page 41",
+        },
+        {
+          question: "What is the focus of UML in today's scope?",
+          options: [
+            "Sequence diagrams",
+            "Focus on Class Diagram (classes, interfaces, attributes, operations, relationships)",
+            "State diagrams",
+            "All UML types",
+          ],
+          answer: 1,
+          citation: "The course focuses specifically on Class Diagrams.",
+          source: "Page 41",
+        },
+        {
+          question: "What is a good practice for UML diagrams?",
+          options: [
+            "Make them complex",
+            "Keep diagrams simple, name classes as nouns, operations as verbs, and update the diagram when code evolves",
+            "Use verbs for classes",
+            "Never update",
+          ],
+          answer: 1,
+          citation:
+            "Good UML practice involves maintaining simplicity and using proper naming conventions.",
+          source: "Page 41",
+        },
+        {
+          question: "What is UML used for in Java OOP?",
+          options: [
+            "Visual language for runtime",
+            "Visual language for classes, members, relationships",
+            "For methods only",
+            "For fields only",
+          ],
+          answer: 1,
+          citation:
+            "UML provides a comprehensive visual representation of object-oriented design elements.",
+          source: "Page 32",
+        },
+        {
+          question: "What UML diagram is used in this course?",
+          options: ["Sequence", "Class Diagrams only", "Use case", "Activity"],
+          answer: 1,
+          citation: "The course concentrates exclusively on Class Diagrams.",
+          source: "Page 32",
+        },
+        {
+          question: "What is the goal of using UML?",
+          options: [
+            "From code to requirements",
+            "Move from requirements → classes → relationships → Java code clearly",
+            "To avoid code",
+            "For documentation only",
+          ],
+          answer: 1,
+          citation:
+            "The goal is to establish a clear progression from initial requirements through design decisions to final implementation.",
+          source: "Page 32",
+        },
+        {
+          question: "How to find candidate classes from requirements?",
+          options: [
+            "Verbs → classes",
+            "Nouns → Order, PaymentMethod, CreditCard (candidate classes)",
+            "Adjectives → methods",
+            "Ignore nouns",
+          ],
+          answer: 1,
+          citation:
+            "In requirement analysis, nouns typically represent entities that become classes in the design.",
+          source: "Page 33",
+        },
+        {
+          question: "What are candidate operations from verbs in requirements?",
+          options: [
+            "Order, PaymentMethod",
+            "Checkout, pay",
+            "CreditCard",
+            "Using",
+          ],
+          answer: 1,
+          citation:
+            "Verbs in requirements typically indicate actions that become operations (methods) in the design.",
+          source: "Page 33",
+        },
+        {
+          question: "What parts does a UML class/interface box have?",
+          options: [
+            "Only name",
+            "Up to 3 parts (top→down): 1. Name 2. Attributes (fields) 3. Operations (methods)",
+            "4 parts including constructors",
+            "Bottom to top",
+          ],
+          answer: 1,
+          citation:
+            "UML class/interface boxes follow a standard three-part structure organized from top to bottom: name, attributes, and operations.",
+        },
+        {
+          question: "What to draw in UML for Java OOP design?",
+          options: [
+            "All extra decor",
+            "Only what we need for Java OOP design (no extra UML decor)",
+            "Full code",
+            "No attributes",
+          ],
+          answer: 1,
+          citation:
+            "The focus should be on elements essential for Java OOP design rather than decorative UML features.",
+        },
+        {
+          question: "What is the attribute in Order box?",
+          options: [
+            "+ total: double",
+            "- total: double",
+            "# total: double",
+            "~total: double",
+          ],
+          answer: 1,
+          citation:
+            "The Order class has a private total attribute, indicated by the minus (-) symbol.",
+        },
+        {
+          question: "What is the operation in Order?",
+          options: [
+            "- checkout(pm: PaymentMethod): void",
+            "+ checkout(pm: PaymentMethod): void",
+            "# checkout(): void",
+            "~checkout(): double",
+          ],
+          answer: 1,
+          citation:
+            "The Order class has a public checkout operation that takes a PaymentMethod parameter.",
+        },
+        {
+          question: "How is PaymentMethod marked?",
+          options: [
+            "Order",
+            "«interface» PaymentMethod",
+            "CreditCard",
+            "abstract PaymentMethod",
+          ],
+          answer: 1,
+          citation:
+            "Interfaces in UML are marked with the stereotype «interface».",
+        },
+        {
+          question: "What is the operation in PaymentMethod?",
+          options: [
+            "- pay(amount: double): void",
+            "+ pay(amount: double): void",
+            "pay(): double",
+            "static pay(amount: double): void",
+          ],
+          answer: 1,
+          citation: "Interface methods are public by default.",
+        },
+        {
+          question: "What is the attribute in CreditCard?",
+          options: [
+            "+ cardNumber: String",
+            "- cardNumber: String",
+            "# cardNumber: int",
+            "~cardNumber: double",
+          ],
+          answer: 1,
+          citation: "The CreditCard class has a private cardNumber attribute.",
+        },
+        {
+          question: "What is the operation in CreditCard?",
+          options: [
+            "- pay(amount: double): void",
+            "+ pay(amount: double): void",
+            "pay(): String",
+            "checkout(pm: PaymentMethod): void",
+          ],
+          answer: 1,
+          citation:
+            "CreditCard implements the PaymentMethod interface's pay operation.",
+        },
+        {
+          question: "How to name classes in UML?",
+          options: [
+            "Lowercase, verb",
+            "TitleCase, a noun",
+            "All caps",
+            "As verbs",
+          ],
+          answer: 1,
+          citation:
+            "Classes represent entities/objects, named as nouns using TitleCase.",
+        },
+        {
+          question: "How to mark an interface in UML?",
+          options: [
+            "Italic name",
+            "Add stereotype «interface» above the name",
+            "«abstract»",
+            "No stereotype",
+          ],
+          answer: 1,
+          citation: "Interfaces are marked with «interface» stereotype.",
+        },
+        {
+          question: "How to mark an abstract class in UML?",
+          options: [
+            "«interface»",
+            "Italic name (or add «abstract» if you can't italicize)",
+            "TitleCase only",
+            "«concrete»",
+          ],
+          answer: 1,
+          citation: "Abstract classes are marked by italicizing the name.",
+        },
+        {
+          question: "What is the rule for boxes in UML?",
+          options: [
+            "Multiple classes per box",
+            "One box = one type (don't put multiple classes in one box)",
+            "Interfaces in class boxes",
+            "No boxes for interfaces",
+          ],
+          answer: 1,
+          citation: "Each UML box represents exactly one type.",
+        },
+        {
+          question: "What does + mean in UML and Java?",
+          options: [
+            "Private, private",
+            "Public, public",
+            "Protected, protected",
+            "Package, no modifier",
+          ],
+          answer: 1,
+          citation: "The plus (+) symbol represents public visibility.",
+        },
+        {
+          question: "What does - symbolize?",
+          options: ["Public", "Private", "Protected", "Package"],
+          answer: 1,
+          citation: "The minus (-) symbol represents private visibility.",
+        },
+        {
+          question: "What does # mean?",
+          options: ["Public", "Private", "Protected", "Package"],
+          answer: 2,
+          citation: "The hash (#) symbol represents protected visibility.",
+        },
+        {
+          question: "What does ~ mean?",
+          options: ["Public", "Private", "Protected", "Package (default)"],
+          answer: 3,
+          citation: "The tilde (~) symbol represents package visibility.",
+        },
+        {
+          question: "Where to put visibility symbols in UML?",
+          options: [
+            "After name",
+            "Before each attribute/operation to show its access level",
+            "Only for classes",
+            "No symbols",
+          ],
+          answer: 1,
+          citation: "Visibility symbols must be placed before each member.",
+        },
+        {
+          question: "What is the form for attributes?",
+          options: [
+            "name visibility: Type",
+            "visibility name: Type = default (default is optional)",
+            "Type name",
+            "name: visibility",
+          ],
+          answer: 1,
+          citation: "UML attributes follow the pattern: visibility name: Type.",
+        },
+        {
+          question: "What types to use for attributes?",
+          options: [
+            "UML specific only",
+            "Java types or class names (e.g., String, double, List)",
+            "No types",
+            "Primitive only",
+          ],
+          answer: 1,
+          citation: "Use Java types for accurate code generation.",
+        },
+        {
+          question: "How to mark static field in UML?",
+          options: [
+            "Italic",
+            "Underline the attribute (optional in slides)",
+            "{static}",
+            "No mark",
+          ],
+          answer: 1,
+          citation: "Static fields are marked by underlining.",
+        },
+        {
+          question: "How to mark constant in UML?",
+          options: [
+            "Underline",
+            "Add {readOnly} (optional) or note it in code",
+            "Italic",
+            "No",
+          ],
+          answer: 1,
+          citation: "Constants can be marked with {readOnly}.",
+        },
+        {
+          question: "What is the form for operations?",
+          options: [
+            "name visibility (param: Type): ReturnType",
+            "visibility name(param: Type, ...): ReturnType",
+            "Type name(param)",
+            "name: ReturnType",
+          ],
+          answer: 1,
+          citation:
+            "UML operations follow: visibility name(param: Type): ReturnType.",
+        },
+        {
+          question: "How to denote no return value in UML?",
+          options: [": nothing", ": void", "No :", ": null"],
+          answer: 1,
+          citation: "Use : void for methods that don't return a value.",
+        },
+        {
+          question: "How to mark static method?",
+          options: [
+            "Italic",
+            "Underline the operation (optional)",
+            "{static}",
+            "No",
+          ],
+          answer: 1,
+          citation: "Static methods are marked by underlining.",
+        },
+        {
+          question: "How to mark abstract method?",
+          options: [
+            "Underline",
+            "Italic name (or add {abstract} if you can't italicize)",
+            "{concrete}",
+            "Bold",
+          ],
+          answer: 1,
+          citation: "Abstract methods are marked with italic text.",
+        },
+        {
+          question: "What to avoid in UML attributes/operations?",
+          options: [
+            "Always write name: Type",
+            "Missing types (always write name: Type)",
+            "Use types only",
+            "No names",
+          ],
+          answer: 1,
+          citation: "Always include type information for clarity.",
+        },
+        {
+          question: "What symbols to remember?",
+          options: [
+            "No symbols",
+            "Forgetting visibility symbols (+ - # ~)",
+            "Use only +",
+            "Visibility optional",
+          ],
+          answer: 1,
+          citation: "Visibility symbols are essential in UML.",
+        },
+        {
+          question: "What to avoid for class names?",
+          options: [
+            "Nouns",
+            "Using verbs for class names (use nouns)",
+            "TitleCase",
+            "Short names",
+          ],
+          answer: 1,
+          citation: "Classes should be named with nouns.",
+        },
+        {
+          question: "What not to do in box sections?",
+          options: [
+            "Separate attributes and operations",
+            "Mixing attributes and operations in the same section",
+            "Use 3 sections",
+            "Omit operations",
+          ],
+          answer: 1,
+          citation: "Keep attributes and operations in separate sections.",
+        },
+        {
+          question: "How to handle constructors in UML for this course?",
+          options: [
+            "Always show",
+            "Optional to show constructors in UML; for this course, omit constructors in the box",
+            "Must show logic",
+            "In attribute section",
+          ],
+          answer: 1,
+          citation: "Constructors are omitted from boxes in this course.",
+        },
+      ];
+
+      // Shuffle the questions array
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      // Quiz state variables
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let shuffledQuestions = [];
+      let selectedOption = null;
+      let answerSubmitted = false;
+
+      // DOM elements
+      const questionElement = document.getElementById("question");
+      const optionsElement = document.getElementById("options");
+      const feedbackElement = document.getElementById("feedback");
+      const nextButton = document.getElementById("next-btn");
+      const currentQuestionSpan = document.getElementById("current-question");
+      const totalQuestionsSpan = document.getElementById("total-questions");
+      const progressFill = document.getElementById("progress-fill");
+      const scoreContainer = document.getElementById("score-container");
+      const scorePercentage = document.getElementById("score-percentage");
+      const scoreMessage = document.getElementById("score-message");
+      const restartButton = document.getElementById("restart-btn");
+
+      // Initialize the quiz
+      function initQuiz() {
+        shuffledQuestions = shuffleArray([...questions]);
+        currentQuestionIndex = 0;
+        score = 0;
+        totalQuestionsSpan.textContent = shuffledQuestions.length;
+        updateProgressBar();
+        showQuestion();
+        scoreContainer.style.display = "none";
+        document.querySelector(".quiz-container").style.display = "block";
+      }
+
+      // Update progress bar
+      function updateProgressBar() {
+        const progress =
+          (currentQuestionIndex / shuffledQuestions.length) * 100;
+        progressFill.style.width = `${progress}%`;
+      }
+
+      // Display the current question
+      function showQuestion() {
+        answerSubmitted = false;
+        selectedOption = null;
+        feedbackElement.style.display = "none";
+        nextButton.disabled = true;
+        nextButton.textContent = "Next Question";
+
+        const currentQuestion = shuffledQuestions[currentQuestionIndex];
+        currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+        questionElement.innerHTML = currentQuestion.question;
+        optionsElement.innerHTML = "";
+
+        currentQuestion.options.forEach((option, index) => {
+          const optionElement = document.createElement("div");
+          optionElement.classList.add("option");
+          optionElement.innerHTML = option;
+          optionElement.dataset.index = index;
+          optionElement.addEventListener("click", selectOption);
+          optionsElement.appendChild(optionElement);
+        });
+
+        // Add fade-in animation
+        questionElement.style.animation = "fadeIn 0.5s ease";
+        optionsElement.style.animation = "fadeIn 0.5s ease";
+      }
+
+      // Handle option selection
+      function selectOption(e) {
+        if (answerSubmitted) return;
+
+        // Remove selected class from all options
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
+
+        // Add selected class to clicked option
+        const selectedElement = e.target;
+        selectedElement.classList.add("selected");
+        selectedOption = parseInt(selectedElement.dataset.index);
+
+        // Enable next button
+        nextButton.disabled = false;
+      }
+
+      // Check the answer and show feedback
+      function checkAnswer() {
+        if (selectedOption === null || answerSubmitted) return;
+
+        answerSubmitted = true;
+        const currentQuestion = shuffledQuestions[currentQuestionIndex];
+        const isCorrect = selectedOption === currentQuestion.answer;
+
+        // Disable all options
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.style.pointerEvents = "none";
+        });
+
+        // Highlight correct answer
+        document.querySelectorAll(".option").forEach((opt, index) => {
+          if (index === currentQuestion.answer) {
+            opt.classList.add("correct");
+          } else if (index === selectedOption && !isCorrect) {
+            opt.classList.add("incorrect");
+          }
+        });
+
+        // Update score
+        if (isCorrect) {
+          score++;
         }
 
-        // Quiz state variables
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let shuffledQuestions = [];
-        let selectedOption = null;
-        let answerSubmitted = false;
+        // Show feedback
+        feedbackElement.innerHTML = isCorrect
+          ? "✓ Correct! " + currentQuestion.citation
+          : "✗ Incorrect. The correct answer is: " +
+            currentQuestion.options[currentQuestion.answer] +
+            ". " +
+            currentQuestion.citation;
+        feedbackElement.className =
+          "feedback " + (isCorrect ? "correct-feedback" : "incorrect-feedback");
+        feedbackElement.style.display = "block";
+        feedbackElement.style.animation = "fadeIn 0.5s ease";
 
-        // DOM elements
-        const questionElement = document.getElementById('question');
-        const optionsElement = document.getElementById('options');
-        const feedbackElement = document.getElementById('feedback');
-        const nextButton = document.getElementById('next-btn');
-        const currentQuestionSpan = document.getElementById('current-question');
-        const totalQuestionsSpan = document.getElementById('total-questions');
-        const progressFill = document.getElementById('progress-fill');
-        const scoreContainer = document.getElementById('score-container');
-        const scorePercentage = document.getElementById('score-percentage');
-        const scoreMessage = document.getElementById('score-message');
-        const restartButton = document.getElementById('restart-btn');
+        // Change button text if it's the last question
+        if (currentQuestionIndex === shuffledQuestions.length - 1) {
+          nextButton.textContent = "See Results";
+        }
+      }
 
-        // Initialize the quiz
-        function initQuiz() {
-            shuffledQuestions = shuffleArray([...questions]);
-            currentQuestionIndex = 0;
-            score = 0;
-            totalQuestionsSpan.textContent = shuffledQuestions.length;
-            updateProgressBar();
-            showQuestion();
-            scoreContainer.style.display = 'none';
-            document.querySelector('.quiz-container').style.display = 'block';
+      // Move to the next question or show results
+      function nextQuestion() {
+        if (!answerSubmitted) {
+          checkAnswer();
+          return;
         }
 
-        // Update progress bar
-        function updateProgressBar() {
-            const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
-            progressFill.style.width = `${progress}%`;
+        if (currentQuestionIndex < shuffledQuestions.length - 1) {
+          currentQuestionIndex++;
+          updateProgressBar();
+          showQuestion();
+        } else {
+          showResults();
+        }
+      }
+
+      // Show the final results
+      function showResults() {
+        document.querySelector(".quiz-container").style.display = "none";
+
+        const percentage = Math.round((score / shuffledQuestions.length) * 100);
+        scorePercentage.textContent = `${percentage}%`;
+
+        let message;
+        if (percentage >= 80) {
+          message =
+            "Excellent! You have mastered Java Interfaces and UML concepts.";
+        } else if (percentage >= 60) {
+          message =
+            "Good job! You understand the basics but could use some more practice.";
+        } else {
+          message = "Keep practicing! Review the concepts and try again.";
         }
 
-        // Display the current question
-        function showQuestion() {
-            answerSubmitted = false;
-            selectedOption = null;
-            feedbackElement.style.display = 'none';
-            nextButton.disabled = true;
-            nextButton.textContent = 'Next Question';
+        scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
 
-            const currentQuestion = shuffledQuestions[currentQuestionIndex];
-            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+        scoreContainer.style.display = "block";
+      }
 
-            questionElement.innerHTML = currentQuestion.question;
-            optionsElement.innerHTML = '';
+      // Event listeners
+      nextButton.addEventListener("click", nextQuestion);
+      restartButton.addEventListener("click", initQuiz);
 
-            currentQuestion.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.classList.add('option');
-                optionElement.innerHTML = option;
-                optionElement.dataset.index = index;
-                optionElement.addEventListener('click', selectOption);
-                optionsElement.appendChild(optionElement);
-            });
-            
-            // Add fade-in animation
-            questionElement.style.animation = 'fadeIn 0.5s ease';
-            optionsElement.style.animation = 'fadeIn 0.5s ease';
-        }
-
-        // Handle option selection
-        function selectOption(e) {
-            if (answerSubmitted) return;
-            
-            // Remove selected class from all options
-            document.querySelectorAll('.option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            
-            // Add selected class to clicked option
-            const selectedElement = e.target;
-            selectedElement.classList.add('selected');
-            selectedOption = parseInt(selectedElement.dataset.index);
-            
-            // Enable next button
-            nextButton.disabled = false;
-        }
-
-        // Check the answer and show feedback
-        function checkAnswer() {
-            if (selectedOption === null || answerSubmitted) return;
-            
-            answerSubmitted = true;
-            const currentQuestion = shuffledQuestions[currentQuestionIndex];
-            const isCorrect = selectedOption === currentQuestion.answer;
-            
-            // Disable all options
-            document.querySelectorAll('.option').forEach(opt => {
-                opt.style.pointerEvents = 'none';
-            });
-            
-            // Highlight correct answer
-            document.querySelectorAll('.option').forEach((opt, index) => {
-                if (index === currentQuestion.answer) {
-                    opt.classList.add('correct');
-                } else if (index === selectedOption && !isCorrect) {
-                    opt.classList.add('incorrect');
-                }
-            });
-            
-            // Update score
-            if (isCorrect) {
-                score++;
-            }
-            
-            // Show feedback
-            feedbackElement.innerHTML = isCorrect 
-                ? '✓ Correct! ' + currentQuestion.citation 
-                : '✗ Incorrect. The correct answer is: ' + currentQuestion.options[currentQuestion.answer] + '. ' + currentQuestion.citation;
-            feedbackElement.className = 'feedback ' + (isCorrect ? 'correct-feedback' : 'incorrect-feedback');
-            feedbackElement.style.display = 'block';
-            feedbackElement.style.animation = 'fadeIn 0.5s ease';
-
-            // Change button text if it's the last question
-            if (currentQuestionIndex === shuffledQuestions.length - 1) {
-                nextButton.textContent = 'See Results';
-            }
-        }
-
-        // Move to the next question or show results
-        function nextQuestion() {
-            if (!answerSubmitted) {
-                checkAnswer();
-                return;
-            }
-            
-            if (currentQuestionIndex < shuffledQuestions.length - 1) {
-                currentQuestionIndex++;
-                updateProgressBar();
-                showQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        // Show the final results
-        function showResults() {
-            document.querySelector('.quiz-container').style.display = 'none';
-            
-            const percentage = Math.round((score / shuffledQuestions.length) * 100);
-            scorePercentage.textContent = `${percentage}%`;
-            
-            let message;
-            if (percentage >= 80) {
-                message = "Excellent! You have mastered Java Interfaces and UML concepts.";
-            } else if (percentage >= 60) {
-                message = "Good job! You understand the basics but could use some more practice.";
-            } else {
-                message = "Keep practicing! Review the concepts and try again.";
-            }
-            
-            scoreMessage.textContent = `You answered ${score} out of ${shuffledQuestions.length} questions correctly. ${message}`;
-            
-            scoreContainer.style.display = 'block';
-        }
-
-        // Event listeners
-        nextButton.addEventListener('click', nextQuestion);
-        restartButton.addEventListener('click', initQuiz);
-
-        // Start the quiz
-        initQuiz();
+      // Start the quiz
+      initQuiz();
     </script>
-</body>
+  </body>
 </html>

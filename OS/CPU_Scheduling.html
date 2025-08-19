@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>CPU Scheduling Simulator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #3498db;
+        --secondary: #9b59b6;
+        --success: #2ecc71;
+        --danger: #e74c3c;
+        --warning: #f39c12;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --gray: #95a5a6;
+        --white: #ffffff;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --border-radius: 12px;
+        --panel-padding: 16px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        background-color: #f8f9fa;
+        color: var(--dark);
+        min-height: 100vh;
+        padding: 12px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 12px 0 24px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: clamp(1.8rem, 5vw, 2.2rem);
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 12px;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 3px;
+      }
+
+      .tabs {
+        display: flex;
+        margin-bottom: 16px;
+        border-bottom: 2px solid #dee2e6;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab {
+        padding: 10px 16px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: var(--transition);
+        font-weight: 500;
+        white-space: nowrap;
+        font-size: 0.95rem;
+      }
+
+      .tab.active {
+        border-bottom: 2px solid var(--primary);
+        color: var(--primary);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .panel {
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: var(--panel-padding);
+        margin-bottom: 16px;
+        transition: var(--transition);
+      }
+
+      .panel-title {
+        margin-bottom: 12px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+
+      .form-group {
+        margin-bottom: 12px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: var(--transition);
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+      }
+
+      button {
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.95rem;
+        box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      button:hover,
+      button:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+        outline: none;
+      }
+
+      button.run {
+        background: linear-gradient(90deg, var(--success), #27ae60);
+      }
+
+      button.reset {
+        background: linear-gradient(90deg, var(--danger), #c0392b);
+      }
+
+      .process-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+        font-size: 0.9rem;
+      }
+
+      .process-table th,
+      .process-table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      .process-table th {
+        background-color: #f5f7fa;
+        font-weight: 600;
+      }
+
+      .process-table tr:hover {
+        background-color: #f9f9f9;
+      }
+
+      .gantt-chart {
+        display: flex;
+        margin: 20px 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px;
+      }
+
+      .gantt-block {
+        min-width: 60px;
+        height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        margin-right: 4px;
+        font-weight: 600;
+        color: white;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .gantt-block::after {
+        content: attr(data-time);
+        position: absolute;
+        bottom: -20px;
+        font-size: 0.8rem;
+        color: var(--dark);
+        font-weight: normal;
+      }
+
+      .gantt-block:last-child::after {
+        content: attr(data-end-time);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .stat-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 12px;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        font-size: 0.8rem;
+        color: var(--gray);
+      }
+
+      .algorithm-info {
+        margin-top: 16px;
+        padding: 12px;
+        background-color: #f0f4f8;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .algorithm-info h3 {
+        color: var(--primary);
+        margin-bottom: 8px;
+      }
+
+      .add-process-btn {
+        background: linear-gradient(90deg, var(--warning), #d35400);
+        margin-bottom: 12px;
+      }
+
+      .remove-process-btn {
+        background: none;
+        color: var(--danger);
+        padding: 2px 6px;
+        font-size: 0.8rem;
+        box-shadow: none;
+        width: auto;
+        margin: 0;
+      }
+
+      .remove-process-btn:hover {
+        transform: none;
+        text-decoration: underline;
+      }
+
+      @media (min-width: 768px) {
+        .stats {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .form-row {
+          display: flex;
+          gap: 12px;
+        }
+
+        .form-row .form-group {
+          flex: 1;
+        }
+
+        button {
+          width: auto;
+          padding: 12px 24px;
+        }
+
+        .btn-group {
+          display: flex;
+          gap: 8px;
+        }
+
+        .btn-group button {
+          flex: 1;
+        }
+      }
+
+      /* Color palette for processes */
+      .color-1 {
+        background-color: #3498db;
+      }
+      .color-2 {
+        background-color: #2ecc71;
+      }
+      .color-3 {
+        background-color: #e74c3c;
+      }
+      .color-4 {
+        background-color: #9b59b6;
+      }
+      .color-5 {
+        background-color: #f39c12;
+      }
+      .color-6 {
+        background-color: #1abc9c;
+      }
+      .color-7 {
+        background-color: #d35400;
+      }
+      .color-8 {
+        background-color: #34495e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>CPU Scheduling Simulator</h1>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="fcfs">FCFS</div>
+        <div class="tab" data-tab="sjf">SJF</div>
+        <div class="tab" data-tab="srtf">SRTF</div>
+        <div class="tab" data-tab="rr">Round Robin</div>
+      </div>
+
+      <div class="tab-content active" id="fcfs-tab">
+        <div class="panel">
+          <h2 class="panel-title">First Come First Serve (FCFS)</h2>
+          <p>
+            Processes are executed in the order they arrive. Non-preemptive.
+          </p>
+
+          <div class="form-group">
+            <button class="add-process-btn" id="add-fcfs-process">
+              + Add Process
+            </button>
+          </div>
+
+          <div id="fcfs-processes">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Process ID</label>
+                <input type="text" value="P1" readonly />
+              </div>
+              <div class="form-group">
+                <label>Arrival Time</label>
+                <input type="number" class="arrival-time" value="0" min="0" />
+              </div>
+              <div class="form-group">
+                <label>Burst Time</label>
+                <input type="number" class="burst-time" value="5" min="1" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" value="P2" readonly />
+              </div>
+              <div class="form-group">
+                <input type="number" class="arrival-time" value="1" min="0" />
+              </div>
+              <div class="form-group">
+                <input type="number" class="burst-time" value="3" min="1" />
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="run" id="run-fcfs">Simulate</button>
+            <button class="reset" id="reset-fcfs">Reset</button>
+          </div>
+        </div>
+
+        <div class="panel" id="fcfs-results" style="display: none">
+          <h2 class="panel-title">FCFS Scheduling Results</h2>
+
+          <h3>Gantt Chart</h3>
+          <div class="gantt-chart" id="fcfs-gantt"></div>
+
+          <h3>Process Timeline</h3>
+          <table class="process-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival</th>
+                <th>Burst</th>
+                <th>Start</th>
+                <th>Finish</th>
+                <th>Waiting</th>
+                <th>Turnaround</th>
+                <th>Response</th>
+              </tr>
+            </thead>
+            <tbody id="fcfs-timeline"></tbody>
+          </table>
+
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-value" id="fcfs-avg-wait">0</div>
+              <div class="stat-label">Avg Waiting Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="fcfs-avg-turnaround">0</div>
+              <div class="stat-label">Avg Turnaround Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="fcfs-avg-response">0</div>
+              <div class="stat-label">Avg Response Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="fcfs-throughput">0</div>
+              <div class="stat-label">Throughput</div>
+            </div>
+          </div>
+
+          <div class="algorithm-info">
+            <h3>About FCFS Scheduling</h3>
+            <p>
+              <strong>First Come First Serve (FCFS)</strong> is the simplest CPU
+              scheduling algorithm where the process that arrives first is
+              executed first.
+            </p>
+            <p><strong>Characteristics:</strong></p>
+            <ul>
+              <li>Non-preemptive</li>
+              <li>Simple to implement</li>
+              <li>
+                May suffer from convoy effect (short processes waiting behind
+                long ones)
+              </li>
+              <li>Poor performance for time-sharing systems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="sjf-tab">
+        <div class="panel">
+          <h2 class="panel-title">Shortest Job First (SJF)</h2>
+          <p>
+            Process with shortest burst time is executed next. Non-preemptive.
+          </p>
+
+          <div class="form-group">
+            <button class="add-process-btn" id="add-sjf-process">
+              + Add Process
+            </button>
+          </div>
+
+          <div id="sjf-processes">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Process ID</label>
+                <input type="text" value="P1" readonly />
+              </div>
+              <div class="form-group">
+                <label>Arrival Time</label>
+                <input type="number" class="arrival-time" value="0" min="0" />
+              </div>
+              <div class="form-group">
+                <label>Burst Time</label>
+                <input type="number" class="burst-time" value="6" min="1" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" value="P2" readonly />
+              </div>
+              <div class="form-group">
+                <input type="number" class="arrival-time" value="2" min="0" />
+              </div>
+              <div class="form-group">
+                <input type="number" class="burst-time" value="8" min="1" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" value="P3" readonly />
+              </div>
+              <div class="form-group">
+                <input type="number" class="arrival-time" value="4" min="0" />
+              </div>
+              <div class="form-group">
+                <input type="number" class="burst-time" value="3" min="1" />
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="run" id="run-sjf">Simulate</button>
+            <button class="reset" id="reset-sjf">Reset</button>
+          </div>
+        </div>
+
+        <div class="panel" id="sjf-results" style="display: none">
+          <h2 class="panel-title">SJF Scheduling Results</h2>
+
+          <h3>Gantt Chart</h3>
+          <div class="gantt-chart" id="sjf-gantt"></div>
+
+          <h3>Process Timeline</h3>
+          <table class="process-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival</th>
+                <th>Burst</th>
+                <th>Start</th>
+                <th>Finish</th>
+                <th>Waiting</th>
+                <th>Turnaround</th>
+                <th>Response</th>
+              </tr>
+            </thead>
+            <tbody id="sjf-timeline"></tbody>
+          </table>
+
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-value" id="sjf-avg-wait">0</div>
+              <div class="stat-label">Avg Waiting Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="sjf-avg-turnaround">0</div>
+              <div class="stat-label">Avg Turnaround Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="sjf-avg-response">0</div>
+              <div class="stat-label">Avg Response Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="sjf-throughput">0</div>
+              <div class="stat-label">Throughput</div>
+            </div>
+          </div>
+
+          <div class="algorithm-info">
+            <h3>About SJF Scheduling</h3>
+            <p>
+              <strong>Shortest Job First (SJF)</strong> selects the process with
+              the smallest burst time to execute next.
+            </p>
+            <p><strong>Characteristics:</strong></p>
+            <ul>
+              <li>Non-preemptive version</li>
+              <li>Minimizes average waiting time</li>
+              <li>
+                Difficult to implement as burst times aren't known in advance
+              </li>
+              <li>May lead to starvation of longer processes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="srtf-tab">
+        <div class="panel">
+          <h2 class="panel-title">Shortest Remaining Time First (SRTF)</h2>
+          <p>
+            Preemptive version of SJF where the process with shortest remaining
+            time runs.
+          </p>
+
+          <div class="form-group">
+            <button class="add-process-btn" id="add-srtf-process">
+              + Add Process
+            </button>
+          </div>
+
+          <div id="srtf-processes">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Process ID</label>
+                <input type="text" value="P1" readonly />
+              </div>
+              <div class="form-group">
+                <label>Arrival Time</label>
+                <input type="number" class="arrival-time" value="0" min="0" />
+              </div>
+              <div class="form-group">
+                <label>Burst Time</label>
+                <input type="number" class="burst-time" value="8" min="1" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" value="P2" readonly />
+              </div>
+              <div class="form-group">
+                <input type="number" class="arrival-time" value="1" min="0" />
+              </div>
+              <div class="form-group">
+                <input type="number" class="burst-time" value="4" min="1" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" value="P3" readonly />
+              </div>
+              <div class="form-group">
+                <input type="number" class="arrival-time" value="2" min="0" />
+              </div>
+              <div class="form-group">
+                <input type="number" class="burst-time" value="2" min="1" />
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="run" id="run-srtf">Simulate</button>
+            <button class="reset" id="reset-srtf">Reset</button>
+          </div>
+        </div>
+
+        <div class="panel" id="srtf-results" style="display: none">
+          <h2 class="panel-title">SRTF Scheduling Results</h2>
+
+          <h3>Gantt Chart</h3>
+          <div class="gantt-chart" id="srtf-gantt"></div>
+
+          <h3>Process Timeline</h3>
+          <table class="process-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival</th>
+                <th>Burst</th>
+                <th>Start</th>
+                <th>Finish</th>
+                <th>Waiting</th>
+                <th>Turnaround</th>
+                <th>Response</th>
+              </tr>
+            </thead>
+            <tbody id="srtf-timeline"></tbody>
+          </table>
+
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-value" id="srtf-avg-wait">0</div>
+              <div class="stat-label">Avg Waiting Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="srtf-avg-turnaround">0</div>
+              <div class="stat-label">Avg Turnaround Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="srtf-avg-response">0</div>
+              <div class="stat-label">Avg Response Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="srtf-throughput">0</div>
+              <div class="stat-label">Throughput</div>
+            </div>
+          </div>
+
+          <div class="algorithm-info">
+            <h3>About SRTF Scheduling</h3>
+            <p>
+              <strong>Shortest Remaining Time First (SRTF)</strong> is the
+              preemptive version of SJF where the process with the smallest
+              remaining burst time is selected to execute.
+            </p>
+            <p><strong>Characteristics:</strong></p>
+            <ul>
+              <li>Preemptive scheduling</li>
+              <li>Provides minimum average waiting time</li>
+              <li>More complex implementation than SJF</li>
+              <li>Context switching overhead</li>
+              <li>May lead to starvation of longer processes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="rr-tab">
+        <div class="panel">
+          <h2 class="panel-title">Round Robin (RR)</h2>
+          <p>Each process gets a fixed time quantum in cyclic order.</p>
+
+          <div class="form-group">
+            <button class="add-process-btn" id="add-rr-process">
+              + Add Process
+            </button>
+          </div>
+
+          <div id="rr-processes">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Process ID</label>
+                <input type="text" value="P1" readonly />
+              </div>
+              <div class="form-group">
+                <label>Arrival Time</label>
+                <input type="number" class="arrival-time" value="0" min="0" />
+              </div>
+              <div class="form-group">
+                <label>Burst Time</label>
+                <input type="number" class="burst-time" value="5" min="1" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" value="P2" readonly />
+              </div>
+              <div class="form-group">
+                <input type="number" class="arrival-time" value="1" min="0" />
+              </div>
+              <div class="form-group">
+                <input type="number" class="burst-time" value="3" min="1" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" value="P3" readonly />
+              </div>
+              <div class="form-group">
+                <input type="number" class="arrival-time" value="2" min="0" />
+              </div>
+              <div class="form-group">
+                <input type="number" class="burst-time" value="8" min="1" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="time-quantum">Time Quantum</label>
+            <input type="number" id="time-quantum" value="2" min="1" />
+          </div>
+
+          <div class="btn-group">
+            <button class="run" id="run-rr">Simulate</button>
+            <button class="reset" id="reset-rr">Reset</button>
+          </div>
+        </div>
+
+        <div class="panel" id="rr-results" style="display: none">
+          <h2 class="panel-title">Round Robin Scheduling Results</h2>
+
+          <h3>Gantt Chart</h3>
+          <div class="gantt-chart" id="rr-gantt"></div>
+
+          <h3>Process Timeline</h3>
+          <table class="process-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival</th>
+                <th>Burst</th>
+                <th>Start</th>
+                <th>Finish</th>
+                <th>Waiting</th>
+                <th>Turnaround</th>
+                <th>Response</th>
+              </tr>
+            </thead>
+            <tbody id="rr-timeline"></tbody>
+          </table>
+
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-value" id="rr-avg-wait">0</div>
+              <div class="stat-label">Avg Waiting Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="rr-avg-turnaround">0</div>
+              <div class="stat-label">Avg Turnaround Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="rr-avg-response">0</div>
+              <div class="stat-label">Avg Response Time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="rr-throughput">0</div>
+              <div class="stat-label">Throughput</div>
+            </div>
+          </div>
+
+          <div class="algorithm-info">
+            <h3>About Round Robin Scheduling</h3>
+            <p>
+              <strong>Round Robin (RR)</strong> assigns a fixed time unit per
+              process in cyclic order.
+            </p>
+            <p><strong>Characteristics:</strong></p>
+            <ul>
+              <li>Preemptive scheduling</li>
+              <li>Fair allocation of CPU time</li>
+              <li>Performance depends heavily on time quantum size</li>
+              <li>No starvation (each process gets regular turns)</li>
+              <li>Good for time-sharing systems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Tab switching
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.addEventListener("click", function () {
+            document
+              .querySelectorAll(".tab")
+              .forEach((t) => t.classList.remove("active"));
+            document
+              .querySelectorAll(".tab-content")
+              .forEach((c) => c.classList.remove("active"));
+
+            this.classList.add("active");
+            document
+              .getElementById(`${this.dataset.tab}-tab`)
+              .classList.add("active");
+          });
+        });
+
+        // Process counter
+        let processCounter = {
+          fcfs: 3,
+          sjf: 4,
+          srtf: 4,
+          rr: 4,
+        };
+
+        // Add process buttons
+        document
+          .getElementById("add-fcfs-process")
+          .addEventListener("click", () => addProcess("fcfs"));
+        document
+          .getElementById("add-sjf-process")
+          .addEventListener("click", () => addProcess("sjf"));
+        document
+          .getElementById("add-srtf-process")
+          .addEventListener("click", () => addProcess("srtf"));
+        document
+          .getElementById("add-rr-process")
+          .addEventListener("click", () => addProcess("rr"));
+
+        // Run buttons
+        document
+          .getElementById("run-fcfs")
+          .addEventListener("click", () => runScheduling("fcfs"));
+        document
+          .getElementById("run-sjf")
+          .addEventListener("click", () => runScheduling("sjf"));
+        document
+          .getElementById("run-srtf")
+          .addEventListener("click", () => runScheduling("srtf"));
+        document
+          .getElementById("run-rr")
+          .addEventListener("click", () => runScheduling("rr"));
+
+        // Reset buttons
+        document
+          .getElementById("reset-fcfs")
+          .addEventListener("click", () => resetScheduler("fcfs"));
+        document
+          .getElementById("reset-sjf")
+          .addEventListener("click", () => resetScheduler("sjf"));
+        document
+          .getElementById("reset-srtf")
+          .addEventListener("click", () => resetScheduler("srtf"));
+        document
+          .getElementById("reset-rr")
+          .addEventListener("click", () => resetScheduler("rr"));
+
+        // Add process function
+        function addProcess(algorithm) {
+          const container = document.getElementById(`${algorithm}-processes`);
+          const processNum = processCounter[algorithm]++;
+          const processId = `P${processNum}`;
+
+          const processDiv = document.createElement("div");
+          processDiv.className = "form-row";
+          processDiv.innerHTML = `
+                    <div class="form-group">
+                        <input type="text" value="${processId}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="arrival-time" value="${processNum}" min="0">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="burst-time" value="${
+                          Math.floor(Math.random() * 5) + 1
+                        }" min="1">
+                    </div>
+                    <div class="form-group">
+                        <button class="remove-process-btn" onclick="this.parentElement.remove()">Remove</button>
+                    </div>
+                `;
+
+          container.appendChild(processDiv);
+        }
+
+        // Get processes data
+        function getProcesses(algorithm) {
+          const container = document.getElementById(`${algorithm}-processes`);
+          const rows = container.querySelectorAll(".form-row");
+          const processes = [];
+
+          rows.forEach((row, index) => {
+            const pid = row.querySelector('input[type="text"]').value;
+            const arrivalTime = parseInt(
+              row.querySelector(".arrival-time").value
+            );
+            const burstTime = parseInt(row.querySelector(".burst-time").value);
+
+            processes.push({
+              pid,
+              arrivalTime,
+              burstTime,
+              remainingTime: burstTime,
+              colorClass: `color-${(index % 8) + 1}`,
+            });
+          });
+
+          return processes;
+        }
+
+        // Run scheduling algorithm
+        function runScheduling(algorithm) {
+          let processes = getProcesses(algorithm);
+
+          if (processes.length === 0) {
+            alert("Please add at least one process");
+            return;
+          }
+
+          let timeline = [];
+          let ganttChart = [];
+          let currentTime = 0;
+          let completed = 0;
+          let n = processes.length;
+
+          // Deep clone processes for working copy
+          let workingProcesses = JSON.parse(JSON.stringify(processes));
+
+          // Algorithm specific implementations
+          switch (algorithm) {
+            case "fcfs":
+              timeline = runFCFS(workingProcesses);
+              break;
+            case "sjf":
+              timeline = runSJF(workingProcesses);
+              break;
+            case "srtf":
+              timeline = runSRTF(workingProcesses);
+              break;
+            case "rr":
+              const timeQuantum = parseInt(
+                document.getElementById("time-quantum").value
+              );
+              timeline = runRR(workingProcesses, timeQuantum);
+              break;
+          }
+
+          // Calculate metrics
+          let totalWaiting = 0;
+          let totalTurnaround = 0;
+          let totalResponse = 0;
+
+          timeline.forEach((proc) => {
+            proc.waitingTime =
+              proc.finishTime - proc.arrivalTime - proc.burstTime;
+            proc.turnaroundTime = proc.finishTime - proc.arrivalTime;
+            proc.responseTime = proc.startTime - proc.arrivalTime;
+
+            totalWaiting += proc.waitingTime;
+            totalTurnaround += proc.turnaroundTime;
+            totalResponse += proc.responseTime;
+          });
+
+          // Display results
+          displayResults(algorithm, timeline, ganttChart);
+
+          // Calculate and display averages
+          const avgWait = (totalWaiting / n).toFixed(2);
+          const avgTurnaround = (totalTurnaround / n).toFixed(2);
+          const avgResponse = (totalResponse / n).toFixed(2);
+          const throughput = (n / currentTime).toFixed(2);
+
+          document.getElementById(`${algorithm}-avg-wait`).textContent =
+            avgWait;
+          document.getElementById(`${algorithm}-avg-turnaround`).textContent =
+            avgTurnaround;
+          document.getElementById(`${algorithm}-avg-response`).textContent =
+            avgResponse;
+          document.getElementById(`${algorithm}-throughput`).textContent =
+            throughput;
+
+          // Show results panel
+          document.getElementById(`${algorithm}-results`).style.display =
+            "block";
+        }
+
+        // FCFS Algorithm
+        function runFCFS(processes) {
+          // Sort by arrival time
+          processes.sort((a, b) => a.arrivalTime - b.arrivalTime);
+
+          let currentTime = 0;
+          let timeline = [];
+          let ganttChart = [];
+
+          processes.forEach((proc) => {
+            if (currentTime < proc.arrivalTime) {
+              currentTime = proc.arrivalTime;
+            }
+
+            const startTime = currentTime;
+            const finishTime = currentTime + proc.burstTime;
+
+            timeline.push({
+              ...proc,
+              startTime,
+              finishTime,
+            });
+
+            ganttChart.push({
+              pid: proc.pid,
+              start: currentTime,
+              end: finishTime,
+              color: proc.colorClass,
+            });
+
+            currentTime = finishTime;
+          });
+
+          return timeline;
+        }
+
+        // SJF Algorithm (non-preemptive)
+        function runSJF(processes) {
+          let currentTime = 0;
+          let completed = 0;
+          let timeline = [];
+          let n = processes.length;
+
+          while (completed < n) {
+            // Find processes that have arrived by current time
+            let eligible = processes.filter(
+              (p) => p.arrivalTime <= currentTime && p.remainingTime > 0
+            );
+
+            if (eligible.length === 0) {
+              currentTime++;
+              continue;
+            }
+
+            // Sort by burst time (shortest first)
+            eligible.sort((a, b) => a.burstTime - b.burstTime);
+
+            const proc = eligible[0];
+            const startTime = currentTime;
+            const finishTime = currentTime + proc.burstTime;
+
+            timeline.push({
+              ...proc,
+              startTime,
+              finishTime,
+            });
+
+            proc.remainingTime = 0;
+            currentTime = finishTime;
+            completed++;
+          }
+
+          return timeline;
+        }
+
+        // SRTF Algorithm (preemptive)
+        function runSRTF(processes) {
+          let currentTime = 0;
+          let completed = 0;
+          let timeline = [];
+          let n = processes.length;
+          let lastProc = null;
+
+          while (completed < n) {
+            // Find processes that have arrived by current time
+            let eligible = processes.filter(
+              (p) => p.arrivalTime <= currentTime && p.remainingTime > 0
+            );
+
+            if (eligible.length === 0) {
+              currentTime++;
+              continue;
+            }
+
+            // Sort by remaining time (shortest first)
+            eligible.sort((a, b) => a.remainingTime - b.remainingTime);
+
+            const proc = eligible[0];
+
+            // Check if we need to preempt
+            if (
+              lastProc &&
+              lastProc.pid !== proc.pid &&
+              lastProc.remainingTime > 0
+            ) {
+              // Add the interrupted process to timeline
+              timeline.push({
+                ...lastProc,
+                startTime: lastProc.lastStart,
+                finishTime: currentTime,
+                burstTime: lastProc.lastBurst - lastProc.remainingTime,
+              });
+            }
+
+            // Execute for 1 time unit
+            proc.remainingTime--;
+            currentTime++;
+
+            // Track start time if this is first time running
+            if (!proc.lastStart) {
+              proc.lastStart = currentTime - 1;
+              proc.lastBurst = proc.burstTime;
+            }
+
+            // If process completed
+            if (proc.remainingTime === 0) {
+              timeline.push({
+                ...proc,
+                startTime: proc.lastStart,
+                finishTime: currentTime,
+                burstTime: proc.burstTime,
+              });
+              completed++;
+            }
+
+            lastProc = proc;
+          }
+
+          return timeline;
+        }
+
+        // Round Robin Algorithm
+        function runRR(processes, timeQuantum) {
+          let currentTime = 0;
+          let completed = 0;
+          let timeline = [];
+          let queue = [];
+          let n = processes.length;
+          let lastProc = null;
+
+          // Sort by arrival time initially
+          processes.sort((a, b) => a.arrivalTime - b.arrivalTime);
+
+          while (completed < n) {
+            // Add arriving processes to queue
+            processes.forEach((p) => {
+              if (
+                p.arrivalTime === currentTime &&
+                !queue.includes(p) &&
+                p.remainingTime > 0
+              ) {
+                queue.push(p);
+              }
+            });
+
+            if (queue.length === 0) {
+              currentTime++;
+              continue;
+            }
+
+            const proc = queue.shift();
+
+            // Track start time if this is first time running
+            if (proc.startTime === undefined) {
+              proc.startTime = currentTime;
+            }
+
+            // Execute for time quantum or remaining time, whichever is smaller
+            const execTime = Math.min(timeQuantum, proc.remainingTime);
+
+            // Add to timeline
+            timeline.push({
+              ...proc,
+              startTime: currentTime,
+              finishTime: currentTime + execTime,
+              burstTime: execTime,
+            });
+
+            // Update process state
+            proc.remainingTime -= execTime;
+            currentTime += execTime;
+
+            // Add arriving processes during this execution
+            processes.forEach((p) => {
+              if (
+                p.arrivalTime <= currentTime &&
+                !queue.includes(p) &&
+                p.remainingTime > 0 &&
+                p.pid !== proc.pid
+              ) {
+                queue.push(p);
+              }
+            });
+
+            // If process not finished, add back to queue
+            if (proc.remainingTime > 0) {
+              queue.push(proc);
+            } else {
+              proc.finishTime = currentTime;
+              completed++;
+            }
+          }
+
+          // Calculate actual start/finish times for each process
+          const processMap = {};
+          processes.forEach((p) => {
+            processMap[p.pid] = {
+              ...p,
+              actualStart: null,
+              actualFinish: p.finishTime,
+              waitingTime: 0,
+              turnaroundTime: p.finishTime - p.arrivalTime,
+            };
+          });
+
+          // Find first occurrence of each process for response time
+          timeline.forEach((entry) => {
+            if (processMap[entry.pid].actualStart === null) {
+              processMap[entry.pid].actualStart = entry.startTime;
+              processMap[entry.pid].responseTime =
+                entry.startTime - entry.arrivalTime;
+            }
+          });
+
+          // Calculate waiting time (turnaround - burst)
+          Object.values(processMap).forEach((p) => {
+            p.waitingTime = p.turnaroundTime - p.burstTime;
+          });
+
+          return Object.values(processMap);
+        }
+
+        // Display results
+        function displayResults(algorithm, timeline, ganttChart) {
+          const timelineBody = document.getElementById(`${algorithm}-timeline`);
+          const ganttContainer = document.getElementById(`${algorithm}-gantt`);
+
+          // Clear previous results
+          timelineBody.innerHTML = "";
+          ganttContainer.innerHTML = "";
+
+          // Populate timeline table
+          timeline.forEach((proc) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                        <td>${proc.pid}</td>
+                        <td>${proc.arrivalTime}</td>
+                        <td>${proc.burstTime}</td>
+                        <td>${proc.startTime || "-"}</td>
+                        <td>${proc.finishTime}</td>
+                        <td>${proc.waitingTime}</td>
+                        <td>${proc.turnaroundTime}</td>
+                        <td>${proc.responseTime}</td>
+                    `;
+            timelineBody.appendChild(row);
+          });
+
+          // Generate Gantt chart
+          if (algorithm === "srtf" || algorithm === "rr") {
+            // For preemptive algorithms, use the detailed timeline
+            let prevEnd = 0;
+
+            timeline.forEach((entry) => {
+              if (entry.startTime > prevEnd) {
+                // Add idle time
+                const idleBlock = document.createElement("div");
+                idleBlock.className = "gantt-block";
+                idleBlock.style.background = "#95a5a6";
+                idleBlock.textContent = "IDLE";
+                idleBlock.style.width = `${(entry.startTime - prevEnd) * 30}px`;
+                idleBlock.setAttribute("data-time", prevEnd);
+                idleBlock.setAttribute("data-end-time", entry.startTime);
+                ganttContainer.appendChild(idleBlock);
+              }
+
+              const block = document.createElement("div");
+              block.className = `gantt-block ${entry.colorClass}`;
+              block.textContent = entry.pid;
+              block.style.width = `${entry.burstTime * 30}px`;
+              block.setAttribute("data-time", entry.startTime);
+              block.setAttribute("data-end-time", entry.finishTime);
+              ganttContainer.appendChild(block);
+
+              prevEnd = entry.finishTime;
+            });
+          } else {
+            // For non-preemptive algorithms
+            let prevEnd = 0;
+
+            timeline.forEach((proc) => {
+              if (proc.startTime > prevEnd) {
+                // Add idle time
+                const idleBlock = document.createElement("div");
+                idleBlock.className = "gantt-block";
+                idleBlock.style.background = "#95a5a6";
+                idleBlock.textContent = "IDLE";
+                idleBlock.style.width = `${(proc.startTime - prevEnd) * 30}px`;
+                idleBlock.setAttribute("data-time", prevEnd);
+                idleBlock.setAttribute("data-end-time", proc.startTime);
+                ganttContainer.appendChild(idleBlock);
+              }
+
+              const block = document.createElement("div");
+              block.className = `gantt-block ${proc.colorClass}`;
+              block.textContent = proc.pid;
+              block.style.width = `${proc.burstTime * 30}px`;
+              block.setAttribute("data-time", proc.startTime);
+              block.setAttribute("data-end-time", proc.finishTime);
+              ganttContainer.appendChild(block);
+
+              prevEnd = proc.finishTime;
+            });
+          }
+        }
+
+        // Reset scheduler
+        function resetScheduler(algorithm) {
+          document.getElementById(`${algorithm}-results`).style.display =
+            "none";
+          document.getElementById(`${algorithm}-processes`).innerHTML = "";
+
+          // Add default processes
+          const defaults = {
+            fcfs: [
+              { pid: "P1", arrival: 0, burst: 5 },
+              { pid: "P2", arrival: 1, burst: 3 },
+            ],
+            sjf: [
+              { pid: "P1", arrival: 0, burst: 6 },
+              { pid: "P2", arrival: 2, burst: 8 },
+              { pid: "P3", arrival: 4, burst: 3 },
+            ],
+            srtf: [
+              { pid: "P1", arrival: 0, burst: 8 },
+              { pid: "P2", arrival: 1, burst: 4 },
+              { pid: "P3", arrival: 2, burst: 2 },
+            ],
+            rr: [
+              { pid: "P1", arrival: 0, burst: 5 },
+              { pid: "P2", arrival: 1, burst: 3 },
+              { pid: "P3", arrival: 2, burst: 8 },
+            ],
+          };
+
+          const container = document.getElementById(`${algorithm}-processes`);
+          defaults[algorithm].forEach((proc, index) => {
+            const processDiv = document.createElement("div");
+            processDiv.className = "form-row";
+            processDiv.innerHTML = `
+                        <div class="form-group">
+                            <input type="text" value="${proc.pid}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="arrival-time" value="${
+                              proc.arrival
+                            }" min="0">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="burst-time" value="${
+                              proc.burst
+                            }" min="1">
+                        </div>
+                        ${
+                          index > 1
+                            ? '<div class="form-group"><button class="remove-process-btn" onclick="this.parentElement.remove()">Remove</button></div>'
+                            : ""
+                        }
+                    `;
+            container.appendChild(processDiv);
+          });
+
+          // Reset process counter
+          processCounter[algorithm] = defaults[algorithm].length + 1;
+
+          // Reset time quantum for RR
+          if (algorithm === "rr") {
+            document.getElementById("time-quantum").value = 2;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
