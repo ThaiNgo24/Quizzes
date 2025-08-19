@@ -1632,6 +1632,1171 @@
           answer: 0,
           citation: "Page 32 - 'Use private to hide internal fields'",
         },
+        {
+          question: "What best practice uses methods in encapsulation?",
+          options: [
+            "Use methods to validate and control access.",
+            "Use direct access.",
+            "Avoid methods.",
+            "Use static only.",
+          ],
+          answer: 0,
+          citation: 'Page 32 - "Use methods to validate and control access"',
+        },
+        {
+          question: "When should setters not be provided?",
+          options: [
+            "When fields should be read-only.",
+            "Always provide setters.",
+            "For public fields.",
+            "For private fields.",
+          ],
+          answer: 0,
+          citation:
+            'Page 32 - "Do not provide setters when fields should be read-only"',
+        },
+        {
+          question: "What do immutable classes ensure?",
+          options: [
+            "Full protection of internal state.",
+            "Partial protection.",
+            "No protection.",
+            "External changes.",
+          ],
+          answer: 0,
+          citation:
+            'Page 32 - "Immutable classes ensure full protection of internal state"',
+        },
+        {
+          question: "What is a Java package?",
+          options: [
+            "A namespace that organizes a set of related classes and interfaces.",
+            "A class that extends another.",
+            "A method group.",
+            "A variable container.",
+          ],
+          answer: 0,
+          citation:
+            'Page 33 - "A package is a namespace that organizes a set of related classes and interfaces."',
+        },
+        {
+          question: "What is a benefit of Java packages?",
+          options: [
+            "Prevents class name conflicts.",
+            "Increases conflicts.",
+            "Hides all classes.",
+            "Removes interfaces.",
+          ],
+          answer: 0,
+          citation: 'Page 33 - "Prevents class name conflicts"',
+        },
+        {
+          question: "What is another benefit of Java packages?",
+          options: [
+            "Groups similar classes together.",
+            "Separates all classes.",
+            "Deletes classes.",
+            "Makes classes abstract.",
+          ],
+          answer: 0,
+          citation: 'Page 33 - "Groups similar classes together"',
+        },
+        {
+          question: "What is another benefit of Java packages?",
+          options: [
+            "Helps maintain large projects.",
+            "Complicates small projects.",
+            "Prevents maintenance.",
+            "Ignores projects.",
+          ],
+          answer: 0,
+          citation: 'Page 33 - "Helps maintain large projects"',
+        },
+        {
+          question: "Where do you declare a package in a .java file?",
+          options: [
+            "At the top: package myschool.student;",
+            "At the bottom.",
+            "In the class body.",
+            "In the method.",
+          ],
+          answer: 0,
+          citation:
+            'Page 34 - "At the top of your .java file, declare the package: package myschool.student;"',
+        },
+        {
+          question: "How do you use a class from another package?",
+          options: [
+            "import myschool.student.Student;",
+            "package myschool.student;",
+            "extend myschool.student;",
+            "new myschool.student;",
+          ],
+          answer: 0,
+          citation:
+            'Page 34 - "To use a class from another package: import myschool.student.Student;"',
+        },
+        {
+          question:
+            "Which package provides core language features and is automatically imported?",
+          options: ["java.lang", "java.util", "java.io", "java.time"],
+          answer: 0,
+          citation:
+            'Page 35 - "java.lang – core language features (automatically imported)"',
+        },
+        {
+          question: "Which package provides data structures and utilities?",
+          options: ["java.util", "java.lang", "java.io", "java.math"],
+          answer: 0,
+          citation: 'Page 35 - "java.util – data structures and utilities"',
+        },
+        {
+          question: "Which package provides input/output?",
+          options: ["java.io", "java.util", "java.time", "java.math"],
+          answer: 0,
+          citation: 'Page 35 - "java.io – input/output"',
+        },
+        {
+          question: "Which package provides date and time?",
+          options: ["java.time", "java.io", "java.util", "java.lang"],
+          answer: 0,
+          citation: 'Page 35 - "java.time – date and time"',
+        },
+        {
+          question: "Which package provides mathematical operations?",
+          options: ["java.math", "java.time", "java.io", "java.lang"],
+          answer: 0,
+          citation: 'Page 35 - "java.math – mathematical operations"',
+        },
+        {
+          question:
+            'What is imported in the example?\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String name = sc.nextLine();\n        System.out.println("Hello, " + name);\n    }\n}',
+          options: [
+            "import java.util.Scanner;",
+            "import java.lang;",
+            "import java.io;",
+            "No import.",
+          ],
+          answer: 0,
+          citation: 'Page 36 - "import java.util.Scanner;"',
+        },
+        {
+          question:
+            'In the example, what does Scanner do?\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String name = sc.nextLine();\n        System.out.println("Hello, " + name);\n    }\n}',
+          options: [
+            "Reads input: String name = sc.nextLine();",
+            "Prints output only.",
+            "Calculates math.",
+            "Handles files.",
+          ],
+          answer: 0,
+          citation:
+            'Page 36 - "Scanner sc = new Scanner(System.in); String name = sc.nextLine();"',
+        },
+        {
+          question: "What package is Scanner part of?",
+          options: ["java.util", "java.lang", "java.io", "java.math"],
+          answer: 0,
+          citation: 'Page 36 - "Scanner is part of the java.util package"',
+        },
+        {
+          question: "Why do we import Scanner?",
+          options: [
+            "To use it in our program.",
+            "To hide it.",
+            "To delete it.",
+            "To make it private.",
+          ],
+          answer: 0,
+          citation: 'Page 36 - "We import it to use in our program"',
+        },
+        {
+          question:
+            "For public modifier, is access from same package and different package allowed?",
+          options: [
+            "✅ from same, ✅ from different.",
+            "✅ from same, ❌ from different.",
+            "❌ from same, ❌ from different.",
+            "✅ from same, ✅ if subclass.",
+          ],
+          answer: 0,
+          citation: 'Page 37 - "public ✅ ✅"',
+        },
+        {
+          question:
+            "For protected modifier, is access from same package allowed and from different package?",
+          options: [
+            "✅ from same, ✅ (if subclass) from different.",
+            "✅ from same, ✅ from different.",
+            "✅ from same, ❌ from different.",
+            "❌ from same, ❌ from different.",
+          ],
+          answer: 0,
+          citation: 'Page 37 - "protected ✅ ✅ (if subclass)"',
+        },
+        {
+          question:
+            "For default modifier, is access from same package allowed and from different package?",
+          options: [
+            "✅ from same, ❌ from different.",
+            "✅ from same, ✅ from different.",
+            "❌ from same, ❌ from different.",
+            "✅ from same, ✅ if subclass.",
+          ],
+          answer: 0,
+          citation: 'Page 37 - "default ✅ ❌"',
+        },
+        {
+          question:
+            "For private modifier, is access from same package and different package allowed?",
+          options: [
+            "❌ from same, ❌ from different.",
+            "✅ from same, ✅ from different.",
+            "✅ from same, ❌ from different.",
+            "✅ from same, ✅ if subclass.",
+          ],
+          answer: 0,
+          citation: 'Page 37 - "private ❌ ❌"',
+        },
+        {
+          question:
+            "What do packages work with to control visibility across files?",
+          options: [
+            "Access modifiers.",
+            "Classes only.",
+            "Methods only.",
+            "Variables only.",
+          ],
+          answer: 0,
+          citation:
+            'Page 37 - "Key Point: Packages work with access modifiers to control visibility across files"',
+        },
+        {
+          question: "What is the Java API?",
+          options: [
+            "A collection of prewritten classes provided by the Java platform.",
+            "A user-defined class.",
+            "A package declaration.",
+            "A method library.",
+          ],
+          answer: 0,
+          citation:
+            'Page 38 - "The Java API is a collection of prewritten classes provided by the Java platform."',
+        },
+        {
+          question: "What does the Java API include?",
+          options: [
+            "Classes for strings, files, networking, collections, etc.",
+            "Only user classes.",
+            "Only primitives.",
+            "Only exceptions.",
+          ],
+          answer: 0,
+          citation:
+            'Page 38 - "Includes classes for strings, files, networking, collections, etc."',
+        },
+        {
+          question: "What benefit does the Java API provide?",
+          options: [
+            "Saves time – no need to reinvent the wheel.",
+            "Increases time.",
+            "Reinvents classes.",
+            "Deletes code.",
+          ],
+          answer: 0,
+          citation: 'Page 38 - "Saves time – no need to reinvent the wheel"',
+        },
+        {
+          question: "How is the Java API described?",
+          options: [
+            "Well-documented with examples.",
+            "Undocumented.",
+            "No examples.",
+            "Poorly maintained.",
+          ],
+          answer: 0,
+          citation: 'Page 38 - "Well-documented with examples"',
+        },
+        {
+          question: "How do you bring in classes from the Java API?",
+          options: ["Use import.", "Use package.", "Use extend.", "Use new."],
+          answer: 0,
+          citation: 'Page 39 - "Use import to bring in classes"',
+        },
+        {
+          question: "Where can you look up Java API documentation?",
+          options: [
+            "https://docs.oracle.com/en/java/javase/",
+            "https://example.com",
+            "Local file.",
+            "No documentation.",
+          ],
+          answer: 0,
+          citation:
+            'Page 39 - "Look up documentation at: https://docs.oracle.com/en/java/javase/"',
+        },
+        {
+          question:
+            "In the example, what package is Math from and how is it imported?\nSystem.out.println(Math.sqrt(16)); // prints 4.0",
+          options: [
+            "From java.lang (auto-imported).",
+            "From java.util, manual import.",
+            "From java.math, import needed.",
+            "From java.io.",
+          ],
+          answer: 0,
+          citation:
+            'Page 39 - "Using Math class from java.lang (auto-imported):"',
+        },
+        {
+          question:
+            'What is imported in the practice example?\nimport java.util.ArrayList;\n\npublic class Demo {\n    public static void main(String[] args) {\n        ArrayList<String> list = new ArrayList<>();\n        list.add("Java");\n        list.add("OOP");\n        System.out.println(list);\n    }\n}',
+          options: [
+            "import java.util.ArrayList;",
+            "import java.lang.ArrayList;",
+            "No import.",
+            "import java.io;",
+          ],
+          answer: 0,
+          citation: 'Page 40 - "import java.util.ArrayList;"',
+        },
+        {
+          question:
+            'In the example, what does ArrayList do?\nArrayList<String> list = new ArrayList<>();\nlist.add("Java");\nlist.add("OOP");\nSystem.out.println(list);',
+          options: [
+            'Adds "Java" and "OOP" to a dynamic array.',
+            "Removes items.",
+            "Calculates sqrt.",
+            "Reads input.",
+          ],
+          answer: 0,
+          citation: 'Page 40 - "list.add("Java"); list.add("OOP");"',
+        },
+        {
+          question: "What package is ArrayList from?",
+          options: ["java.util", "java.lang", "java.math", "java.time"],
+          answer: 0,
+          citation: 'Page 40 - "ArrayList is from java.util"',
+        },
+        {
+          question: "What is ArrayList described as?",
+          options: [
+            "Generic class for dynamic arrays.",
+            "Static array.",
+            "Method for math.",
+            "Input class.",
+          ],
+          answer: 0,
+          citation: 'Page 40 - "Generic class for dynamic arrays"',
+        },
+        {
+          question: "What do packages do?",
+          options: [
+            "Group related classes and avoid naming conflicts.",
+            "Hide classes.",
+            "Delete classes.",
+            "Make classes final.",
+          ],
+          answer: 0,
+          citation:
+            'Page 41 - "Packages group related classes and avoid naming conflicts"',
+        },
+        {
+          question: "How do you define and use packages?",
+          options: [
+            "Use package to define; import to use.",
+            "Use import to define.",
+            "Use extend to use.",
+            "No need for import.",
+          ],
+          answer: 0,
+          citation: 'Page 41 - "Use package to define; import to use"',
+        },
+        {
+          question: "What does the Java API provide?",
+          options: [
+            "Thousands of ready-to-use classes.",
+            "Only a few classes.",
+            "User-defined only.",
+            "No classes.",
+          ],
+          answer: 0,
+          citation:
+            'Page 41 - "The Java API gives you thousands of ready-to-use classes"',
+        },
+        {
+          question:
+            "What should you learn to understand available functionality?",
+          options: [
+            "Learn to read JavaDoc.",
+            "Ignore documentation.",
+            "Write your own.",
+            "Use only lang.",
+          ],
+          answer: 0,
+          citation:
+            'Page 41 - "Learn to read JavaDoc to understand available functionality"',
+        },
+        {
+          question:
+            "What purpose do modifiers serve in Java regarding classes, methods, fields, and constructors?",
+          options: [
+            "They define accessibility and behavior or constraints.",
+            "They handle exception throwing.",
+            "They manage loop iterations.",
+            "They create array structures.",
+          ],
+          answer: 0,
+          citation:
+            'Page 2 - "In Java, modifiers are keywords used to define: The accessibility of classes, methods, fields, and constructors; The behavior or constraints of these elements"',
+        },
+        {
+          question:
+            "What divides modifiers into access and non-access types in Java?",
+          options: [
+            "Access controls visibility; non-access defines additional behavior unrelated to access.",
+            "Access defines behavior; non-access controls visibility.",
+            "Both categories manage only visibility.",
+            "Both categories handle only constraints.",
+          ],
+          answer: 0,
+          citation:
+            'Page 2 - "Access Modifiers – Control visibility; Non-Access Modifiers – Define additional behavior, not related to access"',
+        },
+        {
+          question:
+            "In the table of modifier types, what role do access modifiers play?",
+          options: [
+            "They control visibility of classes and members.",
+            "They define characteristics or constraints.",
+            "They group related classes.",
+            "They provide ready-to-use methods.",
+          ],
+          answer: 0,
+          citation:
+            'Page 3 - "Access Modifiers: Control visibility of classes and members"',
+        },
+        {
+          question:
+            "In the table of modifier types, what do non-access modifiers primarily do?",
+          options: [
+            "Define characteristics or constraints.",
+            "Control visibility of classes and members.",
+            "Wrap data and methods.",
+            "Organize namespaces.",
+          ],
+          answer: 0,
+          citation:
+            'Page 3 - "Non-Access Modifiers: Define characteristics or constraints"',
+        },
+        {
+          question: "Which set correctly lists examples of access modifiers?",
+          options: [
+            "public, private, protected, default.",
+            "static, final, abstract, synchronized.",
+            "transient, volatile, synchronized, abstract.",
+            "final, static, public, private.",
+          ],
+          answer: 0,
+          citation: 'Page 3 - "Access: public, private, protected, default"',
+        },
+        {
+          question:
+            "Which options are correct examples of non-access modifiers?",
+          options: [
+            "static, final, abstract, synchronized, etc.",
+            "public, private, protected, default.",
+            "class, object, method, field.",
+            "extends, implements, super, this.",
+          ],
+          answer: 0,
+          citation:
+            'Page 3 - "Non-access: static, final, abstract, synchronized, etc."',
+        },
+        {
+          question:
+            'In the code example, why can other classes access the Main class?\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello World");\n    }\n}',
+          options: [
+            "Because it is declared public, defining its visibility.",
+            "Because it uses static.",
+            "Because it has a main method.",
+            "Because it prints to console.",
+          ],
+          answer: 0,
+          citation:
+            'Page 4 - "It defines the visibility of the class Main and the method main. Any other class can access Main because it is declared public."',
+        },
+        {
+          question:
+            "What role does the 'public' keyword play in the provided code example?\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World\");\n    }\n}",
+          options: [
+            "It is a modifier defining visibility for class and method.",
+            "It declares a variable.",
+            "It initializes an object.",
+            "It controls loop behavior.",
+          ],
+          answer: 0,
+          citation: 'Page 4 - "The keyword public is a modifier."',
+        },
+        {
+          question: "Access modifiers in Java control access to what elements?",
+          options: [
+            "Class members from specific locations.",
+            "Only class definitions.",
+            "Variable types only.",
+            "Method parameters only.",
+          ],
+          answer: 0,
+          citation:
+            'Page 5 - "Access modifiers determine where a class member can be accessed from."',
+        },
+        {
+          question: "What are the four provided access levels in Java?",
+          options: [
+            "public, protected, default (no keyword), private.",
+            "static, final, abstract, synchronized.",
+            "public, private, static, final.",
+            "protected, default, transient, volatile.",
+          ],
+          answer: 0,
+          citation:
+            'Page 5 - "Java provides four access levels: public, protected, default (no keyword), private"',
+        },
+        {
+          question:
+            "For top-level classes, which access modifiers are permitted?",
+          options: [
+            "Only public and default (no modifier).",
+            "All four including private and protected.",
+            "Only private and protected.",
+            "Only abstract and final.",
+          ],
+          answer: 0,
+          citation:
+            'Page 6 - "Only two modifiers are allowed for top-level classes:"',
+        },
+        {
+          question:
+            "If a top-level class uses public, what access does it grant?",
+          options: [
+            "Accessible from any other class.",
+            "Accessible only within the same package.",
+            "No access outside its file.",
+            "Access only by subclasses.",
+          ],
+          answer: 0,
+          citation:
+            'Page 6 - "public: The class is accessible from any other class"',
+        },
+        {
+          question:
+            "If no modifier is used for a top-level class, what is its access scope?",
+          options: [
+            "Accessible only within the same package.",
+            "Accessible from any other class.",
+            "Hidden completely.",
+            "Accessible by subclasses anywhere.",
+          ],
+          answer: 0,
+          citation:
+            'Page 6 - "default (no modifier): The class is accessible only within the same package"',
+        },
+        {
+          question:
+            "Regarding packages in relation to class access modifiers, what is noted for future study?",
+          options: [
+            "You will learn more about packages later in this course.",
+            "Packages are not related to access.",
+            "Packages replace modifiers.",
+            "Packages are covered immediately.",
+          ],
+          answer: 0,
+          citation:
+            'Page 6 - "You will learn more about packages later in this course."',
+        },
+        {
+          question: "A top-level class is defined in what location?",
+          options: [
+            "Directly in a .java file.",
+            "Inside another class or method.",
+            "Within a package only.",
+            "In a constructor.",
+          ],
+          answer: 0,
+          citation: 'Page 7 - "Top-level: Directly in a .java file"',
+        },
+        {
+          question: "Where is a nested class typically defined?",
+          options: [
+            "Inside another class or method.",
+            "Directly in a .java file.",
+            "In an external package.",
+            "In the main function.",
+          ],
+          answer: 0,
+          citation: 'Page 7 - "Nested: Inside another class or method"',
+        },
+        {
+          question: "Top-level classes are commonly used for what purpose?",
+          options: [
+            "Main classes of programs.",
+            "Utility or helper classes.",
+            "Data validation only.",
+            "Method definitions only.",
+          ],
+          answer: 0,
+          citation: 'Page 7 - "Main classes of programs"',
+        },
+        {
+          question: "Nested classes are often employed as what?",
+          options: [
+            "Utility or helper classes.",
+            "Main classes of programs.",
+            "Abstract base classes.",
+            "Final immutable classes.",
+          ],
+          answer: 0,
+          citation: 'Page 7 - "Utility or helper classes"',
+        },
+        {
+          question:
+            "In the code snippet, what type is the class named Outer?\n// Top-Level class\npublic class Outer {\n    // Nested class\n    class Inner {\n        ...\n    }\n}",
+          options: [
+            "Top-level class.",
+            "Nested class.",
+            "Abstract class.",
+            "Static class.",
+          ],
+          answer: 0,
+          citation: 'Page 7 - "// Top-Level class public class Outer {"',
+        },
+        {
+          question:
+            "In the code snippet, what type is the class named Inner?\n// Top-Level class\npublic class Outer {\n    // Nested class\n    class Inner {\n        ...\n    }\n}",
+          options: [
+            "Nested class.",
+            "Top-level class.",
+            "Public class.",
+            "Private class.",
+          ],
+          answer: 0,
+          citation: 'Page 7 - "// Nested class class Inner {"',
+        },
+        {
+          question:
+            "Top-level classes are restricted to which access modifiers?",
+          options: [
+            "public and default (no modifier).",
+            "private and protected.",
+            "final and abstract.",
+            "static and volatile.",
+          ],
+          answer: 0,
+          citation:
+            'Page 8 - "Top-level classes can only use: public, default (no modifier)"',
+        },
+        {
+          question:
+            "What is the reason top-level classes cannot use private or protected?",
+          options: [
+            "They imply visibility relative to another class, but top-level is not inside another.",
+            "They are for methods only.",
+            "They conflict with non-access modifiers.",
+            "They make classes non-instantiable.",
+          ],
+          answer: 0,
+          citation:
+            'Page 8 - "private and protected imply visibility inside or relative to another class; A top-level class is not inside another class, so private and protected are not meaningful"',
+        },
+        {
+          question:
+            "Which declaration is valid for a top-level class using public?",
+          options: [
+            "public class MyClass { }",
+            "private class HiddenClass { }",
+            "protected class SubClass { }",
+            "abstract class AbsClass { }",
+          ],
+          answer: 0,
+          citation: 'Page 9 - "Valid: public class MyClass { }"',
+        },
+        {
+          question: "Which shows a valid default access top-level class?",
+          options: [
+            "class PackageClass { }",
+            "public class MyClass { }",
+            "private class HiddenClass { }",
+            "protected class SubClass { }",
+          ],
+          answer: 0,
+          citation: 'Page 9 - "class PackageClass { } // default access"',
+        },
+        {
+          question:
+            "What issue arises with private class HiddenClass { } as top-level?",
+          options: [
+            "It causes an ERROR, as private is invalid for top-level.",
+            "It is valid but restricted.",
+            "It requires nesting.",
+            "It needs public extension.",
+          ],
+          answer: 0,
+          citation:
+            'Page 9 - "Invalid: private class HiddenClass { } // ERROR"',
+        },
+        {
+          question:
+            "What problem occurs with protected class SubClass { } for top-level?",
+          options: [
+            "It results in an ERROR, as protected is not allowed.",
+            "It is valid for inheritance only.",
+            "It conflicts with default.",
+            "It must be final.",
+          ],
+          answer: 0,
+          citation: 'Page 9 - "protected class SubClass { } // ERROR"',
+        },
+        {
+          question: "For fields or methods, what scope does public provide?",
+          options: [
+            "Accessible from any class.",
+            "Only within declaring class.",
+            "Only same package.",
+            "Same package and subclasses.",
+          ],
+          answer: 0,
+          citation: 'Page 10 - "public: Accessible from any class"',
+        },
+        {
+          question: "What limits access when using private for members?",
+          options: [
+            "Only within the declaring class.",
+            "From any class.",
+            "Only same package.",
+            "Same package and subclasses.",
+          ],
+          answer: 0,
+          citation:
+            'Page 10 - "private: Accessible only within the declaring class"',
+        },
+        {
+          question: "No modifier for members means access is limited to what?",
+          options: [
+            "Only within the same package.",
+            "From any class.",
+            "Only declaring class.",
+            "Same package and subclasses.",
+          ],
+          answer: 0,
+          citation:
+            'Page 10 - "default (no modifier): Accessible only within the same package"',
+        },
+        {
+          question: "Protected members can be accessed where?",
+          options: [
+            "Within same package and by subclasses.",
+            "From any class.",
+            "Only declaring class.",
+            "Only same package.",
+          ],
+          answer: 0,
+          citation:
+            'Page 10 - "protected: Accessible within the same package and by subclasses"',
+        },
+        {
+          question:
+            "The protected modifier's use is clarified in the context of what topic?",
+          options: [
+            "Inheritance.",
+            "Packages.",
+            "Encapsulation.",
+            "Modifiers.",
+          ],
+          answer: 0,
+          citation:
+            'Page 10 - "The use of protected will become clearer when we study inheritance."',
+        },
+        {
+          question:
+            "In the Student class code, why can't 'name' be accessed externally?\npublic class Student {\n    private String name;\n    \n    public void setName(String n) {\n        name = n;\n    }\n    \n    public String getName() {\n        return name;\n    }\n}",
+          options: [
+            "It is private, not accessible outside the class.",
+            "It is public, but hidden.",
+            "It is protected for subclasses.",
+            "It is default package level.",
+          ],
+          answer: 0,
+          citation:
+            'Page 11 - "name is private – not accessible outside the class"',
+        },
+        {
+          question:
+            "In the Student class, what role do setName and getName play?\npublic class Student {\n    private String name;\n    \n    public void setName(String n) {\n        name = n;\n    }\n    \n    public String getName() {\n        return name;\n    }\n}",
+          options: [
+            "Provide controlled access to the field.",
+            "Expose the field directly.",
+            "Make the field static.",
+            "Declare the field abstract.",
+          ],
+          answer: 0,
+          citation:
+            'Page 11 - "setName() and getName() provide controlled access"',
+        },
+        {
+          question: "A final class prevents what action?",
+          options: [
+            "Extension or subclassing.",
+            "Instantiation.",
+            "Method overriding.",
+            "Field modification.",
+          ],
+          answer: 0,
+          citation:
+            'Page 12 - "final: The class cannot be extended (no subclassing allowed)"',
+        },
+        {
+          question: "An abstract class requires what?",
+          options: [
+            "Subclassing; cannot be instantiated directly.",
+            "No subclassing allowed.",
+            "All methods to have bodies.",
+            "Fields to be modifiable.",
+          ],
+          answer: 0,
+          citation:
+            'Page 12 - "abstract: The class cannot be instantiated; must be subclassed"',
+        },
+        {
+          question: "Final applied to fields or methods means what?",
+          options: [
+            "Fields cannot be modified; methods cannot be overridden.",
+            "Belong to class, not instance.",
+            "Method without body, must override.",
+            "Skipped in serialization.",
+          ],
+          answer: 0,
+          citation:
+            'Page 13 - "final: Cannot be modified (fields) or overridden (methods)"',
+        },
+        {
+          question: "What does static indicate for fields or methods?",
+          options: [
+            "Belongs to the class, not to any instance.",
+            "Cannot be modified or overridden.",
+            "Declares without body for override.",
+            "Allows single thread access only.",
+          ],
+          answer: 0,
+          citation:
+            'Page 13 - "static: Belongs to the class, not to any instance"',
+        },
+        {
+          question: "Abstract for methods declares what?",
+          options: [
+            "Method without body; must be overridden in subclass.",
+            "Belongs to class.",
+            "Cannot be modified.",
+            "Read from main memory.",
+          ],
+          answer: 0,
+          citation:
+            'Page 13 - "abstract: Declares a method without a body; must be overridden in subclass"',
+        },
+        {
+          question: "Transient fields are handled how during serialization?",
+          options: [
+            "Skipped.",
+            "Read from cache.",
+            "Single thread access.",
+            "Without body.",
+          ],
+          answer: 0,
+          citation: 'Page 13 - "transient: Skipped during serialization"',
+        },
+        {
+          question: "Synchronized methods allow access in what manner?",
+          options: [
+            "Only one thread at a time.",
+            "Skipped in serialization.",
+            "Belong to instance.",
+            "Can be overridden.",
+          ],
+          answer: 0,
+          citation:
+            'Page 13 - "synchronized: Allows only one thread to access the method at a time"',
+        },
+        {
+          question: "Volatile fields are always read from where?",
+          options: [
+            "Main memory, not thread-local cache.",
+            "Thread cache only.",
+            "Serialization stream.",
+            "Subclass override.",
+          ],
+          answer: 0,
+          citation:
+            'Page 13 - "volatile: Always read from main memory, not thread-local cache"',
+        },
+        {
+          question:
+            "Access modifiers help manage what to support encapsulation?",
+          options: [
+            "Visibility.",
+            "Inheritance only.",
+            "Concurrency only.",
+            "Memory only.",
+          ],
+          answer: 0,
+          citation:
+            'Page 14 - "Use access modifiers to manage visibility and support encapsulation"',
+        },
+        {
+          question: "Non-access modifiers control aspects like what?",
+          options: [
+            "Inheritance, concurrency, memory behavior, method structure.",
+            "Visibility and encapsulation only.",
+            "Data wrapping only.",
+            "Package organization.",
+          ],
+          answer: 0,
+          citation:
+            'Page 14 - "Use non-access modifiers to control inheritance, concurrency, memory behavior, and method structure"',
+        },
+        {
+          question: "What advantage comes from mastering modifiers in Java?",
+          options: [
+            "Writing robust, maintainable, and secure code.",
+            "Handling only basic syntax.",
+            "Managing exceptions solely.",
+            "Creating simple loops.",
+          ],
+          answer: 0,
+          citation:
+            'Page 14 - "Mastering Java modifiers helps you write robust, maintainable, and secure code"',
+        },
+        {
+          question:
+            "Encapsulation involves wrapping what into a class with restricted access?",
+          options: [
+            "Data (fields) and methods, restricting direct access to components.",
+            "Only methods without data.",
+            "Classes into packages.",
+            "Modifiers into categories.",
+          ],
+          answer: 0,
+          citation:
+            'Page 15 - "Wrapping data (fields) and methods into a single unit – the class – and restricting direct access to some components."',
+        },
+        {
+          question:
+            "In which programming paradigm is encapsulation a fundamental principle?",
+          options: [
+            "Object-Oriented Programming.",
+            "Procedural Programming.",
+            "Functional Programming.",
+            "Script-based Programming.",
+          ],
+          answer: 0,
+          citation:
+            'Page 15 - "Encapsulation is one of the fundamental principles of Object-Oriented Programming."',
+        },
+        {
+          question:
+            "The core of encapsulation prohibits direct access to what?",
+          options: [
+            "Data inside an object.",
+            "Methods in a class.",
+            "Public modifiers.",
+            "Static fields.",
+          ],
+          answer: 0,
+          citation:
+            'Page 16 - "Data inside an object should not be directly accessible"',
+        },
+        {
+          question: "Under encapsulation, object data should be accessed how?",
+          options: [
+            "Via methods.",
+            "Directly.",
+            "Through static calls.",
+            "Via inheritance.",
+          ],
+          answer: 0,
+          citation: 'Page 16 - "Instead, it should be accessed via methods"',
+        },
+        {
+          question: "Encapsulation uses what to restrict and control access?",
+          options: [
+            "Access modifiers and getter/setter methods.",
+            "Only public fields.",
+            "Abstract classes.",
+            "Final modifiers.",
+          ],
+          answer: 0,
+          citation:
+            'Page 16 - "This is done using access modifiers and getter/setter methods"',
+        },
+        {
+          question:
+            "In the Account class example, why is 'balance' commented as hidden?\nclass Account {\n    private double balance; // hidden\n    \n    public double getBalance() {\n        return balance;\n    }\n    \n    public void deposit(double amount) {\n        if (amount > 0) balance += amount;\n    }\n}",
+          options: [
+            "It is private.",
+            "It is public.",
+            "It is static.",
+            "It is final.",
+          ],
+          answer: 0,
+          citation: 'Page 16 - "private double balance; // hidden"',
+        },
+        {
+          question:
+            "In the Account class, deposit adds amount only under what condition?\nclass Account {\n    private double balance; // hidden\n    \n    public double getBalance() {\n        return balance;\n    }\n    \n    public void deposit(double amount) {\n        if (amount > 0) balance += amount;\n    }\n}",
+          options: [
+            "If amount > 0.",
+            "Always regardless of amount.",
+            "If amount < 0.",
+            "If balance > amount.",
+          ],
+          answer: 0,
+          citation: 'Page 16 - "if (amount > 0) balance += amount;"',
+        },
+        {
+          question: "How does encapsulation protect data integrity?",
+          options: [
+            "Prevents unauthorized or invalid access.",
+            "Allows all changes.",
+            "Exposes internals.",
+            "Removes validation.",
+          ],
+          answer: 0,
+          citation:
+            'Page 17 - "1. Protects data integrity: Prevents unauthorized or invalid access"',
+        },
+        {
+          question:
+            "Encapsulation improves maintainability by ensuring what about changes?",
+          options: [
+            "Internal changes do not affect external code.",
+            "External code must change with internals.",
+            "No changes are possible.",
+            "All code is affected.",
+          ],
+          answer: 0,
+          citation:
+            'Page 17 - "2. Improves maintainability: Changes to internal implementation do not affect external code"',
+        },
+        {
+          question: "What does encapsulation provide through methods?",
+          options: [
+            "Controlled access with safe interactions via well-defined methods.",
+            "Uncontrolled direct access.",
+            "No access at all.",
+            "Access without definitions.",
+          ],
+          answer: 0,
+          citation:
+            'Page 17 - "3. Provides controlled access: Only allows safe interactions through well-defined methods"',
+        },
+        {
+          question:
+            "Encapsulation encourages what design where objects have clear interfaces?",
+          options: [
+            "Modular design with self-contained objects.",
+            "Monolithic design.",
+            "Dependent objects.",
+            "Unclear interfaces.",
+          ],
+          answer: 0,
+          citation:
+            'Page 17 - "4. Encourages modular design: Objects are self-contained, with clear interfaces"',
+        },
+        {
+          question:
+            "In the non-encapsulated Student class, what problem exists with 'age'?\nclass Student {\n    public int age; // directly modifiable\n}",
+          options: [
+            "It is directly modifiable.",
+            "It has validation built-in.",
+            "It is hidden.",
+            "It is read-only.",
+          ],
+          answer: 0,
+          citation: 'Page 18 - "public int age; // directly modifiable"',
+        },
+        {
+          question:
+            "In the encapsulated Student class, access to 'age' is managed how?\nclass Student {\n    private int age;\n    \n    public void setAge(int a) {\n        if (a >= 0) age = a;\n    }\n    \n    public int getAge() {\n        return age;\n    }\n}",
+          options: [
+            "Via setter with validation and getter.",
+            "Directly without methods.",
+            "No access provided.",
+            "Static class level.",
+          ],
+          answer: 0,
+          citation:
+            'Page 18 - "private int age; public void setAge(int a) { if (a >= 0) age = a; } public int getAge() { return age; }"',
+        },
+        {
+          question:
+            "How does the non-encapsulated version differ in data handling?",
+          options: [
+            "Exposes internal data directly.",
+            "Allows only validated access.",
+            "Uses private fields.",
+            "Provides methods only.",
+          ],
+          answer: 0,
+          citation:
+            'Page 18 - "The first version exposes the internal data directly."',
+        },
+        {
+          question: "What advantage does the encapsulated version offer?",
+          options: [
+            "Allows only safe, validated access.",
+            "Exposes data directly.",
+            "No validation needed.",
+            "Public fields used.",
+          ],
+          answer: 0,
+          citation:
+            'Page 18 - "The second version allows only safe, validated access."',
+        },
+        {
+          question:
+            "In the example showing issues with public fields, how is 'age' declared?\nclass Student {\n    public int age;\n}",
+          options: [
+            "public int age;",
+            "private int age;",
+            "final int age;",
+            "static int age;",
+          ],
+          answer: 0,
+          citation: 'Page 19 - "class Student { public int age; }"',
+        },
+        {
+          question:
+            "In the usage, why is s.age = -5; problematic?\nStudent s = new Student();\ns.age = -5; // This is allowed, but it's wrong!",
+          options: [
+            "It is allowed but wrong, as negative age is invalid.",
+            "It is not allowed by compiler.",
+            "It sets to positive automatically.",
+            "It causes runtime error.",
+          ],
+          answer: 0,
+          citation:
+            'Page 19 - "s.age = -5; // This is allowed, but it\'s wrong!"',
+        },
+        {
+          question: "The lack of rules for public fields leads to what?",
+          options: [
+            "Dangerous bad data from invalid assignments like negative age.",
+            "Automatic validation.",
+            "Safe data always.",
+            "No assignments possible.",
+          ],
+          answer: 0,
+          citation:
+            'Page 19 - "Problem: No rule stops us from assigning a negative age. ⚠️ This is dangerous and leads to bad data."',
+        },
       ];
 
       // Shuffle the questions array
